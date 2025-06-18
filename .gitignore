@@ -1,4 +1,17 @@
-venv/
+# python (backend)
+backend/venv/
+backend/.venv/
 __pycache__/
 *.pyc
-.env
+backend/.env
+
+# node (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+
+# os / editor / misc
+.DS_Store
+*.log
+.vscode/
+.idea/
