@@ -12,7 +12,7 @@ audio = AudioSegment.from_mp3(file_path)
 
 wav_path = os.path.join(os.path.dirname(__file__), "vocals.wav")
 audio.export(wav_path, format="wav")
-print("Exported to vocals.wav ✅")
+print("Exported to vocals.wav ")
 
 y, sr = sf.read(wav_path)
 print("Waveform shape:", y.shape)
