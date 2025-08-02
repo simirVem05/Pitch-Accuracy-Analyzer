@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import librosa.display
 import librosa
 import numpy as np
-
+from fastapi import FastAPI
 file_path = os.path.join(os.path.dirname(__file__), "vocals.mp3")
 audio = AudioSegment.from_mp3(file_path)
 
@@ -52,3 +52,8 @@ plt.ylabel("Frequency (Hz)")
 plt.legend()
 plt.tight_layout()
 plt.show()
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello from Pitch Accuracy Analyzer!"}
