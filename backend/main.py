@@ -7,9 +7,9 @@ from dataclasses import dataclass
 from scipy.ndimage import binary_closing, binary_dilation
 
 # inputs - vocal file and key
-AUDIO_FILE = "dont.mp3"
-TARGET_TONIC = "B"
-TARGET_MODE = "minor"
+AUDIO_FILE = "glimpse_of_us.mp3"
+TARGET_TONIC = "Ab"
+TARGET_MODE = "major"
 
 # preemphasis (slightly reduce lower frequencies and slightly boost higher frequencies)
 USE_PREEMPH = False

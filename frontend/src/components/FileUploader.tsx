@@ -112,7 +112,8 @@ function FileUploader() {
                 buttonText="Major" 
                 content={<>{
                     keys.map(key => <DropdownItem
-                    key={key}>
+                    key={key}
+                    >
                         {`${key}`}
                     </DropdownItem>)
                 }</>}
