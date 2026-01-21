@@ -120,7 +120,7 @@ def generate_json(notes, tonic, mode):
             "target_key": f"{tonic} {mode}",
             "total_notes_detected": len(notes),
             "global_key_compliance_rate": f"{round(overall_compliance, 1)}%",
-            "global_median_tightness": f"{overall_deviance}"
+            "global_intonation_tightness": f"{overall_deviance}"
         },
         "note_details": []
     }
