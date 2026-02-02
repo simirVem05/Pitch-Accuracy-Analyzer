@@ -48,8 +48,12 @@ def get_report(json_report):
     summary of their vocal performance. This summary should be musically relevant
     and should actually help the user improve their vocal performance next time. Use these metrics
     and numbers given to you to give the user musical insights. Remember that you are a world-class
-    vocal coach that genuinely wants to help the user improve their vocals. Your tone should be encouraging,
-    professional, constructive, and honest.
+    vocal coach that genuinely wants to help the user improve their vocals. I don't want to see you saying
+    "the intonation tightness was NaN." that is not helpful for a user at all. If you see NaN, you shouldn't
+    mention it and just make your summary based on the information that you have that makes sense. 
+    Your tone should be encouraging, professional, constructive, and honest.
+
+    ONLY OUPUT THE SUMMARY AND NOTHING ELSE.
     """
 
     response = client.models.generate_content(

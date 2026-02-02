@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import librosa
 from music21 import scale
 from scipy.ndimage import binary_closing, binary_dilation
+import matplotlib.ticker as ticker
 
 from processing import pyin_loud_regions
 from processing import min_run
@@ -116,7 +117,7 @@ def wrap_half(x):
     return ((x + 0.5) % 1.0) - 0.5
 
 # analysis
-def analyze_key_compliance_over_time(audio_path, tonic, mode, window_sec=2.0):
+def analyze_performance(audio_path, tonic, mode, window_sec=2.0):
     # y is an array of amplitudes
     y, sr = librosa.load(path, sr=None, mono=True)
     # hop_length = number of samples between the start of a frame and the start of the next
@@ -329,7 +330,7 @@ def analyze_key_compliance_over_time(audio_path, tonic, mode, window_sec=2.0):
 # main
 if __name__ == "__main__":
     path = os.path.join(os.path.dirname(__file__), AUDIO_FILE)
-    times, compliance, tightness, combined, notes, midi_full, nearest_full, report = analyze_key_compliance_over_time(
+    times, compliance, tightness, combined, notes, midi_full, nearest_full, report = analyze_performance(
         path, TARGET_TONIC, TARGET_MODE, WINDOW_SEC
     )
 
@@ -340,14 +341,17 @@ if __name__ == "__main__":
 
     # performance score graph
     plt.figure(figsize=(12, 5.2))
+    ax = plt.gca()
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(10.0))
     plt.axhline(100.0, color="k", linestyle="--", linewidth=0.8, alpha=0.35, zorder=1)
+    
     maskedX = np.ma.masked_invalid(combined)
 
     plt.plot(times, maskedX, color='#1f77b4', linewidth=2.5, zorder=4, label="Overall Performance")
     plt.fill_between(times, maskedX, color='#1f77b4', alpha=0.1)
 
     if HIGHLIGHT_PERFECT:
-        perf_mask = np.isfinite(combined) & (combined >= 99.5)
+        perf_mask = np.isfinite(combined) & (combined >= 95.0)
         if np.any(perf_mask):
             plt.scatter(times[perf_mask], combined[perf_mask],
                         s=12, color="#0050ff", edgecolors="none", alpha=0.9, zorder=5, label="≈100%")
