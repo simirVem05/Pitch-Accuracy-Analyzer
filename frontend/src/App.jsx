@@ -1,26 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import FileUploader from './components/FileUploader'
+import { useState } from "react";
+import UploadForm from "./components/UploadForm";
+import ScoreChart from "./components/ScoreChart";
+import ReportPanel from "./components/ReportPanel";
+import { analyzeVocals } from "./api/analyze";
 
-const App = () => {
+export default function App() {
+  const [loading, setLoading] = useState(false);
+  const [graph, setGraph] = useState(null);
+  const [summary, setSummary] = useState(null);
+  const [geminiPrompt, setGeminiPrompt] = useState("");
+  const [error, setError] = useState("");
+
+  async function handleAnalyze(payload) {
+    setError("");
+    setLoading(true);
+    setGraph(null);
+    setSummary(null);
+    setGeminiPrompt("");
+
+    try {
+      const data = await analyzeVocals(payload);
+      setGraph(data.graph);
+      setSummary(data.summary);
+      setGeminiPrompt(data.gemini_prompt);
+    } catch (e) {
+      setError(e.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <div className="w-screen h-screen bg-gray-100 flex flex-col items-center justify-center">
-      <h1 className="mt-4 absolute top-5 left-5 text-3xl font-light">
-        Pitch Accuracy Analyzer
-      </h1>
-      <h2 className="font-light text-xl">
-        Welcome!
-      </h2>
-      <h3 className="text-lg font-light mt-4">
-        Upload a recording of your vocals for pitch analysis and
-      </h3>
-      <h4 className="font-light mt-1 text-lg">select the key of your vocals.</h4>
-      <FileUploader/>
-    </div>
+    <div style={styles.page}>
+      <div style={styles.container}>
+        <UploadForm onSubmit={handleAnalyze} isLoading={loading} />
 
-  )
+        {error && <div style={styles.error}>{error}</div>}
+
+        <div style={styles.grid}>
+          <ScoreChart graph={graph} />
+          <ReportPanel summary={summary} geminiPrompt={geminiPrompt} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App;
+const styles = {
+  page: { minHeight: "100vh", background: "#f6f7fb", padding: 18 },
+  container: { maxWidth: 1100, margin: "0 auto", display: "flex", flexDirection: "column", gap: 14 },
+  grid: { display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 14, alignItems: "start" },
+  error: {
+    border: "1px solid #fecaca",
+    background: "#fff1f2",
+    color: "#991b1b",
+    padding: 12,
+    borderRadius: 12,
+    fontWeight: 700,
+  },
+};
