@@ -17,60 +17,49 @@ function formatNum(x, digits = 2) {
   return Number(x).toFixed(digits);
 }
 
-export default function ScoreChart({ graph }) {
+export default function ScoreChart({ data }) {
   const [showRaw, setShowRaw] = useState(false);
   const [showVibrato, setShowVibrato] = useState(true);
 
-  const data = useMemo(() => {
-    if (!graph) return [];
-    const n = graph.time_s.length;
+  // Downsample for performance (in case App passes full-res rows)
+  const dsData = useMemo(() => {
+    if (!Array.isArray(data) || data.length === 0) return [];
+    const n = data.length;
+    const MAX_POINTS = 2000;
+    const stride = Math.max(1, Math.floor(n / MAX_POINTS));
+    const out = [];
+    for (let i = 0; i < n; i += stride) out.push(data[i]);
+    return out;
+  }, [data]);
 
-    // Build one array of objects for Recharts
-    const rows = [];
-    for (let i = 0; i < n; i++) {
-        const toNumOrNull = (v) => {
-            if (v === null || v === undefined) return null;
-            const n = Number(v);
-            return Number.isFinite(n) ? n : null;
-        };
-
-        for (let i = 0; i < n; i++) {
-            rows.push({
-                t: toNumOrNull(graph.time_s[i]),
-                score: toNumOrNull(graph.score_pct[i]),
-                scoreRaw: toNumOrNull(graph.score_raw_pct[i]),
-                dev: toNumOrNull(graph.deviation_cents[i]),
-                conf: toNumOrNull(graph.confidence[i]),
-                vib: graph.vibrato_mask?.[i] === 1,
-            });
-        }
-
-    }
-    return rows;
-  }, [graph]);
-
-  // Build vibrato regions as contiguous ranges
+  // Build vibrato regions from dsData
   const vibRanges = useMemo(() => {
-    if (!data.length) return [];
+    if (!dsData.length) return [];
     const ranges = [];
     let start = null;
 
-    for (let i = 0; i < data.length; i++) {
-      const isV = data[i].vib && data[i].score !== null;
-      if (isV && start === null) start = data[i].t;
+    for (let i = 0; i < dsData.length; i++) {
+      const isV = dsData[i].vib && dsData[i].score !== null;
+      if (isV && start === null) start = dsData[i].t;
       if (!isV && start !== null) {
-        const end = data[i - 1]?.t ?? data[i].t;
+        const end = dsData[i - 1]?.t ?? dsData[i].t;
         ranges.push([start, end]);
         start = null;
       }
     }
-    if (start !== null) {
-      ranges.push([start, data[data.length - 1].t]);
-    }
-    return ranges;
-  }, [data]);
+    if (start !== null) ranges.push([start, dsData[dsData.length - 1].t]);
 
-  if (!graph) return null;
+    return ranges.slice(0, 200);
+  }, [dsData]);
+
+  if (!dsData.length) {
+    return (
+      <div style={styles.card}>
+        <div style={styles.title}>On-Key Score Over Time</div>
+        <div style={styles.footer}>No data yet — upload a file and click Analyze.</div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.card}>
@@ -90,17 +79,17 @@ export default function ScoreChart({ graph }) {
 
       <div style={{ height: 360 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data} margin={{ top: 10, right: 18, left: 6, bottom: 10 }}>
+          <LineChart data={dsData} margin={{ top: 10, right: 18, left: 6, bottom: 10 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
               dataKey="t"
               type="number"
               domain={["dataMin", "dataMax"]}
-              tickFormatter={(v) => `${v.toFixed(1)}s`}
+              tickFormatter={(v) => `${Number(v).toFixed(1)}s`}
             />
             <YAxis domain={[0, 100]} tickFormatter={(v) => `${v}%`} />
             <Tooltip
-              formatter={(value, name, ctx) => {
+              formatter={(value, name) => {
                 if (name === "score") return [`${formatNum(value, 1)}%`, "On-key"];
                 if (name === "scoreRaw") return [`${formatNum(value, 1)}%`, "Raw"];
                 return [value, name];
@@ -112,7 +101,16 @@ export default function ScoreChart({ graph }) {
 
             {showVibrato &&
               vibRanges.map(([x1, x2], idx) => (
-                <ReferenceArea key={idx} x1={x1} x2={x2} ifOverflow="hidden" />
+                <ReferenceArea
+                  key={idx}
+                  x1={x1}
+                  x2={x2}
+                  y1={0}
+                  y2={100}
+                  ifOverflow="hidden"
+                  fillOpacity={0.08}
+                  strokeOpacity={0}
+                />
               ))}
 
             <Line
@@ -120,7 +118,7 @@ export default function ScoreChart({ graph }) {
               dataKey="score"
               name="On-key"
               dot={false}
-              connectNulls={false} // gaps for unvoiced frames
+              connectNulls={false}
               strokeWidth={2}
             />
 

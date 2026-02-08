@@ -4,9 +4,40 @@ import ScoreChart from "./components/ScoreChart";
 import ReportPanel from "./components/ReportPanel";
 import { analyzeVocals } from "./api/analyze";
 
+function toNumOrNull(v) {
+  if (v === null || v === undefined) return null;
+  if (v === "null" || v === "None" || v === "") return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function normalizeGraph(rawGraph) {
+  const t = Array.isArray(rawGraph?.time_s) ? rawGraph.time_s.map(toNumOrNull) : [];
+  const s = Array.isArray(rawGraph?.score_pct) ? rawGraph.score_pct.map(toNumOrNull) : [];
+  const sr = Array.isArray(rawGraph?.score_raw_pct) ? rawGraph.score_raw_pct.map(toNumOrNull) : [];
+  const dev = Array.isArray(rawGraph?.deviation_cents) ? rawGraph.deviation_cents.map(toNumOrNull) : [];
+  const conf = Array.isArray(rawGraph?.confidence) ? rawGraph.confidence.map(toNumOrNull) : [];
+  const vib = Array.isArray(rawGraph?.vibrato_mask) ? rawGraph.vibrato_mask : [];
+
+  const n = Math.min(t.length, s.length, sr.length);
+  const rows = [];
+  for (let i = 0; i < n; i++) {
+    if (t[i] === null) continue;
+    rows.push({
+      t: t[i],
+      score: s[i],
+      scoreRaw: sr[i],
+      dev: dev[i] ?? null,
+      conf: conf[i] ?? null,
+      vib: vib[i] === 1,
+    });
+  }
+  return rows;
+}
+
 export default function App() {
   const [loading, setLoading] = useState(false);
-  const [graph, setGraph] = useState(null);
+  const [graphRows, setGraphRows] = useState([]);   // <- store rows, not raw dict
   const [summary, setSummary] = useState(null);
   const [geminiPrompt, setGeminiPrompt] = useState("");
   const [error, setError] = useState("");
@@ -14,13 +45,18 @@ export default function App() {
   async function handleAnalyze(payload) {
     setError("");
     setLoading(true);
-    setGraph(null);
+    setGraphRows([]);
     setSummary(null);
     setGeminiPrompt("");
 
     try {
       const data = await analyzeVocals(payload);
-      setGraph(data.graph);
+
+      console.log("Graph Keys:", Object.keys(data.graph || {}));
+      console.log("time_s[0..5]:", data.graph?.time_s?.slice?.(0, 5));
+      console.log("score_pct[0..5]:", data.graph?.score_pct?.slice?.(0, 5));
+
+      setGraphRows(normalizeGraph(data.graph));
       setSummary(data.summary);
       setGeminiPrompt(data.gemini_prompt);
     } catch (e) {
@@ -38,7 +74,7 @@ export default function App() {
         {error && <div style={styles.error}>{error}</div>}
 
         <div style={styles.grid}>
-          <ScoreChart graph={graph} />
+          <ScoreChart data={graphRows} />
           <ReportPanel summary={summary} geminiPrompt={geminiPrompt} />
         </div>
       </div>
