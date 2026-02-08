@@ -1,8 +1,11 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Tuple
 import numpy as np
+
+# Import your preprocessing pipeline
+# preprocess.py must be in the same folder or installed as a module
+from preprocess import preprocess, PreprocessConfig
 
 
 # Spec from your doc:
@@ -21,12 +24,18 @@ def midi_to_hz(midi: int) -> float:
     return 440.0 * (2.0 ** ((midi - 69) / 12.0))
 
 
-def cents_diff(artist_hz: float, target_hz: float) -> float:
+def cents_diff(artist_hz: np.ndarray, target_hz: float) -> np.ndarray:
+    """
+    Vectorized cents difference.
+    artist_hz may include np.nan (unvoiced); output will be np.nan there.
+    """
     return 1200.0 * np.log2(artist_hz / target_hz)
 
 
 def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
     """
+    Segment frame-level f0 into note segments using the spec hysteresis rules.
+
     Parameters
     ----------
     times : np.ndarray
@@ -39,8 +48,8 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
     List[Dict]
         Each dict: {start, end, midi, target_hz, median_cents}
     """
-    times = np.asarray(times, dtype=float)
-    freqs = np.asarray(freqs, dtype=float)
+    times = np.asarray(times, dtype=np.float64)
+    freqs = np.asarray(freqs, dtype=np.float64)
 
     if times.shape != freqs.shape:
         raise ValueError("times and freqs must have same shape")
@@ -49,16 +58,13 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
     if n == 0:
         return []
 
-    # valid voiced indices
     voiced = ~np.isnan(freqs)
-
-    # If everything is unvoiced, nothing to segment
     if not np.any(voiced):
         return []
 
-    # Find first voiced frame to initialize
+    # First voiced frame initializes the current segment
     i0 = int(np.argmax(voiced))
-    current_midi = hz_to_midi(freqs[i0])
+    current_midi = hz_to_midi(float(freqs[i0]))
     seg_start = i0
 
     # Candidate new note tracking (hysteresis trigger)
@@ -69,12 +75,12 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
 
     def finalize_segment(end_idx: int):
         nonlocal segments, seg_start, current_midi
+
         seg_freqs = freqs[seg_start : end_idx + 1]
         seg_times = times[seg_start : end_idx + 1]
 
-        # compute median cents vs target
         target = midi_to_hz(current_midi)
-        seg_cents = cents_diff(seg_freqs, target)
+        seg_cents = cents_diff(seg_freqs, target)  # vectorized
         med_cents = float(np.nanmedian(seg_cents))
 
         segments.append(
@@ -89,29 +95,26 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
 
     for i in range(i0 + 1, n):
         if np.isnan(freqs[i]):
-            # For Step 1.2 we’ll just ignore unvoiced frames here.
-            # (Later you can decide whether unvoiced splits segments.)
+            # Ignore unvoiced frames for segmentation (per your current approach)
             continue
 
         target_hz_cur = midi_to_hz(current_midi)
-        drift = abs(cents_diff(freqs[i], target_hz_cur))
+        drift = abs(float(cents_diff(np.asarray([freqs[i]]), target_hz_cur)[0]))
 
         if drift <= DRIFT_CENTS:
-            # still close enough to current note; reset candidate
+            # Still close enough to current note; reset candidate
             cand_midi = None
             cand_count = 0
             continue
 
-        # outside drift window => propose new note based on nearest MIDI
-        proposed = hz_to_midi(freqs[i])
+        proposed = hz_to_midi(float(freqs[i]))
 
-        # if proposed is same note (rare rounding edge), treat as staying
         if proposed == current_midi:
             cand_midi = None
             cand_count = 0
             continue
 
-        # hysteresis: must persist > 3 frames in the new note area
+        # Hysteresis: must persist > TRIGGER_FRAMES in the new note area
         if cand_midi is None or cand_midi != proposed:
             cand_midi = proposed
             cand_count = 1
@@ -119,22 +122,20 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
             cand_count += 1
 
         if cand_count > TRIGGER_FRAMES:
-            # switch notes:
-            # end current segment at the frame just BEFORE the run began
+            # End current segment at the frame just BEFORE the run began
             end_current = i - cand_count
             if end_current >= seg_start:
                 finalize_segment(end_current)
 
-            # start new segment at the beginning of the candidate run
+            # Start new segment at the beginning of the candidate run
             seg_start = i - cand_count + 1
             current_midi = cand_midi
 
-            # reset candidate tracking
+            # Reset candidate tracking
             cand_midi = None
             cand_count = 0
 
-    # finalize last segment to last voiced frame
-    # find last voiced index at/after seg_start
+    # Finalize last segment to last voiced frame at/after seg_start
     last_voiced_idx = None
     for j in range(n - 1, seg_start - 1, -1):
         if not np.isnan(freqs[j]):
@@ -145,3 +146,27 @@ def segment_notes(times: np.ndarray, freqs: np.ndarray) -> List[Dict]:
         finalize_segment(last_voiced_idx)
 
     return segments
+
+
+def segment_notes_from_audio(
+    audio_path: str,
+    config: Optional[PreprocessConfig] = None,
+    *,
+    viterbi: bool = False,
+    model_capacity: str = "full",
+) -> Tuple[List[Dict], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Convenience wrapper that:
+      1) calls preprocess.py to get time/frequency/confidence/activation
+      2) runs segmentation on time+frequency
+    Returns:
+      segments, time, frequency, confidence, activation
+    """
+    time, frequency, confidence, activation = preprocess(
+        audio_path,
+        config=config,
+        viterbi=viterbi,
+        model_capacity=model_capacity,
+    )
+    segments = segment_notes(time, frequency)
+    return segments, time, frequency, confidence, activation
