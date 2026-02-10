@@ -1,0 +1,14 @@
+{
+  "median_cents_deviation": 9.360545126996414,
+  "high_ratio": 0.725,
+  "mediocre_ratio": 0.1125,
+  "low_ratio": 0.1625,
+  "key_fit_ratio_strict": 0.8352300824111871,
+  "key_fit_ratio_contextual": 0.9464779594662827,
+  "vibrato_attempts": 90,
+  "good_vibrato": 7,
+  "portamento_attempts": 106,
+  "good_portamento": 59,
+  "good_vibrato_ratio": 0.07777777777777778,
+  "good_portamento_ratio": 0.5566037735849056
+}
