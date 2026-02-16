@@ -19,16 +19,18 @@ function fmtTime(sec) {
 }
 
 function fmtPct(v) {
+  if (v === null || v === undefined) return "N/A";
   const x = Number(v) || 0;
   return `${x.toFixed(1)}%`;
 }
 
 export default function PerformanceChart({ graphTuples }) {
   const data = useMemo(() => {
-    // tuples: [timeSeconds, scoreFraction]
+    // tuples: [timeSeconds, scoreFraction or null]
     return (graphTuples || []).map(([t, s]) => ({
       t: Number(t) || 0,
-      score: (Number(s) || 0) * 100,
+      // CRITICAL: Preserve the null so Recharts knows where to break the line
+      score: s === null ? null : (Number(s) || 0) * 100,
     }));
   }, [graphTuples]);
 
@@ -62,7 +64,7 @@ export default function PerformanceChart({ graphTuples }) {
               width={42}
             />
 
-            {/* Threshold lines */}
+            {/* Threshold lines - aligned with your backend scoring buckets */}
             <ReferenceLine y={60} stroke="rgba(255,255,255,0.25)" strokeDasharray="4 4" />
             <ReferenceLine y={80} stroke="rgba(255,255,255,0.25)" strokeDasharray="4 4" />
 
@@ -79,12 +81,13 @@ export default function PerformanceChart({ graphTuples }) {
             />
 
             <Line
-              type="monotone"
+              type="stepAfter" // Switched to stepAfter to represent musical note centers correctly
               dataKey="score"
               stroke="rgba(255,255,255,0.9)"
               strokeWidth={2}
               dot={false}
               isAnimationActive={true}
+              connectNulls={false} // CRITICAL: This stops the line from drawing through silences
             />
           </LineChart>
         </ResponsiveContainer>

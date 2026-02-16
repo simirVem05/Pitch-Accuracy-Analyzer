@@ -6,7 +6,7 @@ const GENRES = [
   { label: "Hip Hop", value: "hip hop" },
   { label: "Pop", value: "pop" },
   { label: "Alternative Pop", value: "alternative pop" },
-  { label: "R&B", value: "rnb" }, // backend normalizes rnb -> r&b
+  { label: "R&B", value: "rnb" },
   { label: "Rock", value: "rock" },
   { label: "Country", value: "country" },
   { label: "Jazz", value: "jazz" },
@@ -14,11 +14,14 @@ const GENRES = [
 
 export default function UploadForm({ onSubmit, disabled }) {
   const [file, setFile] = useState(null);
-  const [tonic, setTonic] = useState("B");
-  const [scale, setScale] = useState("minor");
-  const [genre, setGenre] = useState("rnb");
+  const [tonic, setTonic] = useState("");
+  const [scale, setScale] = useState("");
+  const [genre, setGenre] = useState("");
 
-  const keyString = useMemo(() => `${tonic} ${scale}`, [tonic, scale]);
+  const keyString = useMemo(() => {
+    if (!tonic || !scale) return "";
+    return `${tonic} ${scale}`;
+  }, [tonic, scale]);
 
   const canSubmit = !!file && !!tonic && !!scale && !!genre && !disabled;
 
@@ -32,6 +35,7 @@ export default function UploadForm({ onSubmit, disabled }) {
     <form onSubmit={handleSubmit} className="w-full max-w-3xl mx-auto">
       <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 md:p-8 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+
           {/* File */}
           <div className="md:col-span-3">
             <label className="block text-xs uppercase tracking-widest text-white/60 mb-2">
@@ -44,13 +48,17 @@ export default function UploadForm({ onSubmit, disabled }) {
               className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white file:mr-4 file:rounded-lg file:border-0 file:bg-white file:px-3 file:py-2 file:text-black hover:border-white/20"
             />
             {file?.name ? (
-              <div className="mt-2 text-xs text-white/60 truncate">Selected: {file.name}</div>
+              <div className="mt-2 text-xs text-white/60 truncate">
+                Selected: {file.name}
+              </div>
             ) : (
-              <div className="mt-2 text-xs text-white/40">Upload a vocal-only file (no instrumental).</div>
+              <div className="mt-2 text-xs text-white/40">
+                Upload a vocal-only file (no instrumental).
+              </div>
             )}
           </div>
 
-          {/* Key */}
+          {/* Tonic */}
           <div>
             <label className="block text-xs uppercase tracking-widest text-white/60 mb-2">
               Tonic
@@ -60,12 +68,18 @@ export default function UploadForm({ onSubmit, disabled }) {
               onChange={(e) => setTonic(e.target.value)}
               className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none focus:border-white/30"
             >
+              <option value="" disabled>
+                Select
+              </option>
               {TONICS.map((t) => (
-                <option key={t} value={t}>{t}</option>
+                <option key={t} value={t}>
+                  {t}
+                </option>
               ))}
             </select>
           </div>
 
+          {/* Scale */}
           <div>
             <label className="block text-xs uppercase tracking-widest text-white/60 mb-2">
               Scale
@@ -75,8 +89,13 @@ export default function UploadForm({ onSubmit, disabled }) {
               onChange={(e) => setScale(e.target.value)}
               className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none focus:border-white/30"
             >
+              <option value="" disabled>
+                Select
+              </option>
               {SCALES.map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s} value={s}>
+                  {s}
+                </option>
               ))}
             </select>
           </div>
@@ -91,15 +110,23 @@ export default function UploadForm({ onSubmit, disabled }) {
               onChange={(e) => setGenre(e.target.value)}
               className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-white outline-none focus:border-white/30"
             >
+              <option value="" disabled>
+                Select
+              </option>
               {GENRES.map((g) => (
-                <option key={g.value} value={g.value}>{g.label}</option>
+                <option key={g.value} value={g.value}>
+                  {g.label}
+                </option>
               ))}
             </select>
           </div>
 
           {/* Key preview */}
           <div className="md:col-span-3 -mt-1 text-xs text-white/50">
-            Key sent to backend: <span className="text-white/70">{keyString}</span>
+            Key sent to backend:{" "}
+            <span className="text-white/70">
+              {keyString || "None selected"}
+            </span>
           </div>
 
           {/* Button */}
@@ -115,6 +142,7 @@ export default function UploadForm({ onSubmit, disabled }) {
               Tip: If results look weird, double-check you selected the correct key.
             </div>
           </div>
+
         </div>
       </div>
     </form>

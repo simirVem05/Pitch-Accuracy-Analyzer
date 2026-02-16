@@ -17,7 +17,7 @@ class PreprocessConfig:
     butter_order: int = 5
 
     # Unvoiced masking thresholds
-    conf_threshold: float = 0.15
+    conf_threshold: float = 0.60
     rms_threshold: float = 0.0  # RMS == 0 treated as unvoiced
 
     # Mask smoothing behavior
