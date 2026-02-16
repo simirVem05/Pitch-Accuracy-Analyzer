@@ -55,8 +55,7 @@ Smooths visualization to reflect what listeners actually perceive
 Treats vibrato and portamento as stylistic features, not mistakes
 
 Architecture Overview
-
-Backend (Python):
+Backend (Python)
 
 preprocess.py
 Audio loading, high-pass filtering, CREPE pitch extraction, voicing mask.
@@ -76,7 +75,7 @@ Orchestrates full pipeline and generates metrics and Gemini report.
 api.py
 FastAPI wrapper exposing an /analyze endpoint.
 
-Frontend (React + Recharts):
+Frontend (React + Recharts)
 
 Upload form for vocal file
 
@@ -168,7 +167,6 @@ Silence gap detection inserts null values
 Step-based graph to represent stable pitch centers
 
 API Usage
-
 POST /analyze
 
 Form data:
@@ -182,9 +180,9 @@ genre: string (example "rnb")
 Returns:
 
 {
-"metrics": {...},
-"graph_tuples": [...],
-"report": "..."
+  "metrics": {...},
+  "graph_tuples": [...],
+  "report": "..."
 }
 
 Running the Project
@@ -192,29 +190,30 @@ Backend
 
 Create virtual environment:
 
-python -m venv venv
-source venv/bin/activate (Mac/Linux)
-venv\Scripts\activate (Windows)
+python -m venv venv  
+source venv/bin/activate  (Mac/Linux)  
+venv\Scripts\activate     (Windows)
+
 
 Install dependencies:
 
 pip install -r requirements.txt
 
+
 Run server:
 
 uvicorn api:app --reload
+
 
 Open:
 http://127.0.0.1:8000/docs
 
 Frontend
-
-npm install
+npm install  
 npm run dev
 
 Example Output
-
-Metrics:
+Metrics
 
 Median cents deviation
 
@@ -228,13 +227,13 @@ Vibrato count
 
 Portamento count
 
-Visualization:
+Visualization
 
 Time-series step graph
 
 No artificial diagonal connections during silence
 
-Report:
+Report
 
 Gemini-generated vocal coaching feedback based only on quantitative metrics.
 
@@ -242,13 +241,16 @@ Design Philosophy
 
 This system is built around three principles:
 
-Perception First
+1. Perception First
+
 Score what listeners hear, not raw frame math.
 
-Musical Context Matters
+2. Musical Context Matters
+
 A non-diatonic note is not automatically wrong.
 
-Expressiveness Is Not a Mistake
+3. Expressiveness Is Not a Mistake
+
 Slides and vibrato are stylistic tools, not tuning errors.
 
 Future Improvements
@@ -274,7 +276,3 @@ FastAPI
 React
 Recharts
 Gemini API
-
-Author
-
-Built as a perception-first vocal analysis system combining digital signal processing, music theory modeling, and AI-generated feedback.
