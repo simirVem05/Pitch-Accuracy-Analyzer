@@ -1,309 +1,280 @@
-🎵 Pitch Accuracy Analyzer
-
-A full-stack audio analysis tool that evaluates vocal pitch accuracy, intonation consistency, and stylistic performance (vibrato & portamento) from an acapella recording.
-Designed for modern pop, R&B, hip-hop, and contemporary vocals, with musically informed scoring rather than rigid tuner-style judgment.
-
-✨ What This App Does
-
-Upload an acapella vocal recording, select the key and genre, and the app will:
-
-• Analyze pitch accuracy over time
-• Segment vocals into musically meaningful notes
-• Score each note for “on-key” accuracy
-• Generate a clean performance graph
-• Produce a concise AI-generated vocal coaching report
-• Return detailed metrics about intonation and style
-
-The goal is musical realism, not perfection — good singing should score well even when it isn’t robotically centered.
-
-🧠 Key Design Philosophy
-
-• Pitch accuracy ≠ exact frequency locking
-• Human pitch naturally fluctuates and still sounds good
-• Modern vocals use bends, slides, vibrato, and expressive tuning
-• Scoring should reflect perceived musical quality, not just cents deviation
-
-This system prioritizes:
-
-Median pitch stability
-
-Musical context
-
-Genre-appropriate expressiveness
-
-Practical feedback over harsh penalties
-
-🏗️ Architecture Overview
 Pitch Accuracy Analyzer
-├── backend/        # Audio analysis + scoring pipeline (Python)
-│   ├── preprocess.py
-│   ├── note_segmentation.py
-│   ├── note_classification.py
-│   ├── scoring.py
-│   ├── main.py
-│   └── test_main.py
-│
-├── frontend/       # UI (React + Vite + Tailwind)
-│   ├── src/
-│   │   ├── components/
-│   │   ├── lib/
-│   │   ├── App.jsx
-│   │   └── index.css
-│
-└── README.md
 
-🔊 Backend Pipeline (High-Level)
-1️⃣ Audio Preprocessing
+A perception-first vocal pitch analysis system designed for modern artists.
 
-Input: Multi-format acapella audio file
+Pitch Accuracy Analyzer evaluates vocal intonation using neural pitch detection, music theory–aware classification, and a perceptual scoring curve optimized for expressive genres like R&B, Pop, and Hip Hop.
 
-Converts audio to mono
+It is not a basic tuner. It is a full audio signal processing pipeline with musical context modeling and AI-generated coaching feedback.
 
-Applies high-pass filtering to remove sub-vocal noise
+What This Project Does
 
-Uses CREPE for frame-level pitch detection
+Given a vocal recording, selected key, and genre, the system:
 
-Removes unvoiced or low-confidence frames
+Extracts pitch using a neural pitch detection model (CREPE).
 
-Smooths pitch confidence over time
+Segments the audio into stable melodic note regions.
 
-Outputs:
+Computes pitch deviation using trimmed median logic.
 
-Time array
+Evaluates musical correctness relative to key and genre.
 
-Frequency array (Hz)
+Applies a perceptual intonation scoring curve.
 
-Pitch confidence
+Detects stylistic techniques such as vibrato and portamento.
 
-Activation mask
+Generates:
 
-2️⃣ Note Segmentation
+A time-series performance graph
 
-Frames are grouped into musically meaningful note segments using hysteresis:
+Quantitative summary metrics
 
-Pitch can drift up to ~40 cents without creating a new note
+A professional vocal coaching report using Gemini
 
-A new note is created only after sustained pitch change
+Why This Is Different
 
-Each segment contains:
+Most pitch analyzers:
 
-Start time
+Evaluate frame-by-frame pitch
 
-End time
+Punish expressive slides
 
-Target MIDI note
+Use hard thresholds
 
-Median cents deviation
+Ignore musical context
 
-This dramatically reduces noise and prevents over-segmentation.
+This system is perception-first:
 
-3️⃣ Musical Note Classification
+Uses hysteresis-based note segmentation
 
-Each note is classified using key + genre-aware rules:
+Computes core pitch centers (trims expressive edges)
 
-Possible classifications:
+Applies genre-aware pitch class allowances
 
-diatonic
+Smooths visualization to reflect what listeners actually perceive
 
-blue
+Treats vibrato and portamento as stylistic features, not mistakes
 
-chromatic
+Architecture Overview
 
-passing
+Backend (Python):
 
-neighbor
+preprocess.py
+Audio loading, high-pass filtering, CREPE pitch extraction, voicing mask.
 
-leading
+note_segmentation.py
+Converts frequency to MIDI, groups frames into NoteSegs using hysteresis, computes core median cents deviation.
 
-dissonant
+note_classification.py
+Key-aware pitch classification, contextual rescue logic, vibrato and portamento detection.
 
-unknown
+scoring.py
+Perceptual intonation curve, soft penalties, sliding median smoothing, silence break logic.
 
-Contextual analysis checks surrounding notes to detect:
+main.py
+Orchestrates full pipeline and generates metrics and Gemini report.
 
-Passing tones
+api.py
+FastAPI wrapper exposing an /analyze endpoint.
 
-Neighbor tones
+Frontend (React + Recharts):
 
-Leading motion
+Upload form for vocal file
 
-This allows expressive non-diatonic singing to score fairly.
+Key and genre selection
 
-4️⃣ Vibrato & Portamento Detection
+Apple-inspired minimalist UI
 
-Detection focuses on presence, not strict correctness:
+Step-based graph visualization
+
+Clean performance dashboard
+
+Core Technical Concepts
+1. Neural Pitch Detection
+
+Model: CREPE
+
+Sample rate: 16 kHz
+
+Step size: 20 ms
+
+Confidence-based voicing mask
+
+2. Hysteresis-Based Note Segmentation
+
+Frames are grouped into notes only when pitch remains within 40 cents of a target MIDI note, and new pitch centers must persist for multiple frames before switching.
+
+This prevents jitter and artificial note flipping.
+
+3. Core Pitch Deviation
+
+For notes longer than 10 frames:
+
+Trim first 20 percent
+
+Trim last 20 percent
+
+Compute median over middle 60 percent
+
+This avoids penalizing stylistic scoops and releases.
+
+4. Perceptual Intonation Curve
+
+Absolute cents deviation → score (0.0–1.0)
+
+0–25 cents: 0.90–1.00 (Pro Zone)
+
+25–45 cents: 0.65–0.90 (Mediocre Zone)
+
+45+ cents: exponential decay
+
+Score floor: 0.05
+
+This matches modern listening tolerance.
+
+5. Musical Context Awareness
+
+Segments are classified as:
+
+Diatonic
+
+Blue
+
+Chromatic
+
+Dissonant
+
+Contextual rescue logic detects passing tones, neighbor tones, and leading tones to avoid over-penalizing intentional tension.
+
+6. Stylization Detection
 
 Vibrato:
 
-Detected via periodic pitch modulation
-
-Scored indirectly through intonation quality
+FFT band energy detection in 3.5–9.5 Hz range
 
 Portamento:
 
-Detected via smooth pitch transitions
+Slide magnitude >= 140 cents
 
-Judged by start/end note quality and duration
+Linear fit R squared threshold
 
-No harsh stylistic penalties — expressive techniques are rewarded when pitch is stable.
+These are reported but not judged as good or bad.
 
-5️⃣ Scoring System (On-Key Logic)
-🎯 Intonation Bands
+7. Visualization Refinement
 
-Based on median cents deviation per note:
+1-second sliding median smoothing
 
-Deviation	Score Range	Label
-0–20c	80–100%	High
-20–30c	60–80%	Mediocre
-30c+	<60%	Low
-🎼 Musical Context Adjustment
+Silence gap detection inserts null values
 
-Notes outside allowed pitch classes are not tanked
+Step-based graph to represent stable pitch centers
 
-Good intonation still scores well (70–90%)
+API Usage
 
-Poor intonation scores lower accordingly
-
-This reflects real-world vocal perception.
-
-📊 Final Outputs
-
-The backend returns:
-
-1️⃣ Performance Graph Data
-
-Array of tuples:
-
-[
-  (start_time_seconds, on_key_score_fraction),
-  ...
-]
-
-
-Used directly for visualization.
-
-2️⃣ Metrics JSON
-
-Example:
-
-{
-  "median_cents_deviation": 16.4,
-  "high_ratio": 0.44,
-  "mediocre_ratio": 0.24,
-  "low_ratio": 0.32,
-  "vibrato_detected_count": 19,
-  "portamento_detected_count": 1
-}
-
-3️⃣ AI-Generated Vocal Coaching Report
-
-Generated via Gemini API, summarizing:
-
-Pitch consistency
-
-Strengths
-
-Musical tendencies
-
-Practical improvement tips
-
-🌐 Backend API (FastAPI)
 POST /analyze
 
-Form-Data Inputs
+Form data:
 
 file: audio file
 
-key: musical key (e.g. "B minor")
+key: string (example "B minor")
 
-genre: genre (e.g. "rnb")
+genre: string (example "rnb")
 
-Returns
+Returns:
 
 {
-  "metrics": { ... },
-  "graph_tuples": [...],
-  "report": "..."
+"metrics": {...},
+"graph_tuples": [...],
+"report": "..."
 }
 
-
-Includes health endpoint:
-
-GET /health
-→ { "status": "ok" }
-
-🎨 Frontend (React + Vite + Tailwind)
-Features
-
-File upload
-
-Key & genre selectors
-
-Analyze button with loading state
-
-Responsive performance graph (Recharts)
-
-Metrics panel
-
-AI report display
-
-Apple-inspired black/white minimal UI
-
-Layout
-[ Graph (left) ] [ Metrics Panel (right) ]
-            [ Vocal Coach Report ]
-
-🚀 Running Locally
+Running the Project
 Backend
-cd backend
+
+Create virtual environment:
+
 python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate
+source venv/bin/activate (Mac/Linux)
+venv\Scripts\activate (Windows)
+
+Install dependencies:
+
 pip install -r requirements.txt
-uvicorn main:app --reload
+
+Run server:
+
+uvicorn api:app --reload
+
+Open:
+http://127.0.0.1:8000/docs
 
 Frontend
-cd frontend
+
 npm install
 npm run dev
 
+Example Output
 
-Open:
+Metrics:
 
-http://localhost:5173
+Median cents deviation
 
-🔮 Future Improvements
+Percentage of high-scoring notes
 
-Key inference (optional)
+Percentage of mediocre notes
 
-Phrase-level scoring
+Percentage of low notes
 
-Comparative vocal benchmarking
+Vibrato count
 
-DAW plugin integration
+Portamento count
 
-Mobile-friendly UI
+Visualization:
 
-Multiple takes comparison
+Time-series step graph
 
-🧑‍🎤 Who This Is For
+No artificial diagonal connections during silence
 
-Singers & vocalists
+Report:
 
-Producers
+Gemini-generated vocal coaching feedback based only on quantitative metrics.
 
-Vocal coaches
+Design Philosophy
 
-Music tech enthusiasts
+This system is built around three principles:
 
-Anyone curious about pitch accuracy without robotic judgment
+Perception First
+Score what listeners hear, not raw frame math.
 
-🖤 Final Note
+Musical Context Matters
+A non-diatonic note is not automatically wrong.
 
-This project intentionally avoids harsh, tuner-style scoring.
-If a vocal sounds good, the system is designed to respect that.
+Expressiveness Is Not a Mistake
+Slides and vibrato are stylistic tools, not tuning errors.
 
-If you want:
+Future Improvements
 
-a pitch-perfect robot → use a tuner
+Duration-weighted scoring metrics
 
-musically intelligent feedback → this tool
+Adaptive confidence threshold
+
+Real-time streaming mode
+
+Signed cents bias detection (sharp vs flat tendencies)
+
+Multi-take comparison
+
+Tech Stack
+
+Python
+NumPy
+Librosa
+SciPy
+CREPE
+FastAPI
+React
+Recharts
+Gemini API
+
+Author
+
+Built as a perception-first vocal analysis system combining digital signal processing, music theory modeling, and AI-generated feedback.
