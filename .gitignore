@@ -15,3 +15,5 @@ frontend/.env
 *.log
 .vscode/
 .idea/
+
+venv/
