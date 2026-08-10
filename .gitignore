@@ -1,11 +1,16 @@
 # python (backend)
+venv/
+.venv/
 backend/venv/
 backend/.venv/
 __pycache__/
 *.pyc
+.env
 backend/.env
+outputs/
 
 # node (frontend)
+node_modules/
 frontend/node_modules/
 frontend/dist/
 frontend/.env
@@ -15,5 +20,3 @@ frontend/.env
 *.log
 .vscode/
 .idea/
-
-venv/

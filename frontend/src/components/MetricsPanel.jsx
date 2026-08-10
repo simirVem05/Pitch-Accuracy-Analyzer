@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { clamp01, intonationScoreFromAbsCents, toPct } from "../lib/scoring";
+import React from "react";
+import { clamp01, toPct } from "../lib/scoring";
 
 function Card({ label, value, sub }) {
   return (
@@ -12,11 +12,7 @@ function Card({ label, value, sub }) {
 }
 
 export default function MetricsPanel({ metrics }) {
-  const avgOnKeyPct = useMemo(() => {
-    const cents = Number(metrics?.median_cents_deviation ?? 0);
-    const score = clamp01(intonationScoreFromAbsCents(Math.abs(cents)));
-    return `${(score * 100).toFixed(1)}%`;
-  }, [metrics]);
+  const avgOnKeyPct = `${(clamp01(metrics?.average_on_key_score ?? 0) * 100).toFixed(1)}%`;
 
   const high = clamp01(metrics?.high_ratio ?? 0);
   const med = clamp01(metrics?.mediocre_ratio ?? 0);
@@ -40,7 +36,7 @@ export default function MetricsPanel({ metrics }) {
         <Card
           label="Average on-key score"
           value={avgOnKeyPct}
-          sub={`From median cents deviation (${Number(metrics?.median_cents_deviation ?? 0).toFixed(2)}c)`}
+          sub={`Median deviation ${Number(metrics?.median_cents_deviation ?? 0).toFixed(2)}c`}
         />
 
         <div className="grid grid-cols-3 gap-3">

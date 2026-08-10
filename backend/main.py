@@ -72,6 +72,7 @@ def compute_metrics(segments: List[Dict[str, Any]]) -> Dict[str, Any]:
     if not segments:
         return {
             "median_cents_deviation": 0.0,
+            "average_on_key_score": 0.0,
             "high_ratio": 0.0,
             "mediocre_ratio": 0.0,
             "low_ratio": 0.0,
@@ -108,6 +109,7 @@ def compute_metrics(segments: List[Dict[str, Any]]) -> Dict[str, Any]:
 
     return {
         "median_cents_deviation": float(np.median(devs)) if devs.size else 0.0,
+        "average_on_key_score": float(np.mean(scores)) if scores.size else 0.0,
         "high_ratio": float(high / total) if total else 0.0,
         "mediocre_ratio": float(mediocre / total) if total else 0.0,
         "low_ratio": float(low / total) if total else 0.0,
