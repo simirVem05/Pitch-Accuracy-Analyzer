@@ -1,10 +1,8 @@
 const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
 
-export async function analyzeAudio({ file, key, genre }) {
+export async function analyzeAudio({ file }) {
   const form = new FormData();
   form.append("file", file);
-  form.append("key", key);
-  form.append("genre", genre);
 
   const res = await fetch(`${API_BASE}/analyze`, {
     method: "POST",
@@ -16,7 +14,9 @@ export async function analyzeAudio({ file, key, genre }) {
     try {
       const data = await res.json();
       if (data?.detail) msg = data.detail;
-    } catch {}
+    } catch {
+      // Non-JSON error body; keep the status-code message.
+    }
     throw new Error(msg);
   }
 

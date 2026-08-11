@@ -10,20 +10,20 @@ export default function App() {
   const [status, setStatus] = useState("idle"); // idle | loading | done | error
   const [error, setError] = useState("");
   const [metrics, setMetrics] = useState(null);
-  const [graphTuples, setGraphTuples] = useState([]);
+  const [graphPoints, setGraphPoints] = useState([]);
   const [report, setReport] = useState("");
 
-  async function handleAnalyze({ file, key, genre }) {
+  async function handleAnalyze({ file }) {
     setStatus("loading");
     setError("");
     setMetrics(null);
-    setGraphTuples([]);
+    setGraphPoints([]);
     setReport("");
 
     try {
-      const data = await analyzeAudio({ file, key, genre });
+      const data = await analyzeAudio({ file });
       setMetrics(data.metrics);
-      setGraphTuples(data.graph_tuples);
+      setGraphPoints(data.graph_points);
       setReport(data.report);
       setStatus("done");
     } catch (e) {
@@ -47,7 +47,9 @@ export default function App() {
             Pitch Accuracy Analyzer
           </h1>
           <p className="mt-3 text-sm md:text-base text-white/60 max-w-2xl">
-            Upload your acapella, choose the key and genre, and get a pitch accuracy graph with a concise vocal coaching report.
+            Upload a full song. The instrumental is separated out and used to work
+            out the harmony, then your vocal is scored on two things: whether the
+            notes fit the song, and whether they were sung cleanly.
           </p>
         </header>
 
@@ -55,7 +57,7 @@ export default function App() {
 
         {status === "loading" && (
           <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-6 md:p-10">
-            <Spinner label="Analyzing" />
+            <Spinner label="Separating stems and analyzing — this takes a few minutes" />
           </div>
         )}
 
@@ -83,7 +85,7 @@ export default function App() {
             {/* Top row: graph left, metrics right */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               <div className="lg:col-span-8">
-                <PerformanceChart graphTuples={graphTuples} />
+                <PerformanceChart graphPoints={graphPoints} />
               </div>
               <div className="lg:col-span-4">
                 <MetricsPanel metrics={metrics} />

@@ -1,75 +1,87 @@
 from __future__ import annotations
-from typing import Dict, List, Tuple, Optional
+
+from typing import Dict, List, Optional, Tuple
+
 import numpy as np
 
 
-def _pick_deviation_cents(seg: Dict) -> float:
-    for k in ("core_median_cents", "median_cents"):
-        v = seg.get(k, None)
-        try:
-            v = float(v)
-            if np.isfinite(v): return v
-        except: continue
+SILENCE_BREAK_S = 0.1
+SMOOTHING_HALF_WINDOW_S = 0.5
+
+SCORE_FLOOR = 0.05
+
+
+def _deviation_cents(seg: Dict) -> float:
+    for key in ("core_median_cents", "median_cents"):
+        value = seg.get(key)
+        if value is None:
+            continue
+        value = float(value)
+        if np.isfinite(value):
+            return value
     return 0.0
 
 
-def _intonation_score_from_cents(abs_cents: float) -> float:
-    """Perception Curve optimized for modern R&B stylistic drift."""
+def intonation_score_from_cents(abs_cents: float) -> float:
+    """
+    Perceptual curve, gentler than linear near zero because small deviations are
+    inaudible and expressive singing in these genres routinely sits tens of cents
+    off an equal-tempered grid.
+
+    Deviation is measured against a tuning-corrected target, so this no longer
+    absorbs a constant offset from a mistuned backing track. It remains a 12-TET
+    grid and so still penalizes intentionally microtonal notes.
+    """
     d = float(abs_cents)
-    if d <= 25.0: return 1.0 - (0.10 / 25.0) * d 
-    if d <= 45.0: return 0.90 - (0.25 / 20.0) * (d - 25.0) 
+    if d <= 25.0:
+        return 1.0 - (0.10 / 25.0) * d
+    if d <= 45.0:
+        return 0.90 - (0.25 / 20.0) * (d - 25.0)
     return float(0.65 * np.exp(-(d - 45.0) / 40.0))
 
 
-def score_segment(seg: Dict) -> float:
-    d = abs(_pick_deviation_cents(seg))
-    s_int = _intonation_score_from_cents(d)
-    cls = str(seg.get("classification", "unknown")).strip().lower()
-
-    if cls in {"diatonic", "chromatic", "blue", "passing", "neighbor", "leading"}:
-        final = s_int
-    else:
-        # Soft penalty for unknown notes
-        pc_dist = int(seg.get("pc_distance_to_allowed", 3))
-        base = 0.70 + (s_int - 0.90) * 2.0 if s_int >= 0.90 else (0.50 + (s_int - 0.65) * 0.8 if s_int >= 0.65 else (s_int / 0.65) * 0.5)
-        final = base - (0.02 * pc_dist)
-
-    # 0.05 'Musical Floor' to avoid erratic 0% spikes
-    return float(np.clip(final, 0.05, 1.0))
-
-
-def score_segments(segments: List[Dict], score_scale: str = "fraction") -> Tuple[List[Dict], List[Tuple[float, Optional[float]]]]:
-    """Generates smoothed on-key scores and inserts nulls for silences."""
-    if not segments: return [], []
-
-    # 1. Compute individual segment scores
+def score_intonation(segments: List[Dict]) -> List[Dict]:
     for seg in segments:
-        s = score_segment(seg)
-        seg["on_key_score"] = s if score_scale == "fraction" else s * 100.0
+        deviation = abs(_deviation_cents(seg))
+        seg["abs_cents_deviation"] = float(deviation)
+        seg["intonation_score"] = float(
+            np.clip(intonation_score_from_cents(deviation), SCORE_FLOOR, 1.0)
+        )
+    return segments
 
-    # 2. Extract raw data for smoothing
-    raw_times = np.array([float(s["start"]) for s in segments])
-    raw_scores = np.array([float(s["on_key_score"]) for s in segments])
-    
-    # 3. Apply 1-second sliding median filter
-    smoothed_scores = []
-    window = 0.5 # +/- 0.5s
-    for i, t in enumerate(raw_times):
-        indices = np.where((raw_times >= t - window) & (raw_times <= t + window))[0]
-        smoothed_scores.append(float(np.median(raw_scores[indices])))
 
-    # 4. Assemble tuples with Gap-Break Logic
-    final_tuples: List[Tuple[float, Optional[float]]] = []
-    for i in range(len(segments)):
-        seg = segments[i]
-        
-        # Insert break if gap > 0.1 seconds
+def build_graph_points(segments: List[Dict]) -> List[Tuple[float, Optional[float]]]:
+    """
+    Time series of smoothed intonation score, with a null inserted across each
+    silence so the chart lifts the pen instead of interpolating through a rest.
+
+    Each note emits both its start and its end so sustained notes have width;
+    emitting only starts made the final note infinitely thin.
+    """
+    if not segments:
+        return []
+
+    starts = np.array([float(s["start"]) for s in segments], dtype=float)
+    raw = np.array([float(s["intonation_score"]) for s in segments], dtype=float)
+
+    smoothed = np.empty_like(raw)
+    for i, t in enumerate(starts):
+        window = (starts >= t - SMOOTHING_HALF_WINDOW_S) & (starts <= t + SMOOTHING_HALF_WINDOW_S)
+        smoothed[i] = float(np.median(raw[window]))
+
+    points: List[Tuple[float, Optional[float]]] = []
+    for i, seg in enumerate(segments):
+        start = float(seg["start"])
+        end = float(seg["end"])
+
         if i > 0:
-            prev_end = float(segments[i-1]["end"])
-            if (seg["start"] - prev_end) > 0.1:
-                # Add a point at the end of the silence to 'lift the pen'
-                final_tuples.append((float(seg["start"] - 0.001), None))
+            gap = start - float(segments[i - 1]["end"])
+            if gap > SILENCE_BREAK_S:
+                points.append((max(start - 1e-3, float(segments[i - 1]["end"])), None))
 
-        final_tuples.append((float(seg["start"]), smoothed_scores[i]))
+        value = float(smoothed[i])
+        points.append((start, value))
+        if end > start:
+            points.append((end, value))
 
-    return segments, final_tuples
+    return points

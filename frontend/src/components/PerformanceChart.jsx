@@ -20,24 +20,25 @@ function fmtTime(sec) {
 
 function fmtPct(v) {
   if (v === null || v === undefined) return "N/A";
-  const x = Number(v) || 0;
-  return `${x.toFixed(1)}%`;
+  return `${(Number(v) || 0).toFixed(1)}%`;
 }
 
-export default function PerformanceChart({ graphTuples }) {
-  const data = useMemo(() => {
-    // tuples: [timeSeconds, scoreFraction or null]
-    return (graphTuples || []).map(([t, s]) => ({
-      t: Number(t) || 0,
-      // CRITICAL: Preserve the null so Recharts knows where to break the line
-      score: s === null ? null : (Number(s) || 0) * 100,
-    }));
-  }, [graphTuples]);
+export default function PerformanceChart({ graphPoints }) {
+  const data = useMemo(
+    () =>
+      (graphPoints || []).map(([t, s]) => ({
+        t: Number(t) || 0,
+        // Preserve null so the line breaks across silences instead of
+        // interpolating through a rest.
+        score: s === null ? null : (Number(s) || 0) * 100,
+      })),
+    [graphPoints]
+  );
 
   return (
     <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur p-5 shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
       <div className="flex items-center justify-between mb-3">
-        <div className="text-sm font-medium text-white/90">Performance Over Time</div>
+        <div className="text-sm font-medium text-white/90">Intonation Over Time</div>
         <div className="text-xs text-white/50">Score (0–100%)</div>
       </div>
 
@@ -47,6 +48,8 @@ export default function PerformanceChart({ graphTuples }) {
             <CartesianGrid strokeOpacity={0.12} vertical={false} />
             <XAxis
               dataKey="t"
+              type="number"
+              domain={["dataMin", "dataMax"]}
               tickFormatter={fmtTime}
               stroke="rgba(255,255,255,0.35)"
               tick={{ fill: "rgba(255,255,255,0.6)", fontSize: 12 }}
@@ -64,7 +67,6 @@ export default function PerformanceChart({ graphTuples }) {
               width={42}
             />
 
-            {/* Threshold lines - aligned with your backend scoring buckets */}
             <ReferenceLine y={60} stroke="rgba(255,255,255,0.25)" strokeDasharray="4 4" />
             <ReferenceLine y={80} stroke="rgba(255,255,255,0.25)" strokeDasharray="4 4" />
 
@@ -73,29 +75,28 @@ export default function PerformanceChart({ graphTuples }) {
                 background: "rgba(0,0,0,0.85)",
                 border: "1px solid rgba(255,255,255,0.12)",
                 borderRadius: 12,
-                boxShadow: "0 10px 30px rgba(0,0,0,0.35)",
               }}
               labelStyle={{ color: "rgba(255,255,255,0.7)" }}
-              formatter={(value) => [fmtPct(value), "On-key"]}
+              formatter={(value) => [fmtPct(value), "Intonation"]}
               labelFormatter={(label) => `Time: ${fmtTime(label)}`}
             />
 
             <Line
-              type="stepAfter" // Switched to stepAfter to represent musical note centers correctly
+              type="linear"
               dataKey="score"
               stroke="rgba(255,255,255,0.9)"
               strokeWidth={2}
               dot={false}
               isAnimationActive={true}
-              connectNulls={false} // CRITICAL: This stops the line from drawing through silences
+              connectNulls={false}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-xs text-white/50">
-        <div>Thresholds: 80%+ high, 60–80% mediocre, &lt;60% low</div>
-        <div>{data.length} points</div>
+      <div className="mt-3 text-xs text-white/50">
+        Each sustained note is drawn at its own width; gaps are rests. This graph
+        shows intonation only — key compliance is reported separately.
       </div>
     </div>
   );

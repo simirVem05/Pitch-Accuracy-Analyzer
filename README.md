@@ -1,278 +1,134 @@
-Pitch Accuracy Analyzer
+# Pitch Accuracy Analyzer
 
-A perception-first vocal pitch analysis system designed for modern artists.
+Vocal analysis that reads a song's harmony from its own instrumental instead of asking you to declare a key.
 
-Pitch Accuracy Analyzer evaluates vocal intonation using neural pitch detection, music theory–aware classification, and a perceptual scoring curve optimized for expressive genres like R&B, Pop, and Hip Hop.
+Upload a full song. The system separates it into stems, works out the harmony from the instrumental, tracks what the singer actually sang, and reports **two independent scores**:
 
-It is not a basic tuner. It is a full audio signal processing pipeline with musical context modeling and AI-generated coaching feedback.
+| Axis | Question | Reference |
+|---|---|---|
+| **Key compliance** | Do the notes chosen fit the music? | The song's own instrumental |
+| **Intonation accuracy** | Were those notes sung cleanly? | Tuning-corrected cents deviation |
 
-What This Project Does
+These are never combined into one number. A singer can nail a deliberate ♭5 dead-center — excellent intonation, low key compliance, musically superb. Averaging those would describe neither.
 
-Given a vocal recording, selected key, and genre, the system:
+## Why not a key and genre picker
 
-Extracts pitch using a neural pitch detection model (CREPE).
+The previous version asked for a key and a genre, then built a set of "allowed" notes from a lookup table. That does not work: two R&B songs in B minor with different chord progressions have different correct-note sets, so genre is a weak prior over an enormous space, and the system became a chain of if/else branches each patching the last one's mistakes.
 
-Segments the audio into stable melodic note regions.
+The instrumental answers the question directly, per song, per moment. Deriving the pitch reference from the accompaniment is validated in the literature — Hsieh et al. (Interspeech 2025) report r = 0.611 against human raters versus 0.364 and 0.232 for reference-free approaches.
 
-Computes pitch deviation using trimmed median logic.
+See `backend/docs/NEW_VERSION.md` for the full design and `backend/docs/RESEARCH.md` for the evidence base.
 
-Evaluates musical correctness relative to key and genre.
+## How it works
 
-Applies a perceptual intonation scoring curve.
+```
+full song (mp3, wav, flac, m4a, ...)
+  │
+  ▼
+Demucs 4-stem separation → vocals / other / bass / drums
+  │
+  ├─ tuning offset ── librosa.estimate_tuning on the instrumental
+  │                   (feeds both axes; drums excluded — broadband
+  │                    transients smear energy across all 12 bins)
+  │
+  ├─ harmony ──────── CENS chroma of other+bass, tuning-aligned
+  │                   → per-frame pitch-class prominence
+  │                   + beat tracking for slack windows
+  │
+  └─ vocal ───────── CREPE (full capacity) → f0, confidence-gated
+                     → note segments via hysteresis
+                            │
+              ┌─────────────┴─────────────┐
+              ▼                           ▼
+      key compliance              intonation accuracy
+      pitch class vs. chroma      cents from tuning-
+      prominence, ±1 beat         corrected target,
+      of slack                    perceptual curve
+              └─────────────┬─────────────┘
+                            ▼
+              two scores + coverage + Gemini report
+```
 
-Detects stylistic techniques such as vibrato and portamento.
+**Chroma, not per-stem pitch tracking.** No separator produces individual instruments — guitars, synths, and keys all land together in one polyphonic `other` stem, which a monophonic tracker cannot read. Chroma never commits to a single note, so chords need no special handling.
 
-Generates:
+**Rank, not raw salience.** Absolute chroma energy depends on level and arrangement density, so it is not comparable across sections. Each pitch class is scored by its rank among the twelve in that frame, which measured roughly twice the separation between notes actually sung and deliberately transposed ones.
 
-A time-series performance graph
+**Slack shifts the window, it does not widen it.** Widening a short note's window dilutes it into beats of unrelated harmony and raises the score for every pitch class equally — forgiving wrong notes as much as anticipated ones. Shifting a fixed-width window asks the intended question: was this note supported by the chord just before or just after it?
 
-Quantitative summary metrics
+**Local and global support, gated.** Each note is scored on both how prominent its pitch class is *at that moment* and across *the whole song*, combined as a geometric mean. Local support alone conflates a note outside the key with an in-key note over a chord that doesn't contain it — a passing tone or suspension. A genuinely wrong note is weak on both terms; a passing tone is strong on one. The geometric mean makes the terms gate rather than compensate, so key membership can't fully rescue a note the current harmony rejects.
 
-A professional vocal coaching report using Gemini
+**Bass is excluded from the chromagram.** It measures 2.8–4.6× louder than `other` in real mixes, so summing them lets root notes drown out the chord voicings that actually distinguish one harmony from another.
 
-Why This Is Different
+## Evaluating changes
 
-Most pitch analyzers:
+`backend/evaluate.py` is a label-free harness. Released vocals are by definition in-key, so the system should rank the notes actually sung above the same notes relabelled to any of the 11 wrong pitch classes:
 
-Evaluate frame-by-frame pitch
+```bash
+cd backend && python evaluate.py          # all songs in test_songs/
+python evaluate.py path/to/song.mp3       # one file
+```
 
-Punish expressive slides
+It runs three tests — global transposition (can the true key be identified), scattered perturbation (are individual wrong notes penalized), and a bleed check (is the signal real harmony or the vocal leaking into `other`). Stems are cached to `/tmp` after the first run, so iterating on scoring is fast. Currently the true key ranks #1 of 12 on all five test songs.
 
-Use hard thresholds
+## Setup
 
-Ignore musical context
-
-This system is perception-first:
-
-Uses hysteresis-based note segmentation
-
-Computes core pitch centers (trims expressive edges)
-
-Applies genre-aware pitch class allowances
-
-Smooths visualization to reflect what listeners actually perceive
-
-Treats vibrato and portamento as stylistic features, not mistakes
-
-Architecture Overview
-Backend (Python)
-
-preprocess.py
-Audio loading, high-pass filtering, CREPE pitch extraction, voicing mask.
-
-note_segmentation.py
-Converts frequency to MIDI, groups frames into NoteSegs using hysteresis, computes core median cents deviation.
-
-note_classification.py
-Key-aware pitch classification, contextual rescue logic, vibrato and portamento detection.
-
-scoring.py
-Perceptual intonation curve, soft penalties, sliding median smoothing, silence break logic.
-
-main.py
-Orchestrates full pipeline and generates metrics and Gemini report.
-
-api.py
-FastAPI wrapper exposing an /analyze endpoint.
-
-Frontend (React + Recharts)
-
-Upload form for vocal file
-
-Key and genre selection
-
-Apple-inspired minimalist UI
-
-Step-based graph visualization
-
-Clean performance dashboard
-
-Core Technical Concepts
-1. Neural Pitch Detection
-
-Model: CREPE
-
-Sample rate: 16 kHz
-
-Step size: 20 ms
-
-Confidence-based voicing mask
-
-2. Hysteresis-Based Note Segmentation
-
-Frames are grouped into notes only when pitch remains within 40 cents of a target MIDI note, and new pitch centers must persist for multiple frames before switching.
-
-This prevents jitter and artificial note flipping.
-
-3. Core Pitch Deviation
-
-For notes longer than 10 frames:
-
-Trim first 20 percent
-
-Trim last 20 percent
-
-Compute median over middle 60 percent
-
-This avoids penalizing stylistic scoops and releases.
-
-4. Perceptual Intonation Curve
-
-Absolute cents deviation → score (0.0–1.0)
-
-0–25 cents: 0.90–1.00 (Pro Zone)
-
-25–45 cents: 0.65–0.90 (Mediocre Zone)
-
-45+ cents: exponential decay
-
-Score floor: 0.05
-
-This matches modern listening tolerance.
-
-5. Musical Context Awareness
-
-Segments are classified as:
-
-Diatonic
-
-Blue
-
-Chromatic
-
-Dissonant
-
-Contextual rescue logic detects passing tones, neighbor tones, and leading tones to avoid over-penalizing intentional tension.
-
-6. Stylization Detection
-
-Vibrato:
-
-FFT band energy detection in 3.5–9.5 Hz range
-
-Portamento:
-
-Slide magnitude >= 140 cents
-
-Linear fit R squared threshold
-
-These are reported but not judged as good or bad.
-
-7. Visualization Refinement
-
-1-second sliding median smoothing
-
-Silence gap detection inserts null values
-
-Step-based graph to represent stable pitch centers
-
-API Usage
-POST /analyze
-
-Form data:
-
-file: audio file
-
-key: string (example "B minor")
-
-genre: string (example "rnb")
-
-Returns:
-
-{
-  "metrics": {...},
-  "graph_tuples": [...],
-  "report": "..."
-}
-
-Running the Project
-Backend
-
-Create virtual environment:
-
-python -m venv venv  
-source venv/bin/activate  (Mac/Linux)  
-venv\Scripts\activate     (Windows)
-
-
-Install dependencies:
-
+```bash
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 
+cd frontend && npm install && cd ..
+```
 
-Run server:
+Add a `backend/.env` with a Gemini key (optional — analysis works without it, only the written report is skipped):
 
-uvicorn api:app --reload
+```
+GEMINI_API_KEY=your_key_here
+```
 
+## Running
 
-Open:
-http://127.0.0.1:8000/docs
+```bash
+# API
+cd backend && uvicorn api:app --reload --port 8000
 
-Frontend
-npm install  
-npm run dev
+# UI, in another shell
+cd frontend && npm run dev
+```
 
-Example Output
-Metrics
+CLI, for a single file:
 
-Median cents deviation
+```bash
+cd backend
+python main.py sample_songs/glimpse_of_us.mp3
+python main.py sample_songs/glimpse_of_us.mp3 --no-report   # skip Gemini
+```
 
-Percentage of high-scoring notes
+Writes `outputs/metrics.json`, `outputs/graph_points.json`, and `outputs/report.txt`.
 
-Percentage of mediocre notes
+### Environment variables
 
-Percentage of low notes
+| Variable | Default | Purpose |
+|---|---|---|
+| `GEMINI_API_KEY` | — | Enables the written report |
+| `DEMUCS_MODEL` | `htdemucs` | Set `htdemucs_ft` for slightly better stems at ~4× the runtime |
+| `DEMUCS_DEVICE` | auto | Forces `cuda` / `mps` / `cpu`; auto-detects by default |
+| `VITE_API_BASE` | `http://127.0.0.1:8000` | Frontend → backend URL |
 
-Vibrato count
+## Runtime
 
-Portamento count
+Separation dominates: roughly 15–30 s on a CUDA GPU, 1–2 min on Apple silicon via MPS, and 3–8 min on CPU. The device is auto-selected. `/analyze` is deliberately synchronous so FastAPI runs it on the threadpool rather than blocking the event loop; there is no job queue yet, so one request occupies one worker for its duration.
 
-Visualization
+## Known limitations
 
-Time-series step graph
+- **Key compliance is octave-blind.** Chroma collapses octaves by construction, so a note sung a full octave off scores as a pitch-class match.
+- **Key compliance is a relative indicator, not an absolute grade.** Released recordings score 66–94%; the same notes transposed to a wrong key score 17–28%. So a 66% does not mean a third of the notes were wrong — it means the accompaniment gave them moderate support. Compare within a song, not across songs. Details in `NEW_VERSION.md` §5.6–5.7.
+- **No ground truth.** The thresholds mapping chroma rank and cents deviation to scores are calibrated against released recordings on five songs, not fitted to labelled data.
+- **Beat slack is a fixed ±1 beat**, with no strong/weak beat weighting. Expect some false dissonance on heavily syncopated phrasing.
+- **A cappella uploads cannot be scored for key compliance.** With no instrumental there is no harmonic reference; the system detects this and reports the axis as unmeasured rather than scoring the vocal against its own separation residue.
+- **Layered vocals reduce coverage.** The `vocals` stem holds lead, backing, harmonies, and doubles together, and CREPE is monophonic — it can jump between lead and harmony mid-phrase. Ambiguous frames are dropped rather than guessed, and the reported coverage figure shows how much was skipped.
+- **Intonation is still measured against a 12-TET grid**, so intentionally microtonal notes are penalized. Replacing this with a learned, style-aware target is the planned next step (`NEW_VERSION.md` §7).
 
-No artificial diagonal connections during silence
+## Tech stack
 
-Report
-
-Gemini-generated vocal coaching feedback based only on quantitative metrics.
-
-Design Philosophy
-
-This system is built around three principles:
-
-1. Perception First
-
-Score what listeners hear, not raw frame math.
-
-2. Musical Context Matters
-
-A non-diatonic note is not automatically wrong.
-
-3. Expressiveness Is Not a Mistake
-
-Slides and vibrato are stylistic tools, not tuning errors.
-
-Future Improvements
-
-Duration-weighted scoring metrics
-
-Adaptive confidence threshold
-
-Real-time streaming mode
-
-Signed cents bias detection (sharp vs flat tendencies)
-
-Multi-take comparison
-
-Tech Stack
-
-Python
-NumPy
-Librosa
-SciPy
-CREPE
-FastAPI
-React
-Recharts
-Gemini API
+Python · Demucs (PyTorch) · CREPE (TensorFlow) · librosa · SciPy · NumPy · FastAPI · React · Vite · Tailwind · Recharts · Gemini
