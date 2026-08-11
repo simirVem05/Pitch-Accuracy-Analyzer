@@ -9,6 +9,7 @@ __pycache__/
 backend/.env
 outputs/
 backend/test_songs
+backend/docs
 
 # node (frontend)
 node_modules/

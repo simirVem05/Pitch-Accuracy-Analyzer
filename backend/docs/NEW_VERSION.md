@@ -9,7 +9,7 @@ first** — this document assumes it and cites back by section (e.g. "RESEARCH �
 | Part | State |
 |---|---|
 | Stem separation, tuning, chroma pipeline | **built** (`separation.py`, `harmony.py`) |
-| **Axis 1 — key compliance** | **built and measured** — see §5, which describes working code |
+| **Axis 1 — harmonic fit** | **built and measured** — see §5, which describes working code |
 | **Axis 2 Phase A** — tuning-corrected cents | **built** (`scoring.py`) — see §6 |
 | **Axis 2 Phase B** — learned intonation model | **not started** — §7 is still a proposal |
 | Evaluation harness | **built** (`evaluate.py`) — see §5.8 |
@@ -20,8 +20,18 @@ looking. Section 2 is retained as the rationale for why the old system was repla
 
 The input contract has changed: the user uploads a **full mixed song** (instrumental
 + vocals). Key and genre are no longer asked for or used. The system reports **two
-independent scores** — key compliance and intonation precision — plus a coverage
+independent scores** — harmonic fit and intonation precision — plus a coverage
 figure. It never combines them into one number.
+
+**Terminology change, 2026-08-11: "key compliance" is now "harmonic fit."** The old
+name pointed at the wrong reference. The score never measured compliance with a
+*key* — it measures how well a note is supported by the harmony sounding at that
+moment, which is a per-frame chord-level question, not a global key-membership one.
+"Compliance" also carried a rules-and-obedience connotation that actively misleads:
+a low value most often means an adventurous-but-correct choice, not a violation.
+Rename only — `RANK_LOW`, `RANK_HIGH`, `GLOBAL_WEIGHT` and the scoring math are
+untouched. The code identifiers (`key_compliance`, `score_key_compliance`) still
+carry the old name and are listed for rename in §9.
 
 ---
 
@@ -31,7 +41,7 @@ figure. It never combines them into one number.
 2. [Why the current system fails](#2-why-the-current-system-fails)
 3. [What the research validates](#3-what-the-research-validates--and-what-it-warns-about)
 4. [Pipeline](#4-pipeline)
-5. [Axis 1 — key compliance (implemented)](#5-axis-1--key-compliance-implemented)
+5. [Axis 1 — harmonic fit (implemented)](#5-axis-1--harmonic-fit-implemented)
 6. [Axis 2 — intonation precision](#6-axis-2--intonation-precision)
 7. [The learned intonation model](#7-the-learned-intonation-model)
 8. [Reporting](#8-reporting)
@@ -49,11 +59,11 @@ The project has been collapsing two independent questions into one score:
 
 | Axis | Question | Ground truth source |
 |---|---|---|
-| **1 — Key compliance** | Do the notes chosen fit the music? | The song's own instrumental |
+| **1 — Harmonic fit** | Do the notes chosen fit the music? | The song's own instrumental |
 | **2 — Intonation precision** | Were those notes sung cleanly? | Deviation from a tuning-corrected, style-aware target |
 
 These are orthogonal. A singer can nail a deliberate ♭5 dead-center — *excellent*
-intonation, *low* key compliance, musically superb. A singer can also drift
+intonation, *low* harmonic fit, musically superb. A singer can also drift
 20 cents flat on a plain root note — *correct* note choice, *poor* execution. One
 number cannot express either case, and the current `on_key_score` collapses them
 into a value that means neither.
@@ -276,12 +286,12 @@ Demucs htdemucs → 4 stems: vocals / other / bass / drums
                                                             │
                         ┌───────────────────────────────────┴──────────┐
                         ▼                                              ▼
-              AXIS 1 — key compliance                   AXIS 2 — intonation precision
+              AXIS 1 — harmonic fit                     AXIS 2 — intonation precision
               local^0.75 × global^0.25                  |cents| from tuning-corrected
               local = best of 3 window                  target, core-trimmed median
                       positions (±1 beat)               → perceptual curve
               → RANK_LOW/HIGH → 0..1                    Phase A: implemented
-              (octave check NOT done, §5.3)             Phase B: not built (§7)
+              (octave-blind BY DESIGN, §5.3a)           Phase B: not built (§7)
                         └───────────────────────────────┬──────────────┘
                                                         ▼
                             duration-weighted means, reported SEPARATELY,
@@ -350,7 +360,7 @@ speed. Do not add threading.
 
 ---
 
-## 5. Axis 1 — key compliance (implemented)
+## 5. Axis 1 — harmonic fit (implemented)
 
 **Status: built, measured, working.** This section describes what the code does,
 not what was proposed. Implemented in `harmony.py`.
@@ -365,12 +375,14 @@ local  = max over 3 window positions of  mean(rank[pc, window])
              earlier, and shifted one beat later
 global = rank of pc in the whole-song mean chroma profile
 
-combined      = local^0.75 * global^0.25          # GLOBAL_WEIGHT = 0.25
-key_compliance = clamp01((combined - 0.50) / (0.75 - 0.50))   # RANK_LOW/HIGH
+combined     = local^0.75 * global^0.25           # GLOBAL_WEIGHT = 0.25
+harmonic_fit = clamp01((combined - 0.50) / (0.75 - 0.50))   # RANK_LOW/HIGH
 ```
 
-Reported metric is the **duration-weighted mean** of `key_compliance` over all
+Reported metric is the **duration-weighted mean** of `harmonic_fit` over all
 scorable notes, so a grace note does not count as much as a sustained one.
+
+`pc` is a **pitch class**, so octave is deliberately not part of this score (§5.3a).
 
 **Exactly two features feed the score: local chroma and global chroma, both from
 the `other` stem.** No bass, no chord labels, no beat-position weighting, no
@@ -425,7 +437,7 @@ chroma was the weakest signal measured (−0.010), which tempers the expectation
 Do not confuse the two uses: bass *in the chromagram* is tested and harmful;
 bass *as a root-motion feature* is untested.
 
-### 5.3 Tuning correction, and what is still missing
+### 5.3 Tuning correction
 
 `librosa.estimate_tuning` runs on `other` and the offset is passed to
 `chroma_cens(tuning=...)`, so bins align to the song's actual grid rather than
@@ -433,10 +445,41 @@ A440. Without it, energy lands between bins and smears across neighbours, blurri
 the profile exactly where it needs to be sharp. Measured offsets on real songs run
 +1 to +35 cents, so this is not hypothetical. The same offset feeds Axis 2.
 
-**Octave checking is NOT implemented.** Chroma is octave-blind by construction, so
-a note sung a full octave off currently scores as a *perfect* pitch-class match.
-This is a real gap, cheap to close against the raw f0, and it is a correctness
-bug rather than an accuracy limitation.
+### 5.3a Octave is deliberately ignored — decided 2026-08-11
+
+**Octave checking will not be implemented.** Earlier revisions of this document
+listed it as step 14 and called it a correctness bug. **That was wrong, and the
+decision is reversed.**
+
+Chroma is octave-blind by construction, so a note sung an octave away from the
+recorded lead scores as a pitch-class match. That is now the *intended* behaviour,
+not a gap. The reasoning:
+
+- **Axis 1 asks whether the note fits the harmony, and harmony is octave-invariant.**
+  A chord is a set of pitch classes. If a pitch class is supported by the sounding
+  harmony, it is supported in every octave — a C over an F major chord is the fifth
+  whether it is sung at C3 or C5. Penalizing the octave would answer a question this
+  axis was never scoped to ask.
+- **There is no correct octave to check against.** The only available reference is
+  the octave the original artist happened to sing in, which is a property of *their*
+  range, not of the music. A baritone covering a soprano lead sings the whole song an
+  octave down and is not wrong; that is transposition, a normal and universal
+  practice. An octave check would systematically penalize every singer whose range
+  does not match the artist's, which is most of them.
+- **It would silently double as an unrequested range judgment.** Marking octave
+  displacement as error conflates "sang the wrong note" with "has a different voice
+  type." The first is a mistake worth reporting; the second is not a mistake at all.
+
+The narrow case this gives up is a singer who jumps an octave *mid-phrase*
+unintentionally. That is real, but it is an execution and phrasing artifact rather
+than a note-choice error, and Axis 1 is the note-choice axis. If it is ever worth
+surfacing, it belongs as a **separate, separately-reported observation** — in the
+same reported-not-judged category as vibrato and portamento (§7.2) — and never
+folded into the harmonic-fit score.
+
+Consequence for the documented behaviour: harmonic fit is a **pitch-class** measure,
+by design and permanently. It should be described that way rather than caveated as
+octave-blind, and §11 no longer lists this as a limitation.
 
 ### 5.4 Beat slack: implemented as a shifting window
 
@@ -502,7 +545,7 @@ released recordings to 72-100% and wrong keys to 17-28%.
 **These two constants are a presentation choice, not a measurement.** The same
 audio reports 66% or 85% depending on where they sit. Consequences:
 
-- Key compliance is a **relative** indicator. Compare moments within a song, or
+- Harmonic fit is a **relative** indicator. Compare moments within a song, or
   the same song before and after a change. Do not read "66%" as "a third of the
   notes were wrong."
 - Cross-song comparison is weak: arrangement density shifts the whole scale.
@@ -519,7 +562,7 @@ residue of the voice — scoring against it compares the vocal to its own leakag
 and returns a confident, meaningless number (measured: 78% before the guard).
 
 `MIN_HARMONY_TO_VOCAL_RMS = 0.04` gates on the `other`-to-vocal RMS ratio. When it
-fails, `key_compliance` is `None` end-to-end: metrics report `null`, the Gemini
+fails, harmonic fit is `None` end-to-end: metrics report `null`, the Gemini
 prompt switches to a branch that states the axis was not measured, and the UI
 shows "—". Axis 2 still scores normally.
 
@@ -591,17 +634,19 @@ swept (log-compression, HPSS, beat-sync aggregation, CQT-vs-CENS) moved it by
 
 **Ranked next steps for Axis 1:**
 
-1. **Octave check** (§5.3) — correctness bug, cheap.
-2. **Strong/weak beat weighting** (§5.4) — `beat_times` already computed,
+1. **Strong/weak beat weighting** (§5.4) — `beat_times` already computed,
    strongest theoretical grounding (RESEARCH §6.1).
-3. **Chord estimation** instead of raw chroma (§5.10) — biggest potential gain,
+2. **Chord estimation** instead of raw chroma (§5.10) — biggest potential gain,
    most likely to fix dense arrangements, new dependency.
-4. **Bass root motion** (§5.2) — tier-2 recommended but the one weak signal
+3. **Bass root motion** (§5.2) — tier-2 recommended but the one weak signal
    measured.
-5. **Fit the local/global weights** (§12.8) — cheap, but combination-level, so
+4. **Fit the local/global weights** (§12.8) — cheap, but combination-level, so
    expect little.
-6. **A labelled set** (§12.1) — gates knowing whether any of the above helped in
+5. **A labelled set** (§12.1) — gates knowing whether any of the above helped in
    human terms rather than transposition terms.
+
+The octave check that previously headed this list has been **removed by decision**,
+not deferred — see §5.3a.
 
 ### 5.10 Discrete chord labels are presentation only
 
@@ -741,7 +786,7 @@ firm number with the soft one.
 
 Report three things:
 
-1. **Key compliance** (Axis 1)
+1. **Harmonic fit** (Axis 1)
 2. **Intonation precision** (Axis 2)
 3. **Coverage** — what fraction of the vocal was confidently scorable
 
@@ -783,7 +828,7 @@ more useful than 74%.
 
 | # | Step | Effort | Why this order |
 |---|---|---|---|
-| 14 | **Octave check** against raw f0 (§5.3) | small | Correctness bug: an octave-off note currently scores perfect |
+| 14 | **Rename `key_compliance` → `harmonic_fit`** through code and UI | small | Doc renamed 2026-08-11; identifiers still carry the old name, so doc and code now disagree |
 | 15 | **Re-verify the a cappella guard** with an actual a cappella (§5.7) | small | Threshold was validated pre-`other`-only; a false trip silently drops Axis 1 |
 | 16 | **Strong/weak beat weighting** (§5.4) | medium | `beat_times` already computed; strongest theory backing (RESEARCH §6.1) |
 | 17 | **Chord estimation** instead of raw chroma (§5.10) | large | Biggest potential gain, most likely to fix dense arrangements; new dependency, benchmark first |
@@ -791,8 +836,22 @@ more useful than 74%.
 | 19 | **Labelled set** (§12.1) | large | Gates knowing whether 16-18 helped *in human terms* rather than transposition terms |
 | 20 | **Axis 2 Phase B** — corruption-trained model (§7) | large | Research project; stays behind the Phase A interface until it beats Phase A |
 
-Steps 14-18 are all measurable today with `evaluate.py`. Step 19 is what makes
-"more accurate" mean anything beyond the transposition proxy.
+The octave check formerly listed here as step 14 was **removed by decision**, not
+reordered — see §5.3a.
+
+Step 14 is a rename with no scoring change, so `evaluate.py` output must be
+**byte-identical** before and after; that is the check. Steps 16-18 are measurable
+today with `evaluate.py`. Step 19 is what makes "more accurate" mean anything beyond
+the transposition proxy.
+
+**Rename surface for step 14**, so it is done in one pass rather than piecemeal:
+`score_key_compliance` and the `key_compliance` segment key (`harmony.py`); the
+`key_compliance` metrics field and its Gemini prompt branch (`main.py`); the
+`hasKey` / `keyCompliance` locals and the "Key compliance" card label
+(`MetricsPanel.jsx`); the "key compliance is reported separately" chart caption
+(`PerformanceChart.jsx`); and the `metrics.json` field name, which is a
+consumer-visible contract — `outputs/` is gitignored, so stale files on disk will
+still carry the old key.
 
 **Methodological lesson from steps 6-13, worth carrying into 14-20:** feature choice
 dominated. Removing bass from the chromagram tripled the margin, while every
@@ -854,7 +913,7 @@ does not survive as a gate.
    the true key first" with "agrees with a listener."
 2. **Axis 1 margins are thin** (§5.9). Two of five songs clear the best wrong key
    by <0.01. Placement is perfect but not robust; a new song could easily rank 2nd.
-3. **Key compliance is a relative indicator, not an absolute grade** (§5.6). The
+3. **Harmonic fit is a relative indicator, not an absolute grade** (§5.6). The
    reported percentage moves with two calibration constants that are a presentation
    choice, not a measurement. Compare within a song, not across songs.
 4. **Axis 1 ceiling ≈ r 0.6, not 1.0.** Best published accompaniment-derived
@@ -869,9 +928,11 @@ does not survive as a gate.
    SDR against a ~10 dB literature threshold for reliable pitch tracking (RESEARCH
    §2.3). Unmeasured on this repo's material; RESEARCH §10.3 notes it is cheaply
    measurable locally and nobody has published it.
-8. **Chroma is octave-blind and the octave check is not built** (§5.3) — a note
-   sung a full octave off currently scores as a perfect pitch-class match. This is
-   a correctness bug, not a tuning issue, and it is step 14.
+8. **Harmonic fit is a pitch-class measure and ignores octave by design** (§5.3a).
+   This is listed here as *scope*, not as a defect — the axis asks whether a note
+   fits the sounding harmony, and harmony is octave-invariant. What it genuinely
+   gives up is detecting an unintentional mid-phrase octave jump, which would have
+   to be reported separately if it is ever wanted.
 9. **No strong/weak beat weighting** (§5.4). ±1 beat of slack is implemented, but
    beat *position* is unused despite `beat_times` being computed. Expect false
    dissonance on syncopated phrasing, the target genres' signature.

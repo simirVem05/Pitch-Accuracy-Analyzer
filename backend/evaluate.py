@@ -72,7 +72,7 @@ def _cached_stems(path: Path) -> Stems:
 
 def prepare(path: Path) -> Optional[Prepared]:
     stems = _cached_stems(path)
-    ctx = build_harmonic_context(stems.harmony, stems.percussive, stems.sample_rate, vocals=stems.vocals)
+    ctx = build_harmonic_context(stems.other, stems.percussive, stems.sample_rate, vocals=stems.vocals)
     track = detect_pitch(stems.vocals, stems.sample_rate)
     segments = segment_notes(track.time, track.frequency, ctx.tuning_semitones)
     if not segments:
@@ -179,7 +179,7 @@ def main() -> int:
             print(f"  skipped {path.name}: no notes detected")
             continue
         ctx = build_harmonic_context(
-            prep.stems.harmony, prep.stems.percussive, prep.stems.sample_rate, vocals=prep.stems.vocals
+            prep.stems.other, prep.stems.percussive, prep.stems.sample_rate, vocals=prep.stems.vocals
         )
         rows.append((prep, ctx, transposition_test(prep, ctx), perturbation_test(prep, ctx), bleed_test(prep)))
         print(f"  done {path.stem}")
