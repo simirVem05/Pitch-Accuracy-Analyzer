@@ -70,6 +70,23 @@ python evaluate.py path/to/song.mp3       # one file
 
 It runs three tests — global transposition (can the true key be identified), scattered perturbation (are individual wrong notes penalized), and a bleed check (is the signal real harmony or the vocal leaking into `other`). Stems are cached to `/tmp` after the first run, so iterating on scoring is fast. Currently the true key ranks #1 of 12 on all five test songs.
 
+## Building the reusable feature dataset
+
+Extract score-free note contours, other-stem chroma, beat/tuning information, and
+an exploratory bass pitch track with the same production preprocessing code:
+
+```bash
+python scripts/build_main_dataset.py --limit 5  # next five validly unprocessed files, sorted by filename
+python scripts/build_main_dataset.py            # all remaining/new files
+python scripts/build_main_dataset.py --validate-only
+```
+
+Outputs are written under `data/main_data/<song_id>/`. Valid current-schema files
+are skipped unless `--force` is supplied. Note contours use flat numerical arrays
+plus `contour_offsets`, so `notes.npz` loads with `allow_pickle=False` while still
+supporting variable-length notes. Source audio is hashed and is never modified or
+deleted by the builder.
+
 ## Setup
 
 ```bash

@@ -8,8 +8,15 @@ __pycache__/
 .env
 backend/.env
 outputs/
-backend/test_songs
-backend/docs
+
+# docs
+docs
+
+# source audio and any future rendered stems; keep extracted main_data visible
+data/test_songs/
+data/stems/
+data/demucs_stems/
+data/main_data
 
 # node (frontend)
 node_modules/

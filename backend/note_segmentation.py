@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
@@ -87,27 +87,32 @@ def _finalize_segment(
     )
 
 
-def segment_notes(
+def segment_notes_with_frame_indices(
     times: np.ndarray,
     freqs: np.ndarray,
     tuning_semitones: float = 0.0,
-) -> List[Dict]:
+) -> Tuple[List[Dict], List[np.ndarray]]:
     """
-    Group voiced frames into notes using hysteresis.
+    Group voiced frames into notes and retain each note's source frame indices.
 
     A new note is only committed after enough consecutive *voiced* frames sit far
     from the current target and agree on a different semitone, which prevents
     vibrato and jitter from splitting one note into many.
+
+    The indices are exposed for consumers that need frame-level contours. Keeping
+    them here ensures those consumers use exactly the same note boundaries and
+    target-note calculation as production scoring.
     """
     times = np.asarray(times, dtype=float)
     freqs = np.asarray(freqs, dtype=float)
 
     voiced = ~np.isnan(freqs)
     if not np.any(voiced):
-        return []
+        return [], []
 
     voiced_positions = np.flatnonzero(voiced)
     segments: List[NoteSeg] = []
+    segment_frame_indices: List[np.ndarray] = []
 
     seg_start_pos = 0
     current_note = int(np.round(hz_to_midi_float(freqs[voiced_positions[0]], tuning_semitones)))
@@ -123,6 +128,7 @@ def segment_notes(
         seg = _finalize_segment(times[idx[0] : idx[-1] + 1], freqs[idx[0] : idx[-1] + 1], tuning_semitones)
         if seg is not None:
             segments.append(seg)
+            segment_frame_indices.append(idx.copy())
 
     for pos in range(1, voiced_positions.size):
         i = voiced_positions[pos]
@@ -153,4 +159,14 @@ def segment_notes(
 
     flush(voiced_positions.size)
 
-    return [s.to_dict() for s in segments]
+    return [s.to_dict() for s in segments], segment_frame_indices
+
+
+def segment_notes(
+    times: np.ndarray,
+    freqs: np.ndarray,
+    tuning_semitones: float = 0.0,
+) -> List[Dict]:
+    """Production note segmentation without the optional frame-index detail."""
+    segments, _frame_indices = segment_notes_with_frame_indices(times, freqs, tuning_semitones)
+    return segments

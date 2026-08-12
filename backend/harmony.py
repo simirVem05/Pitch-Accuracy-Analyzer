@@ -56,6 +56,7 @@ class HarmonicContext:
     """Tuning-aligned pitch-class prominence for the accompaniment."""
 
     rank: np.ndarray            # (12, n_frames), per-frame rank in [0, 1]
+    global_profile: np.ndarray  # (12,), whole-song mean CENS chroma
     global_rank: np.ndarray     # (12,), whole-song pitch-class rank in [0, 1]
     salience: np.ndarray        # (12, n_frames), raw CENS chroma
     frame_times: np.ndarray     # (n_frames,)
@@ -173,6 +174,7 @@ def build_harmonic_context(
 
     return HarmonicContext(
         rank=_to_rank(salience),
+        global_profile=global_profile,
         global_rank=global_rank,
         salience=salience,
         frame_times=frame_times,
