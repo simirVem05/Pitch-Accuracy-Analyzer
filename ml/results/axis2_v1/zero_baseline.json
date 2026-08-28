@@ -1,0 +1,206 @@
+{
+  "experiment": "axis2_v1_zero_baseline",
+  "prediction_rule": "always_predict_zero_cents",
+  "test_evaluated": false,
+  "dataset": {
+    "path": "data/ml_dataset/axis2_v1/examples.npz",
+    "dataset_name": "axis2_v1",
+    "schema_version": 1,
+    "label_field": "injected_shift_cents",
+    "total_example_count": 111205,
+    "split_encoding": {
+      "train": 0,
+      "validation": 1,
+      "test": 2
+    },
+    "variant_encoding": {
+      "clean": 0,
+      "corruption_1": 1,
+      "corruption_2": 2,
+      "corruption_3": 3,
+      "corruption_4": 4
+    },
+    "sealed_split": "test"
+  },
+  "features_used": [],
+  "train": {
+    "overall": {
+      "example_count": 77080,
+      "mae": 20.49772861156977,
+      "rmse": 25.495345743303886,
+      "mean_signed_error": -0.032478720528517656,
+      "median_absolute_error": 19.95030686407057
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 15416,
+        "mae": 0.0,
+        "rmse": 0.0,
+        "mean_signed_error": 0.0,
+        "median_absolute_error": 0.0
+      },
+      "corruption_1": {
+        "example_count": 15416,
+        "mae": 10.010094161588352,
+        "rmse": 10.414532655394346,
+        "mean_signed_error": 0.10568288575037488,
+        "median_absolute_error": 10.009388900598061
+      },
+      "corruption_2": {
+        "example_count": 15416,
+        "mae": 19.978140852721822,
+        "rmse": 20.18669258965912,
+        "mean_signed_error": -0.07749468170951578,
+        "median_absolute_error": 19.95030686407057
+      },
+      "corruption_3": {
+        "example_count": 15416,
+        "mae": 29.979155781035466,
+        "rmse": 30.11859930010618,
+        "mean_signed_error": 0.15018766687826693,
+        "median_absolute_error": 29.96502179317376
+      },
+      "corruption_4": {
+        "example_count": 15416,
+        "mae": 42.5212522625032,
+        "rmse": 42.74304856831095,
+        "mean_signed_error": -0.3407694735617143,
+        "median_absolute_error": 42.53473298414649
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 30832,
+        "mae": 25.662759165122857,
+        "rmse": 28.552994311121207,
+        "mean_signed_error": -25.662759165122857
+      },
+      "negative": {
+        "example_count": 30832,
+        "mae": 25.581562363801563,
+        "rmse": 28.456249793245583,
+        "mean_signed_error": 25.581562363801563
+      }
+    },
+    "sanity_checks": {
+      "all_predictions_exactly_zero": true,
+      "all_clean_targets_exactly_zero": true,
+      "predictions_all_finite": true,
+      "targets_all_finite": true,
+      "max_abs_error_minus_abs_target": 0.0,
+      "abs_error_equals_abs_target": true
+    }
+  },
+  "validation": {
+    "overall": {
+      "example_count": 16210,
+      "mae": 20.49155178714468,
+      "rmse": 25.487856523843455,
+      "mean_signed_error": 0.11112869268783523,
+      "median_absolute_error": 19.980405133529487
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 3242,
+        "mae": 0.0,
+        "rmse": 0.0,
+        "mean_signed_error": 0.0,
+        "median_absolute_error": 0.0
+      },
+      "corruption_1": {
+        "example_count": 3242,
+        "mae": 9.988720170677906,
+        "rmse": 10.411466066225374,
+        "mean_signed_error": -0.20683324310802848,
+        "median_absolute_error": 9.933329725313392
+      },
+      "corruption_2": {
+        "example_count": 3242,
+        "mae": 19.987365600331962,
+        "rmse": 20.197575438077163,
+        "mean_signed_error": -0.021343941039510442,
+        "median_absolute_error": 19.980405133529487
+      },
+      "corruption_3": {
+        "example_count": 3242,
+        "mae": 30.001977821869044,
+        "rmse": 30.137580820338457,
+        "mean_signed_error": -0.28229995559428883,
+        "median_absolute_error": 29.992542979392724
+      },
+      "corruption_4": {
+        "example_count": 3242,
+        "mae": 42.479695342844494,
+        "rmse": 42.70292371691585,
+        "mean_signed_error": 1.0661206031810042,
+        "median_absolute_error": 42.43577487319941
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 6484,
+        "mae": 25.475528868071056,
+        "rmse": 28.331486669121382,
+        "mean_signed_error": -25.475528868071056
+      },
+      "negative": {
+        "example_count": 6484,
+        "mae": 25.753350599790647,
+        "rmse": 28.660145473592255,
+        "mean_signed_error": 25.753350599790647
+      }
+    },
+    "sanity_checks": {
+      "all_predictions_exactly_zero": true,
+      "all_clean_targets_exactly_zero": true,
+      "predictions_all_finite": true,
+      "targets_all_finite": true,
+      "max_abs_error_minus_abs_target": 0.0,
+      "abs_error_equals_abs_target": true
+    },
+    "by_song": {
+      "bruno_mars_when_i_was_your_man_audio": {
+        "example_count": 2030,
+        "mae": 20.533797082574814,
+        "rmse": 25.555810302592757,
+        "mean_signed_error": -0.25794801422091995
+      },
+      "christina_aguilera_hurt_audio": {
+        "example_count": 2275,
+        "mae": 20.5163519192817,
+        "rmse": 25.501487875228175,
+        "mean_signed_error": -0.22554820837525413
+      },
+      "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+        "example_count": 2650,
+        "mae": 20.450568634078476,
+        "rmse": 25.45017312521882,
+        "mean_signed_error": 0.2618104553082119
+      },
+      "lady_gaga_million_reasons_official_audio": {
+        "example_count": 1555,
+        "mae": 20.485584092710262,
+        "rmse": 25.42850247315615,
+        "mean_signed_error": 0.4493229809119266
+      },
+      "luther_vandross_here_and_now": {
+        "example_count": 3730,
+        "mae": 20.4705901380986,
+        "rmse": 25.473498240273585,
+        "mean_signed_error": 0.45619177611288214
+      },
+      "marc_anthony_ahora_quien_cover_audio_video": {
+        "example_count": 2345,
+        "mae": 20.546529549929694,
+        "rmse": 25.53560469609521,
+        "mean_signed_error": -0.3520200523695771
+      },
+      "norah_jones_don_t_know_why": {
+        "example_count": 1625,
+        "mae": 20.445380074742896,
+        "rmse": 25.465873233259416,
+        "mean_signed_error": 0.3504920045617119
+      }
+    }
+  }
+}
