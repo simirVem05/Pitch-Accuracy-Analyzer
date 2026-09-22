@@ -1,0 +1,22 @@
+{
+  "clean_notes_analyzed": 22241,
+  "contour_mismatches_vs_canonical": 0,
+  "time_nonmonotonic": 0,
+  "integrity": {
+    "dataset_files_before": {
+      "README.md": "979a616a8372280c6fdbab133566b3694bcdf083e9092324a7ab2f3a8d169231",
+      "examples.npz": "3957a9c854dd9bd31630f197802ea1da6758cf5da4f0ef34506b366e1a59efb6",
+      "manifest.csv": "ce39f4c7376b96b6f41a1376ff187a0044bbd04789c08345f97265b7f7daf122",
+      "splits.json": "66496cc8ccd1d78aee65baac40c4afaa936c19ab618eaa506dbe34ca2b1e9b23",
+      "summary.json": "5aadb43dff6e1b5338089d01efe5c7efab0d246e71ce47e1817428efd0b09f2c"
+    },
+    "dataset_files_after": {
+      "README.md": "979a616a8372280c6fdbab133566b3694bcdf083e9092324a7ab2f3a8d169231",
+      "examples.npz": "3957a9c854dd9bd31630f197802ea1da6758cf5da4f0ef34506b366e1a59efb6",
+      "manifest.csv": "ce39f4c7376b96b6f41a1376ff187a0044bbd04789c08345f97265b7f7daf122",
+      "splits.json": "66496cc8ccd1d78aee65baac40c4afaa936c19ab618eaa506dbe34ca2b1e9b23",
+      "summary.json": "5aadb43dff6e1b5338089d01efe5c7efab0d246e71ce47e1817428efd0b09f2c"
+    },
+    "unchanged": true
+  }
+}

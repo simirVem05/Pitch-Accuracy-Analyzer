@@ -1,0 +1,103 @@
+{
+  "notes_evaluated": 16776,
+  "explanation": "pct_rank = percentage of same-length contiguous windows in the same note whose IQR is SMALLER than the middle-50% window's IQR. 50 means the middle is typical for its length (no plateau effect). Near 0 means the middle is genuinely the most stable region.",
+  "pct_rank_of_middle_among_same_length_windows": {
+    "n": 16776,
+    "min": 0.0,
+    "p10": 0.0,
+    "p25": 20.0,
+    "p50": 40.0,
+    "p75": 60.0,
+    "p90": 77.77777777777779,
+    "max": 99.16666666666667,
+    "mean": 40.03798529386478
+  },
+  "middle_iqr": {
+    "n": 16776,
+    "min": 0.06975799397266158,
+    "p10": 4.901014895837606,
+    "p25": 9.51456309547353,
+    "p50": 20.70168313126011,
+    "p75": 49.4067189460672,
+    "p90": 110.40098917593599,
+    "max": 1201.6537221838173,
+    "mean": 46.128396401826436
+  },
+  "median_same_length_window_iqr": {
+    "n": 16776,
+    "min": 0.9605746142466707,
+    "p10": 6.934831347740598,
+    "p25": 11.669893478618528,
+    "p50": 21.504149791816985,
+    "p75": 44.71614760695925,
+    "p90": 93.10482235588758,
+    "max": 2654.602220520128,
+    "mean": 39.76640698211757
+  },
+  "best_same_length_window_iqr": {
+    "n": 16776,
+    "min": 0.0581243226629391,
+    "p10": 2.6897027520938175,
+    "p25": 4.947183539761179,
+    "p50": 9.528186934707502,
+    "p75": 18.962639002560373,
+    "p90": 36.4632014625142,
+    "max": 820.6019919524158,
+    "mean": 16.548810223982635
+  },
+  "ratio_middle_to_median_same_length_window": {
+    "n": 16776,
+    "min": 0.004560192882586405,
+    "p10": 0.5155694583993942,
+    "p25": 0.7969562043175509,
+    "p50": 1.0,
+    "p75": 1.1067778190012256,
+    "p90": 1.538105621692114,
+    "max": 81.78870594724611,
+    "mean": 1.1151505088696778
+  },
+  "pct_middle_better_than_median_same_length_window": 43.55627086313782,
+  "pct_middle_is_single_best_window": 14.240581783500238,
+  "by_frames": {
+    "5-6": {
+      "n": 481,
+      "median_pct_rank": 33.33333333333333,
+      "median_mid_iqr": 12.126043436124881,
+      "median_same_len_window_iqr": 15.661193224139998,
+      "median_ratio_vs_same_len": 1.0,
+      "pct_better_than_median_same_len": 47.60914760914761
+    },
+    "7-10": {
+      "n": 4425,
+      "median_pct_rank": 33.33333333333333,
+      "median_mid_iqr": 12.730335957587922,
+      "median_same_len_window_iqr": 15.41741603452195,
+      "median_ratio_vs_same_len": 1.0,
+      "pct_better_than_median_same_len": 49.175141242937855
+    },
+    "11-20": {
+      "n": 5881,
+      "median_pct_rank": 42.857142857142854,
+      "median_mid_iqr": 22.901769039156342,
+      "median_same_len_window_iqr": 23.043921696100107,
+      "median_ratio_vs_same_len": 1.0,
+      "pct_better_than_median_same_len": 41.20047610950519
+    },
+    "21-50": {
+      "n": 4788,
+      "median_pct_rank": 46.15384615384615,
+      "median_mid_iqr": 30.76505686929101,
+      "median_same_len_window_iqr": 30.509385732875913,
+      "median_ratio_vs_same_len": 1.0,
+      "pct_better_than_median_same_len": 41.060985797827904
+    },
+    "51+": {
+      "n": 1201,
+      "median_pct_rank": 48.38709677419355,
+      "median_mid_iqr": 27.46585279927516,
+      "median_same_len_window_iqr": 27.688435065750014,
+      "median_ratio_vs_same_len": 1.0,
+      "pct_better_than_median_same_len": 42.714404662781014
+    }
+  }
+}
