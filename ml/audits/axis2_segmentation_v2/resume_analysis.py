@@ -158,20 +158,26 @@ def main() -> int:
     R1, RH, RP = allrows(v1), allrows(hy), allrows(pu)
     out = {"configs": {"hybrid": hyb_cfg, "pure": cfgs[PURE]}}
 
-    # ---- consistency with the saved sweep and detail CSVs
-    sweep = {r["name"]: r for path in (E.OUT / "parameter_comparison.csv",
-                                       E.OUT / "followup" / "parameter_comparison_gap_reference.csv")
-             for r in csv.DictReader(open(path))}
-    n_saved_v2 = sum(1 for _ in csv.DictReader(open(E.OUT / "v2_notes.csv")))
-    saved_cfgs = {r["config"] for r in csv.DictReader(open(E.OUT / "v2_notes.csv"))}
-    out["consistency"] = {
-        "v1_notes_recomputed": len(R1), "v1_notes_sweep": int(sweep["v1"]["total_notes"]),
-        "hybrid_notes_recomputed": len(RH), "hybrid_notes_sweep": int(sweep[HYBRID]["total_notes"]),
-        "pure_notes_recomputed": len(RP), "pure_notes_sweep": int(sweep[PURE]["total_notes"]),
-        "hybrid_clear_recomputed_pct": 100 * np.mean([r["any_clear_invalid"] for r in RH]),
-        "hybrid_clear_sweep_pct": float(sweep[HYBRID]["pct_clear_invalid"]),
-        "v2_notes_csv_rows": n_saved_v2, "v2_notes_csv_configs": sorted(saved_cfgs),
-    }
+    # ---- consistency with the saved sweep and detail CSVs (only when this
+    # run is over the same songs the sweep covered, i.e. writes beside it)
+    sweep_paths = (E.OUT / "parameter_comparison.csv",
+                   E.OUT / "followup" / "parameter_comparison_gap_reference.csv")
+    if all(p.exists() for p in sweep_paths) and (E.OUT / "v2_notes.csv").exists():
+        sweep = {r["name"]: r for path in sweep_paths for r in csv.DictReader(open(path))}
+        n_saved_v2 = sum(1 for _ in csv.DictReader(open(E.OUT / "v2_notes.csv")))
+        saved_cfgs = {r["config"] for r in csv.DictReader(open(E.OUT / "v2_notes.csv"))}
+        out["consistency"] = {
+            "v1_notes_recomputed": len(R1), "v1_notes_sweep": int(sweep["v1"]["total_notes"]),
+            "hybrid_notes_recomputed": len(RH), "hybrid_notes_sweep": int(sweep[HYBRID]["total_notes"]),
+            "pure_notes_recomputed": len(RP), "pure_notes_sweep": int(sweep[PURE]["total_notes"]),
+            "hybrid_clear_recomputed_pct": 100 * np.mean([r["any_clear_invalid"] for r in RH]),
+            "hybrid_clear_sweep_pct": float(sweep[HYBRID]["pct_clear_invalid"]),
+            "v2_notes_csv_rows": n_saved_v2, "v2_notes_csv_configs": sorted(saved_cfgs),
+        }
+    else:
+        out["consistency"] = {"skipped": f"no sweep outputs in {E.OUT}",
+                              "songs": sorted(E._SONGS), "v1_notes_recomputed": len(R1),
+                              "hybrid_notes_recomputed": len(RH), "pure_notes_recomputed": len(RP)}
 
     # ---- section 2/6 extras: counts behind the sweep percentages
     def counts(rows):
