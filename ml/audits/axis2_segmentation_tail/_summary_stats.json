@@ -1,0 +1,1572 @@
+{
+ "n_notes": 22241,
+ "n_flagged": 10515,
+ "abort_reason_totals": {
+  "proposal_changed": 23934,
+  "returned_within_40c": 10774,
+  "rounds_to_current_note": 3703
+ },
+ "flag_counts": {
+  "iqr_gt100": 3801,
+  "iqr_gt200": 1887,
+  "iqr_gt400": 717,
+  "p5p95_gt200": 6299,
+  "jump_gt100": 8747,
+  "jump_gt200": 4197,
+  "gap_gt0.10": 4664,
+  "gap_gt0.25": 2291,
+  "dur_gt2": 537,
+  "dur_gt5": 62,
+  "dur_gt10": 6
+ },
+ "dist_flagged": {
+  "largest_time_gap_s": {
+   "0": 0.019999999999999574,
+   "5": 0.020000000000003126,
+   "10": 0.020000000000010232,
+   "25": 0.020000000000010232,
+   "50": 0.08000000000000007,
+   "75": 0.21999999999999886,
+   "90": 0.5,
+   "95": 0.7999999999999972,
+   "99": 2.139999999999999,
+   "100": 10.379999999999995
+  },
+  "n_nonconsecutive_gaps": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 1.0,
+   "75": 1.0,
+   "90": 2.0,
+   "95": 3.0,
+   "99": 4.0,
+   "100": 11.0
+  },
+  "voiced_to_elapsed_ratio": {
+   "0": 0.016293279022403257,
+   "5": 0.2777777777777778,
+   "10": 0.40476190476190477,
+   "25": 0.625,
+   "50": 0.8571428571428571,
+   "75": 1.0,
+   "90": 1.0,
+   "95": 1.0,
+   "99": 1.0,
+   "100": 1.0
+  },
+  "max_adjacent_jump_cents": {
+   "0": 6.387158108263723,
+   "5": 57.61023365837674,
+   "10": 77.80217198028149,
+   "25": 112.91240688292513,
+   "50": 170.8655590855587,
+   "75": 270.54023076224405,
+   "90": 503.9719342712007,
+   "95": 690.3147943055017,
+   "99": 1184.3879208928759,
+   "100": 3301.1723422496575
+  },
+  "p90_adjacent_jump_cents": {
+   "0": 2.0363215525346914,
+   "5": 23.394236475694804,
+   "10": 31.299669024901853,
+   "25": 48.87307066701854,
+   "50": 74.82689481423903,
+   "75": 112.31468779422539,
+   "90": 172.66476962593248,
+   "95": 214.1302678651485,
+   "99": 363.50936951231495,
+   "100": 1147.0684749738687
+  },
+  "median_adjacent_jump_cents": {
+   "0": 0.7761129062855652,
+   "5": 4.867496166521184,
+   "10": 6.619205425432929,
+   "25": 10.663303585432622,
+   "50": 17.97689645043068,
+   "75": 28.07640204108045,
+   "90": 39.16392518350301,
+   "95": 47.382827676328034,
+   "99": 72.55454316651141,
+   "100": 215.92592316120601
+  },
+  "n_jumps_gt50": {
+   "0": 0.0,
+   "5": 1.0,
+   "10": 1.0,
+   "25": 2.0,
+   "50": 3.0,
+   "75": 5.0,
+   "90": 8.0,
+   "95": 11.0,
+   "99": 17.0,
+   "100": 52.0
+  },
+  "n_jumps_gt100": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 1.0,
+   "50": 1.0,
+   "75": 2.0,
+   "90": 4.0,
+   "95": 5.0,
+   "99": 8.0,
+   "100": 21.0
+  },
+  "n_jumps_gt200": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 1.0,
+   "90": 1.0,
+   "95": 2.0,
+   "99": 3.0,
+   "100": 8.0
+  },
+  "n_jumps_gt300": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 0.0,
+   "90": 1.0,
+   "95": 1.0,
+   "99": 2.0,
+   "100": 6.0
+  },
+  "apparent_pitch_region_count": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 1.0,
+   "25": 1.0,
+   "50": 1.0,
+   "75": 1.0,
+   "90": 2.0,
+   "95": 2.0,
+   "99": 3.0,
+   "100": 7.0
+  },
+  "full_iqr_cents": {
+   "0": 1.3183236555100457,
+   "5": 11.299983393419533,
+   "10": 15.579731007212935,
+   "25": 27.089529688942996,
+   "50": 56.114293453394026,
+   "75": 146.64107759609163,
+   "90": 308.84305355851063,
+   "95": 477.36710394742477,
+   "99": 987.6171321204799,
+   "100": 2868.55983876341
+  },
+  "duration_s": {
+   "0": 0.06000000000000005,
+   "5": 0.12000000000000455,
+   "10": 0.1600000000000037,
+   "25": 0.2600000000000193,
+   "50": 0.46000000000000796,
+   "75": 0.8400000000000034,
+   "90": 1.4399999999999977,
+   "95": 2.039999999999992,
+   "99": 3.8199999999999994,
+   "100": 15.199999999999989
+  },
+  "frame_count": {
+   "0": 4.0,
+   "5": 7.0,
+   "10": 8.0,
+   "25": 11.0,
+   "50": 17.0,
+   "75": 30.0,
+   "90": 48.0,
+   "95": 64.0,
+   "99": 116.86000000000058,
+   "100": 759.0
+  }
+ },
+ "dist_all": {
+  "largest_time_gap_s": {
+   "0": 0.01999999999998181,
+   "5": 0.020000000000003126,
+   "10": 0.020000000000003126,
+   "25": 0.020000000000010232,
+   "50": 0.020000000000010232,
+   "75": 0.0799999999999983,
+   "90": 0.259999999999998,
+   "95": 0.480000000000004,
+   "99": 1.4519999999999578,
+   "100": 10.379999999999995
+  },
+  "n_nonconsecutive_gaps": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 1.0,
+   "90": 1.0,
+   "95": 2.0,
+   "99": 4.0,
+   "100": 11.0
+  },
+  "voiced_to_elapsed_ratio": {
+   "0": 0.016293279022403257,
+   "5": 0.4146341463414634,
+   "10": 0.5789473684210527,
+   "25": 0.85,
+   "50": 1.0,
+   "75": 1.0,
+   "90": 1.0,
+   "95": 1.0,
+   "99": 1.0,
+   "100": 1.0
+  },
+  "max_adjacent_jump_cents": {
+   "0": 1.608985686780315,
+   "5": 19.59525184607201,
+   "10": 26.02110658768604,
+   "25": 41.71468687206917,
+   "50": 76.05689689027908,
+   "75": 162.26264016367816,
+   "90": 306.62978494282976,
+   "95": 491.577208770066,
+   "99": 957.9629923117967,
+   "100": 3301.1723422496575
+  },
+  "p90_adjacent_jump_cents": {
+   "0": 1.532163733000936,
+   "5": 13.937055821367489,
+   "10": 18.44804479868378,
+   "25": 28.353027758660176,
+   "50": 45.80562566564031,
+   "75": 73.80518892849365,
+   "90": 122.8991742267402,
+   "95": 168.70581941359634,
+   "99": 262.6726302428579,
+   "100": 1147.0684749738687
+  },
+  "median_adjacent_jump_cents": {
+   "0": 0.3564435718198453,
+   "5": 3.970614438561653,
+   "10": 5.385174561316848,
+   "25": 8.794852513464,
+   "50": 15.01793745112364,
+   "75": 23.996442757976506,
+   "90": 33.94928930422625,
+   "95": 41.14919651986793,
+   "99": 61.058784362121045,
+   "100": 215.92592316120601
+  },
+  "n_jumps_gt50": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 1.0,
+   "75": 3.0,
+   "90": 6.0,
+   "95": 8.0,
+   "99": 14.0,
+   "100": 52.0
+  },
+  "n_jumps_gt100": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 1.0,
+   "90": 2.0,
+   "95": 4.0,
+   "99": 6.0,
+   "100": 21.0
+  },
+  "n_jumps_gt200": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 0.0,
+   "90": 1.0,
+   "95": 1.0,
+   "99": 3.0,
+   "100": 8.0
+  },
+  "n_jumps_gt300": {
+   "0": 0.0,
+   "5": 0.0,
+   "10": 0.0,
+   "25": 0.0,
+   "50": 0.0,
+   "75": 0.0,
+   "90": 1.0,
+   "95": 1.0,
+   "99": 1.0,
+   "100": 6.0
+  },
+  "apparent_pitch_region_count": {
+   "0": 0.0,
+   "5": 1.0,
+   "10": 1.0,
+   "25": 1.0,
+   "50": 1.0,
+   "75": 1.0,
+   "90": 1.0,
+   "95": 2.0,
+   "99": 3.0,
+   "100": 7.0
+  },
+  "full_iqr_cents": {
+   "0": 0.7855033432554279,
+   "5": 7.6121326699060345,
+   "10": 10.66499227853496,
+   "25": 17.869525250006575,
+   "50": 31.65575262147893,
+   "75": 62.893265988594614,
+   "90": 172.3882221346418,
+   "95": 292.9812451882632,
+   "99": 735.9640335018864,
+   "100": 2868.55983876341
+  },
+  "duration_s": {
+   "0": 0.04,
+   "5": 0.060000000000002274,
+   "10": 0.0799999999999983,
+   "25": 0.12000000000000455,
+   "50": 0.259999999999998,
+   "75": 0.5400000000000027,
+   "90": 1.0199999999999996,
+   "95": 1.4400000000000013,
+   "99": 2.859999999999985,
+   "100": 15.199999999999989
+  },
+  "frame_count": {
+   "0": 3.0,
+   "5": 4.0,
+   "10": 5.0,
+   "25": 7.0,
+   "50": 12.0,
+   "75": 22.0,
+   "90": 38.0,
+   "95": 52.0,
+   "99": 93.0,
+   "100": 759.0
+  }
+ },
+ "frames_consecutive_all": 14636,
+ "frames_consecutive_flagged": 3809,
+ "category_counts": {
+  "A": {
+   "count": 5101,
+   "pct_flagged": 48.51165002377556,
+   "pct_all": 22.93511982374893
+  },
+  "B": {
+   "count": 3077,
+   "pct_flagged": 29.26295767950547,
+   "pct_all": 13.834809585899915
+  },
+  "C": {
+   "count": 236,
+   "pct_flagged": 2.2444127436994767,
+   "pct_all": 1.061103367654332
+  },
+  "D": {
+   "count": 2291,
+   "pct_flagged": 21.78792201616738,
+   "pct_all": 10.300795827525741
+  },
+  "E": {
+   "count": 920,
+   "pct_flagged": 8.74940561103186,
+   "pct_all": 4.1365046535677354
+  }
+ },
+ "category_combos": {
+  "A": 5101,
+  "B": 2096,
+  "D": 1296,
+  "E": 920,
+  "DB": 866,
+  "DCB": 79,
+  "C": 71,
+  "DC": 50,
+  "CB": 36
+ },
+ "all_note_rates": {
+  "B_likely": {
+   "count": 3124,
+   "pct_all": 14.046131019288701
+  },
+  "C_likely": {
+   "count": 236,
+   "pct_all": 1.061103367654332
+  },
+  "D_likely": {
+   "count": 2291,
+   "pct_all": 10.300795827525741
+  },
+  "B_clear": {
+   "count": 1604,
+   "pct_all": 7.211905939481138
+  },
+  "C_clear": {
+   "count": 2,
+   "pct_all": 0.008992401420799424
+  },
+  "D_clear": {
+   "count": 1736,
+   "pct_all": 7.8054044332539005
+  },
+  "any_clear_invalid": {
+   "count": 2683,
+   "pct_all": 12.063306506002428
+  }
+ },
+ "iqr_gt100_breakdown": {
+  "n": 3801,
+  "combos": {
+   "B": 1436,
+   "A": 961,
+   "E": 586,
+   "DB": 531,
+   "D": 188,
+   "DCB": 61,
+   "CB": 23,
+   "C": 10,
+   "DC": 5
+  },
+  "any_clear_invalid": 1393,
+  "B_clear": 1116,
+  "C_clear": 1,
+  "D_clear": 733,
+  "B_likely": 2051,
+  "D_likely": 785,
+  "C_likely": 99,
+  "slow_range_ge200": 2482,
+  "dominant_abort": {
+   "changed": 3513,
+   "returned": 265,
+   "rounds": 23
+  }
+ },
+ "iqr_gt400_breakdown": {
+  "n": 717,
+  "combos": {
+   "B": 341,
+   "DB": 215,
+   "E": 87,
+   "DCB": 48,
+   "CB": 18,
+   "D": 8
+  },
+  "any_clear_invalid": 547,
+  "B_clear": 537,
+  "C_clear": 0,
+  "D_clear": 267,
+  "B_likely": 622,
+  "D_likely": 271,
+  "C_likely": 66,
+  "slow_range_ge200": 705,
+  "dominant_abort": {
+   "changed": 699,
+   "returned": 15,
+   "rounds": 3
+  }
+ },
+ "scenarios": {
+  "S1_clear_B": {
+   "notes": 1604,
+   "examples": 8020,
+   "pct_notes": 7.211905939481138,
+   "by_split": {
+    "train": {
+     "notes": 1136,
+     "examples": 5680,
+     "pct_of_split": 7.368967306694343
+    },
+    "validation": {
+     "notes": 236,
+     "examples": 1180,
+     "pct_of_split": 7.279457125231339
+    },
+    "test": {
+     "notes": 232,
+     "examples": 1160,
+     "pct_of_split": 6.475020932179738
+    }
+   },
+   "frames_removed": 47935
+  },
+  "S2_clear_B_or_D": {
+   "notes": 2681,
+   "examples": 13405,
+   "pct_notes": 12.054314104581628,
+   "by_split": {
+    "train": {
+     "notes": 1924,
+     "examples": 9620,
+     "pct_of_split": 12.480539699014011
+    },
+    "validation": {
+     "notes": 396,
+     "examples": 1980,
+     "pct_of_split": 12.214682294879704
+    },
+    "test": {
+     "notes": 361,
+     "examples": 1805,
+     "pct_of_split": 10.07535584705554
+    }
+   },
+   "frames_removed": 76620
+  },
+  "S3_clear_B_C_D": {
+   "notes": 2683,
+   "examples": 13415,
+   "pct_notes": 12.063306506002428,
+   "by_split": {
+    "train": {
+     "notes": 1926,
+     "examples": 9630,
+     "pct_of_split": 12.49351323300467
+    },
+    "validation": {
+     "notes": 396,
+     "examples": 1980,
+     "pct_of_split": 12.214682294879704
+    },
+    "test": {
+     "notes": 361,
+     "examples": 1805,
+     "pct_of_split": 10.07535584705554
+    }
+   },
+   "frames_removed": 76672
+  },
+  "S3b_any_likely_BCD": {
+   "notes": 4541,
+   "examples": 22705,
+   "pct_notes": 20.417247425925094,
+   "by_split": {
+    "train": {
+     "notes": 3254,
+     "examples": 16270,
+     "pct_of_split": 21.107939802802285
+    },
+    "validation": {
+     "notes": 665,
+     "examples": 3325,
+     "pct_of_split": 20.512029611351018
+    },
+    "test": {
+     "notes": 622,
+     "examples": 3110,
+     "pct_of_split": 17.359754395757744
+    }
+   },
+   "frames_removed": 131248
+  }
+ },
+ "total_frames": 402379,
+ "D_detail": {
+  "n": 2291,
+  "cross_gap_step_lt80": 814,
+  "cross_gap_step_ge100": 1437,
+  "gap_gt0.5": 1024,
+  "gap_gt1": 379,
+  "gap_gt2": 122,
+  "gap_median_conf": {
+   "0": 0.027919097803533077,
+   "5": 0.1730436012148857,
+   "10": 0.21403847634792328,
+   "25": 0.28994711488485336,
+   "50": 0.38224124908447266,
+   "75": 0.4605543985962868,
+   "90": 0.513026773929596,
+   "95": 0.5433816611766815,
+   "99": 0.5809579640626906,
+   "100": 0.6717816591262817
+  },
+  "gap_max_conf": {
+   "0": 0.218074768781662,
+   "5": 0.5459540784358978,
+   "10": 0.5877501368522644,
+   "25": 0.6936568915843964,
+   "50": 0.7859085202217102,
+   "75": 0.8557396233081818,
+   "90": 0.9091085195541382,
+   "95": 0.9324240386486053,
+   "99": 0.9598057568073273,
+   "100": 0.982390284538269
+  },
+  "islands": {
+   "0": 2.0,
+   "5": 2.0,
+   "10": 2.0,
+   "25": 2.0,
+   "50": 2.0,
+   "75": 3.0,
+   "90": 4.0,
+   "95": 5.0,
+   "99": 7.0,
+   "100": 12.0
+  }
+ },
+ "weight_share": {
+  "D_likely": {
+   "pct_notes": 10.300795827525741,
+   "pct_duration_s_weight": 32.53519877826494,
+   "pct_voiced_time": 17.412688037894625
+  },
+  "D_clear": {
+   "pct_notes": 7.8054044332539,
+   "pct_duration_s_weight": 26.456475688457566,
+   "pct_voiced_time": 12.437030759557533
+  },
+  "any_clear_invalid": {
+   "pct_notes": 12.063306506002428,
+   "pct_duration_s_weight": 32.78801911424209,
+   "pct_voiced_time": 19.054672336279975
+  }
+ },
+ "jump_gt100_where": {
+  "any": 8747,
+  "within_consecutive_frames": 6491,
+  "only_across_gaps": 2256
+ },
+ "unflagged_rule_hits": {
+  "B_likely": 47,
+  "C_likely": 0,
+  "D_likely": 0
+ },
+ "iqr_le100_rule_hits": {
+  "n": 18440,
+  "B_likely": 1073,
+  "B_clear": 488,
+  "C_likely": 137,
+  "C_clear": 1
+ },
+ "by_duration": {
+  "<0.1": {
+   "n": 3890,
+   "pct_clear_invalid": 0.0,
+   "pct_B_clear": 0.0,
+   "pct_D_clear": 0.0,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.0
+  },
+  "0.1-0.25": {
+   "n": 6873,
+   "pct_clear_invalid": 0.7129346719045541,
+   "pct_B_clear": 0.7129346719045541,
+   "pct_D_clear": 0.0,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.2367234104466753
+  },
+  "0.25-0.5": {
+   "n": 5235,
+   "pct_clear_invalid": 8.997134670487107,
+   "pct_B_clear": 7.0869149952244515,
+   "pct_D_clear": 2.139446036294174,
+   "pct_C_clear": 0.019102196752626553,
+   "pct_iqr_gt400": 4.966571155682904
+  },
+  "0.5-1": {
+   "n": 3906,
+   "pct_clear_invalid": 24.628776241679468,
+   "pct_B_clear": 14.618535586277522,
+   "pct_D_clear": 14.925755248335893,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.248335893497184
+  },
+  "1-2": {
+   "n": 1791,
+   "pct_clear_invalid": 45.33780011166946,
+   "pct_B_clear": 23.171412618648798,
+   "pct_D_clear": 37.74427694025684,
+   "pct_C_clear": 0.05583472920156338,
+   "pct_iqr_gt400": 6.365159128978225
+  },
+  "2-5": {
+   "n": 484,
+   "pct_clear_invalid": 68.80165289256198,
+   "pct_B_clear": 34.710743801652896,
+   "pct_D_clear": 63.84297520661158,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 7.644628099173553
+  },
+  "5-10": {
+   "n": 56,
+   "pct_clear_invalid": 91.07142857142857,
+   "pct_B_clear": 46.42857142857143,
+   "pct_D_clear": 91.07142857142857,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 21.428571428571427
+  },
+  ">=10": {
+   "n": 6,
+   "pct_clear_invalid": 83.33333333333334,
+   "pct_B_clear": 66.66666666666666,
+   "pct_D_clear": 83.33333333333334,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 66.66666666666666
+  }
+ },
+ "by_frames": {
+  "3-4": {
+   "n": 1619,
+   "pct_clear_invalid": 0.1852995676343422,
+   "pct_B_clear": 0.0,
+   "pct_D_clear": 0.1852995676343422,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.0
+  },
+  "5-9": {
+   "n": 7167,
+   "pct_clear_invalid": 4.213757499651178,
+   "pct_B_clear": 1.2138970280452073,
+   "pct_D_clear": 3.4742570113017996,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.2138970280452073
+  },
+  "10-19": {
+   "n": 6976,
+   "pct_clear_invalid": 13.474770642201836,
+   "pct_B_clear": 8.156536697247706,
+   "pct_D_clear": 8.514908256880734,
+   "pct_C_clear": 0.014334862385321102,
+   "pct_iqr_gt400": 5.662270642201834
+  },
+  "20-49": {
+   "n": 5217,
+   "pct_clear_invalid": 20.93156986774008,
+   "pct_B_clear": 14.184397163120568,
+   "pct_D_clear": 12.593444508338125,
+   "pct_C_clear": 0.019168104274487254,
+   "pct_iqr_gt400": 4.408663983132068
+  },
+  "50-99": {
+   "n": 1080,
+   "pct_clear_invalid": 26.203703703703702,
+   "pct_B_clear": 15.74074074074074,
+   "pct_D_clear": 17.12962962962963,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.4629629629629629
+  },
+  ">=100": {
+   "n": 182,
+   "pct_clear_invalid": 34.61538461538461,
+   "pct_B_clear": 20.87912087912088,
+   "pct_D_clear": 26.373626373626376,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.0
+  }
+ },
+ "by_confidence": {
+  "<0.7": {
+   "n": 714,
+   "pct_clear_invalid": 22.54901960784314,
+   "pct_B_clear": 10.504201680672269,
+   "pct_D_clear": 18.76750700280112,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 7.002801120448179
+  },
+  "0.7-0.8": {
+   "n": 2878,
+   "pct_clear_invalid": 23.453787352328007,
+   "pct_B_clear": 12.960389159138291,
+   "pct_D_clear": 17.23419041000695,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 7.852675469075747
+  },
+  "0.8-0.9": {
+   "n": 7416,
+   "pct_clear_invalid": 15.39913700107875,
+   "pct_B_clear": 9.519956850053937,
+   "pct_D_clear": 9.83009708737864,
+   "pct_C_clear": 0.026968716289104636,
+   "pct_iqr_gt400": 4.368932038834951
+  },
+  "0.9-0.95": {
+   "n": 9577,
+   "pct_clear_invalid": 6.975044377153597,
+   "pct_B_clear": 4.45859872611465,
+   "pct_D_clear": 3.7590059517594234,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.2216769343218126
+  },
+  ">=0.95": {
+   "n": 1656,
+   "pct_clear_invalid": 2.2342995169082123,
+   "pct_B_clear": 1.3888888888888888,
+   "pct_D_clear": 1.0265700483091789,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.0
+  }
+ },
+ "by_song": {
+  "adele_hello": {
+   "n": 468,
+   "pct_clear_invalid": 10.042735042735043,
+   "pct_B_clear": 7.051282051282051,
+   "pct_D_clear": 5.982905982905983,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.8461538461538463,
+   "split": "test"
+  },
+  "amy_winehouse_love_is_a_losing_game_audio": {
+   "n": 273,
+   "pct_clear_invalid": 6.593406593406594,
+   "pct_B_clear": 3.296703296703297,
+   "pct_D_clear": 4.029304029304029,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.098901098901099,
+   "split": "train"
+  },
+  "ariana_grande_into_you_official_video": {
+   "n": 493,
+   "pct_clear_invalid": 9.533468559837727,
+   "pct_B_clear": 4.056795131845842,
+   "pct_D_clear": 7.099391480730223,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.231237322515213,
+   "split": "test"
+  },
+  "at_last": {
+   "n": 250,
+   "pct_clear_invalid": 12.8,
+   "pct_B_clear": 7.199999999999999,
+   "pct_D_clear": 11.600000000000001,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.0,
+   "split": "train"
+  },
+  "bruno_mars_when_i_was_your_man_audio": {
+   "n": 406,
+   "pct_clear_invalid": 9.35960591133005,
+   "pct_B_clear": 6.65024630541872,
+   "pct_D_clear": 4.679802955665025,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.70935960591133,
+   "split": "validation"
+  },
+  "celine_dion_because_you_loved_me_theme_from_up_close_and_personal_audio": {
+   "n": 510,
+   "pct_clear_invalid": 14.50980392156863,
+   "pct_B_clear": 10.196078431372548,
+   "pct_D_clear": 7.254901960784315,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.078431372549019,
+   "split": "train"
+  },
+  "chris_stapleton_tennessee_whiskey_official_audio": {
+   "n": 472,
+   "pct_clear_invalid": 12.923728813559322,
+   "pct_B_clear": 8.686440677966102,
+   "pct_D_clear": 8.686440677966102,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.661016949152542,
+   "split": "test"
+  },
+  "christina_aguilera_hurt_audio": {
+   "n": 455,
+   "pct_clear_invalid": 10.54945054945055,
+   "pct_B_clear": 5.054945054945055,
+   "pct_D_clear": 7.252747252747254,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.076923076923077,
+   "split": "validation"
+  },
+  "ckay_love_nwantinti_official_audio": {
+   "n": 345,
+   "pct_clear_invalid": 7.536231884057972,
+   "pct_B_clear": 4.9275362318840585,
+   "pct_D_clear": 3.4782608695652173,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.8695652173913043,
+   "split": "train"
+  },
+  "dangerously_in_love": {
+   "n": 613,
+   "pct_clear_invalid": 15.497553017944535,
+   "pct_B_clear": 9.29853181076672,
+   "pct_D_clear": 8.64600326264274,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.567699836867863,
+   "split": "train"
+  },
+  "demi_lovato_stone_cold_audio_only": {
+   "n": 426,
+   "pct_clear_invalid": 11.502347417840376,
+   "pct_B_clear": 7.981220657276995,
+   "pct_D_clear": 7.276995305164319,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.286384976525822,
+   "split": "train"
+  },
+  "don_t": {
+   "n": 340,
+   "pct_clear_invalid": 12.647058823529411,
+   "pct_B_clear": 4.705882352941177,
+   "pct_D_clear": 10.588235294117647,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.1764705882352942,
+   "split": "train"
+  },
+  "ella_langley_choosin_texas_lyrics": {
+   "n": 422,
+   "pct_clear_invalid": 9.95260663507109,
+   "pct_B_clear": 6.872037914691943,
+   "pct_D_clear": 7.109004739336493,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.843601895734597,
+   "split": "train"
+  },
+  "florence_the_machine_never_let_me_go": {
+   "n": 455,
+   "pct_clear_invalid": 13.846153846153847,
+   "pct_B_clear": 6.813186813186813,
+   "pct_D_clear": 9.230769230769232,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.9780219780219779,
+   "split": "train"
+  },
+  "frank_ocean_pink_white": {
+   "n": 280,
+   "pct_clear_invalid": 15.714285714285714,
+   "pct_B_clear": 8.928571428571429,
+   "pct_D_clear": 11.428571428571429,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.857142857142857,
+   "split": "train"
+  },
+  "giveon_heartbreak_anniversary_audio": {
+   "n": 442,
+   "pct_clear_invalid": 5.656108597285068,
+   "pct_B_clear": 2.48868778280543,
+   "pct_D_clear": 4.751131221719457,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.1312217194570136,
+   "split": "test"
+  },
+  "i_have_nothing": {
+   "n": 548,
+   "pct_clear_invalid": 12.226277372262775,
+   "pct_B_clear": 8.02919708029197,
+   "pct_D_clear": 8.394160583941606,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.832116788321168,
+   "split": "train"
+  },
+  "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+   "n": 530,
+   "pct_clear_invalid": 12.075471698113208,
+   "pct_B_clear": 7.735849056603773,
+   "pct_D_clear": 8.30188679245283,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.4528301886792456,
+   "split": "validation"
+  },
+  "jazmine_sullivan_bust_your_windows_audio": {
+   "n": 645,
+   "pct_clear_invalid": 13.023255813953488,
+   "pct_B_clear": 9.147286821705427,
+   "pct_D_clear": 6.511627906976744,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.046511627906977,
+   "split": "train"
+  },
+  "jeff_buckley_hallelujah": {
+   "n": 680,
+   "pct_clear_invalid": 7.205882352941176,
+   "pct_B_clear": 3.5294117647058822,
+   "pct_D_clear": 5.735294117647059,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.5882352941176471,
+   "split": "train"
+  },
+  "jennifer_hudson_spotlight": {
+   "n": 619,
+   "pct_clear_invalid": 14.70113085621971,
+   "pct_B_clear": 11.147011308562197,
+   "pct_D_clear": 5.815831987075929,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.815831987075929,
+   "split": "train"
+  },
+  "jessie_j_who_you_are_audio": {
+   "n": 467,
+   "pct_clear_invalid": 9.850107066381156,
+   "pct_B_clear": 5.353319057815846,
+   "pct_D_clear": 6.423982869379015,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.284796573875803,
+   "split": "train"
+  },
+  "john_legend_ordinary_people_hq": {
+   "n": 539,
+   "pct_clear_invalid": 18.552875695732837,
+   "pct_B_clear": 9.090909090909092,
+   "pct_D_clear": 13.358070500927644,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.267161410018553,
+   "split": "train"
+  },
+  "justin_bieber_baby_ft_ludacris": {
+   "n": 467,
+   "pct_clear_invalid": 7.28051391862955,
+   "pct_B_clear": 5.139186295503212,
+   "pct_D_clear": 3.640256959314775,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.640256959314775,
+   "split": "train"
+  },
+  "kacey_musgraves_rainbow_official_audio": {
+   "n": 348,
+   "pct_clear_invalid": 12.35632183908046,
+   "pct_B_clear": 7.183908045977011,
+   "pct_D_clear": 9.195402298850574,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.8735632183908044,
+   "split": "test"
+  },
+  "kelly_clarkson_because_of_you_audio": {
+   "n": 445,
+   "pct_clear_invalid": 9.662921348314606,
+   "pct_B_clear": 4.269662921348314,
+   "pct_D_clear": 6.067415730337078,
+   "pct_C_clear": 0.22471910112359553,
+   "pct_iqr_gt400": 1.5730337078651686,
+   "split": "train"
+  },
+  "lady_gaga_million_reasons_official_audio": {
+   "n": 311,
+   "pct_clear_invalid": 13.826366559485532,
+   "pct_B_clear": 10.289389067524116,
+   "pct_D_clear": 7.717041800643088,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.858520900321544,
+   "split": "validation"
+  },
+  "lately": {
+   "n": 439,
+   "pct_clear_invalid": 10.250569476082005,
+   "pct_B_clear": 4.555808656036446,
+   "pct_D_clear": 8.656036446469248,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.9612756264236904,
+   "split": "train"
+  },
+  "love_of_my_life": {
+   "n": 278,
+   "pct_clear_invalid": 14.028776978417264,
+   "pct_B_clear": 6.83453237410072,
+   "pct_D_clear": 11.151079136690647,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.158273381294964,
+   "split": "train"
+  },
+  "luis_miguel_hasta_que_me_olvides_video_con_letra": {
+   "n": 411,
+   "pct_clear_invalid": 16.54501216545012,
+   "pct_B_clear": 8.27250608272506,
+   "pct_D_clear": 11.922141119221411,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.64963503649635,
+   "split": "train"
+  },
+  "luther_vandross_here_and_now": {
+   "n": 746,
+   "pct_clear_invalid": 14.47721179624665,
+   "pct_B_clear": 9.785522788203753,
+   "pct_D_clear": 8.579088471849866,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.361930294906166,
+   "split": "validation"
+  },
+  "marc_anthony_ahora_quien_cover_audio_video": {
+   "n": 469,
+   "pct_clear_invalid": 12.57995735607676,
+   "pct_B_clear": 4.690831556503198,
+   "pct_D_clear": 11.513859275053305,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.279317697228145,
+   "split": "validation"
+  },
+  "mariah_carey_all_i_want_for_christmas_is_you": {
+   "n": 548,
+   "pct_clear_invalid": 12.956204379562045,
+   "pct_B_clear": 10.948905109489052,
+   "pct_D_clear": 6.386861313868613,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.37956204379562,
+   "split": "test"
+  },
+  "michael_jackson_chicago_official_audio": {
+   "n": 333,
+   "pct_clear_invalid": 27.32732732732733,
+   "pct_B_clear": 19.51951951951952,
+   "pct_D_clear": 16.216216216216218,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 7.5075075075075075,
+   "split": "train"
+  },
+  "miguel_adorn_audio": {
+   "n": 457,
+   "pct_clear_invalid": 12.25382932166302,
+   "pct_B_clear": 8.096280087527353,
+   "pct_D_clear": 6.3457330415754925,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.564551422319474,
+   "split": "train"
+  },
+  "miley_cyrus_party_in_the_u_s_a_audio": {
+   "n": 347,
+   "pct_clear_invalid": 12.968299711815561,
+   "pct_B_clear": 6.628242074927954,
+   "pct_D_clear": 9.798270893371757,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.7463976945244957,
+   "split": "train"
+  },
+  "ne_yo_so_sick": {
+   "n": 508,
+   "pct_clear_invalid": 11.41732283464567,
+   "pct_B_clear": 8.661417322834646,
+   "pct_D_clear": 4.921259842519685,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.937007874015748,
+   "split": "train"
+  },
+  "no_ordinary_love": {
+   "n": 475,
+   "pct_clear_invalid": 12.631578947368421,
+   "pct_B_clear": 5.684210526315789,
+   "pct_D_clear": 10.73684210526316,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.9473684210526314,
+   "split": "train"
+  },
+  "norah_jones_don_t_know_why": {
+   "n": 325,
+   "pct_clear_invalid": 11.076923076923077,
+   "pct_B_clear": 5.538461538461538,
+   "pct_D_clear": 8.615384615384615,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.769230769230769,
+   "split": "validation"
+  },
+  "paramore_the_only_exception_audio": {
+   "n": 390,
+   "pct_clear_invalid": 13.846153846153847,
+   "pct_B_clear": 4.871794871794872,
+   "pct_D_clear": 11.282051282051283,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.7692307692307693,
+   "split": "train"
+  },
+  "prince_royce_corazon_sin_cara_audio": {
+   "n": 389,
+   "pct_clear_invalid": 5.3984575835475574,
+   "pct_B_clear": 2.827763496143959,
+   "pct_D_clear": 4.884318766066838,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.0282776349614395,
+   "split": "test"
+  },
+  "romeo_santos_propuesta_indecente_audio": {
+   "n": 400,
+   "pct_clear_invalid": 14.000000000000002,
+   "pct_B_clear": 9.75,
+   "pct_D_clear": 8.75,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.0,
+   "split": "train"
+  },
+  "sam_smith_lay_me_down_lyric_video": {
+   "n": 483,
+   "pct_clear_invalid": 10.559006211180124,
+   "pct_B_clear": 6.418219461697723,
+   "pct_D_clear": 7.246376811594203,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.2422360248447204,
+   "split": "train"
+  },
+  "teri_ore_full_audio_singh_is_kinng_akshay_kkatrina_kpritamrahat_fateh_ali_khanshreya_ghoshal": {
+   "n": 662,
+   "pct_clear_invalid": 8.459214501510575,
+   "pct_B_clear": 5.740181268882175,
+   "pct_D_clear": 3.927492447129909,
+   "pct_C_clear": 0.1510574018126888,
+   "pct_iqr_gt400": 1.812688821752266,
+   "split": "train"
+  },
+  "the_weeknd_starboy_audio_ft_daft_punk": {
+   "n": 314,
+   "pct_clear_invalid": 9.235668789808917,
+   "pct_B_clear": 4.140127388535031,
+   "pct_D_clear": 6.369426751592357,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.9554140127388535,
+   "split": "train"
+  },
+  "tum_hi_ho_lyrics_arijit_singhaashiqui_2_tseries": {
+   "n": 423,
+   "pct_clear_invalid": 10.874704491725769,
+   "pct_B_clear": 7.328605200945626,
+   "pct_D_clear": 5.200945626477541,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.9456264775413712,
+   "split": "test"
+  },
+  "usher_burn": {
+   "n": 561,
+   "pct_clear_invalid": 13.19073083778966,
+   "pct_B_clear": 9.803921568627452,
+   "pct_D_clear": 6.7736185383244205,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.7433155080213902,
+   "split": "train"
+  },
+  "wild_thoughts": {
+   "n": 405,
+   "pct_clear_invalid": 11.11111111111111,
+   "pct_B_clear": 6.91358024691358,
+   "pct_D_clear": 7.160493827160494,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.7037037037037033,
+   "split": "train"
+  },
+  "you_make_me_feel_like_a_natural_woman": {
+   "n": 302,
+   "pct_clear_invalid": 19.5364238410596,
+   "pct_B_clear": 8.940397350993377,
+   "pct_D_clear": 15.2317880794702,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.304635761589404,
+   "split": "train"
+  },
+  "you_raise_me_up": {
+   "n": 327,
+   "pct_clear_invalid": 12.232415902140673,
+   "pct_B_clear": 4.892966360856269,
+   "pct_D_clear": 9.480122324159021,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.058103975535168,
+   "split": "train"
+  }
+ },
+ "by_artist": {
+  "Adele": {
+   "n": 468,
+   "pct_clear_invalid": 10.042735042735043,
+   "pct_B_clear": 7.051282051282051,
+   "pct_D_clear": 5.982905982905983,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.8461538461538463
+  },
+  "Amy Winehouse": {
+   "n": 273,
+   "pct_clear_invalid": 6.593406593406594,
+   "pct_B_clear": 3.296703296703297,
+   "pct_D_clear": 4.029304029304029,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.098901098901099
+  },
+  "Ariana Grande": {
+   "n": 493,
+   "pct_clear_invalid": 9.533468559837727,
+   "pct_B_clear": 4.056795131845842,
+   "pct_D_clear": 7.099391480730223,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.231237322515213
+  },
+  "Bruno Mars": {
+   "n": 406,
+   "pct_clear_invalid": 9.35960591133005,
+   "pct_B_clear": 6.65024630541872,
+   "pct_D_clear": 4.679802955665025,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.70935960591133
+  },
+  "CKAY": {
+   "n": 345,
+   "pct_clear_invalid": 7.536231884057972,
+   "pct_B_clear": 4.9275362318840585,
+   "pct_D_clear": 3.4782608695652173,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.8695652173913043
+  },
+  "Chris Stapleton": {
+   "n": 472,
+   "pct_clear_invalid": 12.923728813559322,
+   "pct_B_clear": 8.686440677966102,
+   "pct_D_clear": 8.686440677966102,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.661016949152542
+  },
+  "Christina Aguilera": {
+   "n": 455,
+   "pct_clear_invalid": 10.54945054945055,
+   "pct_B_clear": 5.054945054945055,
+   "pct_D_clear": 7.252747252747254,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.076923076923077
+  },
+  "C\u00e9line Dion": {
+   "n": 510,
+   "pct_clear_invalid": 14.50980392156863,
+   "pct_B_clear": 10.196078431372548,
+   "pct_D_clear": 7.254901960784315,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.078431372549019
+  },
+  "Demi Lovato": {
+   "n": 426,
+   "pct_clear_invalid": 11.502347417840376,
+   "pct_B_clear": 7.981220657276995,
+   "pct_D_clear": 7.276995305164319,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.286384976525822
+  },
+  "Ella Langley": {
+   "n": 422,
+   "pct_clear_invalid": 9.95260663507109,
+   "pct_B_clear": 6.872037914691943,
+   "pct_D_clear": 7.109004739336493,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.843601895734597
+  },
+  "Florence  The Machine": {
+   "n": 455,
+   "pct_clear_invalid": 13.846153846153847,
+   "pct_B_clear": 6.813186813186813,
+   "pct_D_clear": 9.230769230769232,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.9780219780219779
+  },
+  "Frank Ocean": {
+   "n": 280,
+   "pct_clear_invalid": 15.714285714285714,
+   "pct_B_clear": 8.928571428571429,
+   "pct_D_clear": 11.428571428571429,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.857142857142857
+  },
+  "GIV\u0112ON": {
+   "n": 442,
+   "pct_clear_invalid": 5.656108597285068,
+   "pct_B_clear": 2.48868778280543,
+   "pct_D_clear": 4.751131221719457,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.1312217194570136
+  },
+  "If I Ain't Got You": {
+   "n": 530,
+   "pct_clear_invalid": 12.075471698113208,
+   "pct_B_clear": 7.735849056603773,
+   "pct_D_clear": 8.30188679245283,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.4528301886792456
+  },
+  "Jazmine Sullivan": {
+   "n": 645,
+   "pct_clear_invalid": 13.023255813953488,
+   "pct_B_clear": 9.147286821705427,
+   "pct_D_clear": 6.511627906976744,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.046511627906977
+  },
+  "Jeff Buckley": {
+   "n": 680,
+   "pct_clear_invalid": 7.205882352941176,
+   "pct_B_clear": 3.5294117647058822,
+   "pct_D_clear": 5.735294117647059,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.5882352941176471
+  },
+  "Jennifer Hudson": {
+   "n": 619,
+   "pct_clear_invalid": 14.70113085621971,
+   "pct_B_clear": 11.147011308562197,
+   "pct_D_clear": 5.815831987075929,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.815831987075929
+  },
+  "Jessie J": {
+   "n": 467,
+   "pct_clear_invalid": 9.850107066381156,
+   "pct_B_clear": 5.353319057815846,
+   "pct_D_clear": 6.423982869379015,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.284796573875803
+  },
+  "John Legend": {
+   "n": 539,
+   "pct_clear_invalid": 18.552875695732837,
+   "pct_B_clear": 9.090909090909092,
+   "pct_D_clear": 13.358070500927644,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.267161410018553
+  },
+  "Justin Bieber": {
+   "n": 467,
+   "pct_clear_invalid": 7.28051391862955,
+   "pct_B_clear": 5.139186295503212,
+   "pct_D_clear": 3.640256959314775,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.640256959314775
+  },
+  "Kacey Musgraves": {
+   "n": 348,
+   "pct_clear_invalid": 12.35632183908046,
+   "pct_B_clear": 7.183908045977011,
+   "pct_D_clear": 9.195402298850574,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.8735632183908044
+  },
+  "Kelly Clarkson": {
+   "n": 445,
+   "pct_clear_invalid": 9.662921348314606,
+   "pct_B_clear": 4.269662921348314,
+   "pct_D_clear": 6.067415730337078,
+   "pct_C_clear": 0.22471910112359553,
+   "pct_iqr_gt400": 1.5730337078651686
+  },
+  "Lady Gaga": {
+   "n": 311,
+   "pct_clear_invalid": 13.826366559485532,
+   "pct_B_clear": 10.289389067524116,
+   "pct_D_clear": 7.717041800643088,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.858520900321544
+  },
+  "Luis Miguel": {
+   "n": 411,
+   "pct_clear_invalid": 16.54501216545012,
+   "pct_B_clear": 8.27250608272506,
+   "pct_D_clear": 11.922141119221411,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.64963503649635
+  },
+  "Luther Vandross": {
+   "n": 746,
+   "pct_clear_invalid": 14.47721179624665,
+   "pct_B_clear": 9.785522788203753,
+   "pct_D_clear": 8.579088471849866,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 5.361930294906166
+  },
+  "Marc Anthony": {
+   "n": 469,
+   "pct_clear_invalid": 12.57995735607676,
+   "pct_B_clear": 4.690831556503198,
+   "pct_D_clear": 11.513859275053305,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.279317697228145
+  },
+  "Mariah Carey": {
+   "n": 548,
+   "pct_clear_invalid": 12.956204379562045,
+   "pct_B_clear": 10.948905109489052,
+   "pct_D_clear": 6.386861313868613,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 4.37956204379562
+  },
+  "Michael Jackson": {
+   "n": 333,
+   "pct_clear_invalid": 27.32732732732733,
+   "pct_B_clear": 19.51951951951952,
+   "pct_D_clear": 16.216216216216218,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 7.5075075075075075
+  },
+  "Miguel": {
+   "n": 457,
+   "pct_clear_invalid": 12.25382932166302,
+   "pct_B_clear": 8.096280087527353,
+   "pct_D_clear": 6.3457330415754925,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 6.564551422319474
+  },
+  "Miley Cyrus": {
+   "n": 347,
+   "pct_clear_invalid": 12.968299711815561,
+   "pct_B_clear": 6.628242074927954,
+   "pct_D_clear": 9.798270893371757,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.7463976945244957
+  },
+  "Ne-Yo": {
+   "n": 508,
+   "pct_clear_invalid": 11.41732283464567,
+   "pct_B_clear": 8.661417322834646,
+   "pct_D_clear": 4.921259842519685,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.937007874015748
+  },
+  "Norah Jones": {
+   "n": 325,
+   "pct_clear_invalid": 11.076923076923077,
+   "pct_B_clear": 5.538461538461538,
+   "pct_D_clear": 8.615384615384615,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 2.769230769230769
+  },
+  "Paramore": {
+   "n": 390,
+   "pct_clear_invalid": 13.846153846153847,
+   "pct_B_clear": 4.871794871794872,
+   "pct_D_clear": 11.282051282051283,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.7692307692307693
+  },
+  "Prince Royce": {
+   "n": 389,
+   "pct_clear_invalid": 5.3984575835475574,
+   "pct_B_clear": 2.827763496143959,
+   "pct_D_clear": 4.884318766066838,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.0282776349614395
+  },
+  "Sam Smith": {
+   "n": 483,
+   "pct_clear_invalid": 10.559006211180124,
+   "pct_B_clear": 6.418219461697723,
+   "pct_D_clear": 7.246376811594203,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 1.2422360248447204
+  },
+  "The Weeknd": {
+   "n": 314,
+   "pct_clear_invalid": 9.235668789808917,
+   "pct_B_clear": 4.140127388535031,
+   "pct_D_clear": 6.369426751592357,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 0.9554140127388535
+  },
+  "USHER": {
+   "n": 561,
+   "pct_clear_invalid": 13.19073083778966,
+   "pct_B_clear": 9.803921568627452,
+   "pct_D_clear": 6.7736185383244205,
+   "pct_C_clear": 0.0,
+   "pct_iqr_gt400": 3.7433155080213902
+  },
+  "unknown": {
+   "n": 5462,
+   "pct_clear_invalid": 12.504577077993408,
+   "pct_B_clear": 6.957158549981692,
+   "pct_D_clear": 8.659831563529842,
+   "pct_C_clear": 0.01830831197363603,
+   "pct_iqr_gt400": 3.1124130355181254
+  }
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "v1_reproduction": {
+  "songs": 50,
+  "notes": 22241,
+  "mismatching_songs": []
+ },
+ "tail_classifier_reproduction": {
+  "notes": 22241,
+  "mismatches": 0
+ },
+ "subset_sizes": {
+  "v1_plausible_A": 5101,
+  "v1_unflagged": 11679,
+  "vibrato_like": 523,
+  "scoop": 132,
+  "fall": 911,
+  "portamento_drift": 577,
+  "stable_center_examples": 34
+ }
+}
