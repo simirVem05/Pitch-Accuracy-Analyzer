@@ -1,0 +1,51 @@
+{
+  "all_passed": true,
+  "checked_at_utc": "2026-10-14T18:43:11.499652+00:00",
+  "checks": {
+    "backup_still_intact": {
+      "detail": null,
+      "passed": true
+    },
+    "every_song_valid_and_consistent": {
+      "detail": [],
+      "passed": true
+    },
+    "manifest_config_canonical": {
+      "detail": null,
+      "passed": true
+    },
+    "manifest_schema_2": {
+      "detail": 2,
+      "passed": true
+    },
+    "protected_files_byte_identical": {
+      "detail": {
+        "changed": [],
+        "checked": 69
+      },
+      "passed": true
+    },
+    "song_dirs_match_manifest": {
+      "detail": {
+        "dirs": 63,
+        "manifest": 63
+      },
+      "passed": true
+    },
+    "songs_match_selections": {
+      "detail": 63,
+      "passed": true
+    },
+    "totals": {
+      "detail": {
+        "v1_notes": 27554,
+        "v2_notes": 31803
+      },
+      "passed": true
+    },
+    "v1_sidecars_equal_backup": {
+      "detail": [],
+      "passed": true
+    }
+  }
+}

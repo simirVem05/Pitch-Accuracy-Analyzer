@@ -1,0 +1,15 @@
+{
+  "validation": {
+    "lengths_aligned": true,
+    "offsets_valid": true,
+    "five_variants_per_note": true,
+    "clean_is_zero": true,
+    "two_pos_two_neg": true,
+    "magnitudes_in_bands": true,
+    "shifts_rederived_from_seed": true,
+    "contours_match_canonical_notes": true,
+    "splits_disjoint_song_level": true,
+    "manifest_rows": true
+  },
+  "validation_passed": true
+}

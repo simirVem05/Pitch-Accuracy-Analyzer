@@ -1,0 +1,597 @@
+{
+  "code_sha256": {
+    "backend/note_segmentation.py": "c47975debb8e4f06e6ba4ee86d889cdcc64303c5611b5e5e2b94800a2a5bc33f",
+    "backend/note_segmentation_v2.py": "84bfff6f3c539b52fb0ab691df4a3f3db9d3c7d995fafb18e3dbd6ff6c908b9e",
+    "scripts/main_data_io.py": "5cb5729321b46838bba6db5ac25e8bc6ca55edebf88db6c2da75cff93cbdc3e2",
+    "scripts/resegment_main_dataset.py": "ead1973184a66a000b0f8c29a29878bfcd5efa6f0b89890e1c473267fdb096f4"
+  },
+  "git": {
+    "code_dirty": false,
+    "commit": "2364668c058413a402b6ce6d9b4071303ffb8830"
+  },
+  "main_dir": "/Users/simirvempali/Desktop/personal-projects/Pitch-Accuracy-Analyzer/data/main_data",
+  "manifest_sha256": "4f5fa5da0fb3051bb412bf5c2399cb1d85013b285a8149a188e7381b0576b999",
+  "segmentation": "v2",
+  "segmentation_config": {
+    "center_window_frames": 50,
+    "gap_before": "local",
+    "gap_context_frames": 10,
+    "hard_gap_s": 0.5,
+    "mode": "gap_v1",
+    "persistence_frames": 4,
+    "return_window_frames": 3,
+    "separation_cents": 100,
+    "target_estimator": "core_median"
+  },
+  "songs": {
+    "adele_hello": {
+      "harmony_npz_sha256": "6fb406e08ba2800065730cc04e824b063ce34a4059e9b8998bef5d0eb45d5e83",
+      "metadata_sha256": "63651f138434b727917827bf251ca3833ce33c320cdc56942b4b27c0e8be3f9b",
+      "notes_npz_content_sha256": "e8284ec78f295583c08ab5951184c4c0305ede20b0c5a1f549030e8557c8ada8",
+      "notes_sha256": "4a043f4dacb2a61d1a15e3219a77d1e06f4bae1607f07b9cd1f427307f5fdee3",
+      "number_of_notes": 523,
+      "v1_notes_sha256": "13523e15bdb4a3d60bc926d80da2ffdb5f9e30868dbb4817e31513be25f8fc83",
+      "v1_number_of_notes": 468
+    },
+    "amy_winehouse_love_is_a_losing_game_audio": {
+      "harmony_npz_sha256": "264b81a8d08f6f76dffbe22767ca6d07fc776ee2f614e84f6b5d8cdf59303466",
+      "metadata_sha256": "8c55780bcde48d22a9365f2ffeb97d488e658aeed0ea94ca9a74db58e1eab2dd",
+      "notes_npz_content_sha256": "652cae16ad9ffe1f4847888daccbfa502e0356eace18b94edfd197c7033fcf31",
+      "notes_sha256": "65edde9b838e04611569a5f2568a016a7d383dee73915545937a134c6a5314cc",
+      "number_of_notes": 292,
+      "v1_notes_sha256": "72b6b5e9ad97accfd6b19d9ebbdba7e87124a3babfb9523eac88009744f43c1c",
+      "v1_number_of_notes": 273
+    },
+    "ariana_grande_into_you_official_video": {
+      "harmony_npz_sha256": "7e9328b6c8c40ccd8d77643e98a13ccd8b196736780008548a930b1f9a241293",
+      "metadata_sha256": "71afcfc01c3b70444bf6f94fdbef5cec31eca7b32aa4c4069b1cb00966a61ea4",
+      "notes_npz_content_sha256": "41033aaa285ba29ade63294387b63d944e7b70dd06b89bf62088704e7811ec6d",
+      "notes_sha256": "f17ae1133faf1ec2452cf411f5252b557da8992e649a4faedde74f2668c82f08",
+      "number_of_notes": 550,
+      "v1_notes_sha256": "1f3beeb27c54b48b1a0e81f63641da547736fa25ce520cb89a56ea566fe7e592",
+      "v1_number_of_notes": 493
+    },
+    "at_last": {
+      "harmony_npz_sha256": "016c07434d971f31c3cf4f6002e367be01cd8cca5d5585ea284be3051616ffdb",
+      "metadata_sha256": "2cd24f981d3f741e9eccc6f23bd56cc0c0b7417a8cc5a8db1a51461615b144b5",
+      "notes_npz_content_sha256": "5cfd7f02faf4e5bfa0c3093d049ba7d69d6c0522b0adf91fecf0dbb808348907",
+      "notes_sha256": "4974e73dbf54de1bcaba7dc32592bb247a179b6a2386fbcdc49e325fc49bd609",
+      "number_of_notes": 278,
+      "v1_notes_sha256": "4b667f1a6fcdfea7c4ac0518b3ad8fb24653e1e658dca31c39cc5cdb73ab589d",
+      "v1_number_of_notes": 250
+    },
+    "billiejean_mj_full_song": {
+      "harmony_npz_sha256": "a797a2d008a5166ae136e44c58889854257090c2284bf2f51dad355410d0d0bd",
+      "metadata_sha256": "38694d59d85f56f34ec20ff3729171450fb304be133069c483200c4bb864e778",
+      "notes_npz_content_sha256": "0ecc740c877f70c845a8c327c3e6afd857370e90578069021163388fad0d2744",
+      "notes_sha256": "daf27adafd996eba01fb115a6db344956adb52527f269883cfe56f61ce2460be",
+      "number_of_notes": 563,
+      "v1_notes_sha256": "b5659af81cdbdb995d90310c87935676bc137796247013496a68de4b972535dc",
+      "v1_number_of_notes": 402
+    },
+    "black_beatles": {
+      "harmony_npz_sha256": "739e057576145e571e1d4fdd2df7177a1d4e6b45321548deb8f01b2479812f40",
+      "metadata_sha256": "bdec066e9a9100cbdd81239f18e0eec2738794890057ec6b3a7bbd62c7948359",
+      "notes_npz_content_sha256": "5e21da1f32d531212a1bc69a0d4b2ccbcae29462a69b6d1b888190b872edc764",
+      "notes_sha256": "4e09ad9821d92a901dcdacf48ee57de372559491596955d20242e69f7b63044b",
+      "number_of_notes": 752,
+      "v1_notes_sha256": "f74c01ba9f7d1b493863279eb02308bd686ac0b63a20c246f305b95ffe6b2fad",
+      "v1_number_of_notes": 616
+    },
+    "bruno_mars_when_i_was_your_man_audio": {
+      "harmony_npz_sha256": "12bc1570ebd2d5c41569c8c478dc6fce2809251595d495f3ebb051f7ff51df92",
+      "metadata_sha256": "ab6e6f490eb7e31944f62c90ff3b340a0bfe8df15a7aac1f01aaf5f07b5111c2",
+      "notes_npz_content_sha256": "481eef6e13a2bebe703b97578718f3ec5b8e120679b1610ee5ec8e6ebd9eabc6",
+      "notes_sha256": "2cc00850387339cb60da643ea844dc46a62ed1982c3c800842590d0f26f08158",
+      "number_of_notes": 481,
+      "v1_notes_sha256": "71d45bd5948775d11edaffef9a4ec2845b70969edc171240d642d58c867feb22",
+      "v1_number_of_notes": 406
+    },
+    "celine_dion_because_you_loved_me_theme_from_up_close_and_personal_audio": {
+      "harmony_npz_sha256": "c7e1c6158e039147d48f801cf832b93e928056c355fdf9a0c74aabb54d2e54be",
+      "metadata_sha256": "1f06fc8bdd1f67d7938fddf85ade50180616968acce1ab0ba52f2775639781f8",
+      "notes_npz_content_sha256": "b8cccd520a6e572c3cdebee1aaea29be3e29e300221b5b2cd55685abeb2ecccd",
+      "notes_sha256": "352cfb9318bb4568a3fe1c47de5112ef6e9606b4d935b453f8f34b98189e0cc5",
+      "number_of_notes": 595,
+      "v1_notes_sha256": "6362773dd1311ed640636bcbbccc959fe7969625c1aa5fc7b7cd3dca2900cbb7",
+      "v1_number_of_notes": 510
+    },
+    "chris_stapleton_tennessee_whiskey_official_audio": {
+      "harmony_npz_sha256": "04bfcf34c8c89d2c17812c11667448497b7df7c8edeac64bc740c860777c89d4",
+      "metadata_sha256": "846443d18f4359f15a092b4bd3fbd2e93903ddba4c14a98666e2fd8eb8aaa198",
+      "notes_npz_content_sha256": "7a342e4df32995943906ee278d830684883cc265297607287c38e8a082ea0d69",
+      "notes_sha256": "1914d0c1dc2b7fb0009d3d47e70ccb7e85263fb743ac1c31df22c5c695e14a40",
+      "number_of_notes": 552,
+      "v1_notes_sha256": "9426df447eaeda1c768bc9a4e2cc438fc70725401d779c6661cfe0047211fc19",
+      "v1_number_of_notes": 472
+    },
+    "christina_aguilera_hurt_audio": {
+      "harmony_npz_sha256": "f636b3867bb01f63fcbd1fc732c454abe0da4f53338e56f877d023b28724b525",
+      "metadata_sha256": "e716130213ce5be3b213c21ac5cc89bcca7e53aefcca4bb1837afca0645f4e5a",
+      "notes_npz_content_sha256": "5838e5bee9718e4423e0a6e87a901cd53c41a03b5ede0791f93fd24118edff5f",
+      "notes_sha256": "00f4cc4862627c804b133784b7f1ae5b7fef499130048aa3430ed7c1e86c2bbe",
+      "number_of_notes": 510,
+      "v1_notes_sha256": "25de64127ab05200efbaa2c6cd4e7fcc47ac93e4bf898eda368ff9cccb9ab022",
+      "v1_number_of_notes": 455
+    },
+    "ckay_love_nwantinti_official_audio": {
+      "harmony_npz_sha256": "1cae362feb1f8c0926d814980bbe177b814a242fa1e7a70aa1e25243d28f08da",
+      "metadata_sha256": "f3c482311c10489de650a0c3a52a8650d28c73b5b29bed910fb469e5e037e027",
+      "notes_npz_content_sha256": "5d330e37456898063d3502294896d1be673926f89a5aa54f59abd5c1a3b8ff14",
+      "notes_sha256": "70931ff17248bcf09e66d1dd08bb54df9d920949752a37268da2e7b7dd512ff6",
+      "number_of_notes": 370,
+      "v1_notes_sha256": "768698f79c58bbcc4f8465eef4ddba2174c485774402f5c79ccd4800690436a7",
+      "v1_number_of_notes": 345
+    },
+    "dangerously_in_love": {
+      "harmony_npz_sha256": "aa7aa03f37d5c6a7762aefa4bd340c76a56309e52d9a1025013a346cf0be6dd8",
+      "metadata_sha256": "e4e3e5115c9772c3a3e5fbf757cec7b5a261ab8eb6b1f60b1d4ac7384da4f2d4",
+      "notes_npz_content_sha256": "b2207863099ef46c464a912ab2d24303291dca5ec48f608926f61620899847d8",
+      "notes_sha256": "d71b471fa48bd33f2f63e87b8d36f3d376103b3ab6a8f2f429c9612863b5ae51",
+      "number_of_notes": 731,
+      "v1_notes_sha256": "60a383b8b007fe9019c144f50e7cf1cd78700339c6a0d4fd65617579aa7b6e52",
+      "v1_number_of_notes": 613
+    },
+    "demi_lovato_stone_cold_audio_only": {
+      "harmony_npz_sha256": "08decc651a9d9732da01fd9d0440c571cedb5e75dac4a4fd3f4b7533041d9ce2",
+      "metadata_sha256": "5bdcaf942f04b675b39ca39853fb504ba6447ebda2a3a37a765e2e997833298f",
+      "notes_npz_content_sha256": "e6369fc2a8286e75faff08cdea3b4a2c211e92ec6c3803119282b1afa81d5e66",
+      "notes_sha256": "cf38bae6876f32aa0a3d9ca5dc9970a70b988df8dd1c9d64f5bba600b92928f2",
+      "number_of_notes": 486,
+      "v1_notes_sha256": "ad73fb2ec175a3d479ab22edbe34df1d52037a108f9a9f094d0a19ad4bf43b31",
+      "v1_number_of_notes": 426
+    },
+    "don_t": {
+      "harmony_npz_sha256": "5c2239199cafeef17032dd93ba225931667a105cce8d47494336f08c5109fd7d",
+      "metadata_sha256": "79c64ce5d62b1d3f053ddd59a81b26b41b6d74e0fe5801994bbd78820dbadb6c",
+      "notes_npz_content_sha256": "80c0e939e180d059a24b67988203054dbdad485595b5e8c466aa98cbebb10d42",
+      "notes_sha256": "cc944d6121b40aeea8e7d50bfb6d7fc51297d183f1a094ba3d17e6fc3dd55656",
+      "number_of_notes": 391,
+      "v1_notes_sha256": "9bee10e01449b91bf3a3d7f146e73bf968110b584c751f7883f30c17b5104ab8",
+      "v1_number_of_notes": 340
+    },
+    "ella_langley_choosin_texas_lyrics": {
+      "harmony_npz_sha256": "584d2260952f0343e3603441787295a270eac8a64fe27c0a2f34f0ee34d5e334",
+      "metadata_sha256": "945f83871cab6e9b37012e878dab4b0835b94280f1bf8793633d04e9281ef433",
+      "notes_npz_content_sha256": "fcdd95eb1778ed139ee008467c21def1b73e2f845ca2a54bc2e9db1c94883b98",
+      "notes_sha256": "808bca2814c9308c143a1a604d665ec3a5934e02cd481d480f7b2155430873c6",
+      "number_of_notes": 479,
+      "v1_notes_sha256": "cf88f2854e8384a3c179a6bb3c16fef3b02bafad07f8246ffad62d1de0b21368",
+      "v1_number_of_notes": 422
+    },
+    "florence_the_machine_never_let_me_go": {
+      "harmony_npz_sha256": "644a2d51fa911372f66180b646644c508d33749308f4675bfafe6c432222e23a",
+      "metadata_sha256": "59f693c6f9edcc21f729b61b919c47ab1cd357d80ec071661c2c09d0753955ab",
+      "notes_npz_content_sha256": "a9e8d94cc69709970b3c2bfd0c54a1527e9b1b2579a3f9c543f346ac7e4a9b1d",
+      "notes_sha256": "d8d337ca5000e5879b2882aa864a3aa1b9feab496a3fc5eb7463401fbbe4898f",
+      "number_of_notes": 516,
+      "v1_notes_sha256": "b8067c3bc1f8b3a294b72357f6e73fb5481031e4d362e95577c4c5e212e37987",
+      "v1_number_of_notes": 455
+    },
+    "floyymenor_gata_only_ft_cris_mj_letralyrics": {
+      "harmony_npz_sha256": "34958bfa0cf3ae801c40ef833fc0905fc004732d5c9ec9672565a7d089797722",
+      "metadata_sha256": "1153631d018dca1723237c7eef546d22025372c8c2944de95b64f4690f9243c8",
+      "notes_npz_content_sha256": "0d1c6e41d150d9614d6a3eb58b61b4b0a9561b50609902397d987b77a7ba0f08",
+      "notes_sha256": "d2d853a49cbb582cd719e4e00c3455615db2049f4e41e1dc9d566e5cd9bcfc97",
+      "number_of_notes": 547,
+      "v1_notes_sha256": "4a4b592fce767d977d51da83d1caa1242dbda70432166140259e1c1f3c0de018",
+      "v1_number_of_notes": 507
+    },
+    "frank_ocean_pink_white": {
+      "harmony_npz_sha256": "5804cef8782b619ae37e5c7e5a3f7ffedb0563a5df8fab7486f1e71a5c14af45",
+      "metadata_sha256": "0c75cd610c7a145e0f3d2873967b33dd3891cb3de266348fd2159d10a6073f6a",
+      "notes_npz_content_sha256": "584b7f430f86dcf8af433ff76199f8d00eeb29fd98a95d6888b5fc2911562602",
+      "notes_sha256": "df60e12926776e81073dc3bb5bc870bcd7185f23c15ba58d655cbac13bc9d41e",
+      "number_of_notes": 331,
+      "v1_notes_sha256": "589406a284014f1b968b65df9a177b59fb31834297f6ed5827d7352ff1c87609",
+      "v1_number_of_notes": 280
+    },
+    "giveon_heartbreak_anniversary_audio": {
+      "harmony_npz_sha256": "f16f6d862366f2e5f4a13e045b86cbc9456e7ee107a64cd75d9e96d595e9f2aa",
+      "metadata_sha256": "a053e5332ec95182ad0fce3208ccdba5f502e8e0c8254a9a3bff8c8375041110",
+      "notes_npz_content_sha256": "3890556458fea27f08ed4a47744b12dfa9361a2b90775d685e0471ae4cec1a13",
+      "notes_sha256": "92a56ee9044ed830d204615dabfb0cdb784413a11b49936e35ac47e80ad52281",
+      "number_of_notes": 476,
+      "v1_notes_sha256": "7ba07ec49fdb57b72225e6b89f67553a4efe811329705e66239011f27e03aa19",
+      "v1_number_of_notes": 442
+    },
+    "gotye_somebody_that_i_used_to_know_2015_remaster": {
+      "harmony_npz_sha256": "3777b8686976dd8cc7623dc838823015bb081903d9e435aee8484c6494fea7f6",
+      "metadata_sha256": "30d77ed31cc6a95ab4865890e835b83e1a7019192473f04b5c2fe7c9537c38b1",
+      "notes_npz_content_sha256": "891fe4ab09ef58f883979f5d0a86028f689477071d36c5f15bf1d89145b83922",
+      "notes_sha256": "4566f90df227638e4ed5a81779c7af9f12eb8a81d6ab2909efa3a1e7e2f7c7c8",
+      "number_of_notes": 387,
+      "v1_notes_sha256": "40598372331469d36d46c6cdca4d2c8d8fde9f3ada5de7f02287c50dcabbf6b0",
+      "v1_number_of_notes": 342
+    },
+    "i_have_nothing": {
+      "harmony_npz_sha256": "e269b5f08c9c99192d2390eac02dceedbcb54e8c30c9cd0c9552ebf4bdc43757",
+      "metadata_sha256": "eb3652fd8255c17ad992f99fee4682320a9c967ae0f87a10f2dd6b8702aa3637",
+      "notes_npz_content_sha256": "a356b38c3685f26df9e2bc30b1ebfa56c9a1a1ac96fd43278e1339b8e7e366dd",
+      "notes_sha256": "02e08c40367995802a62334f7ef94126ca312a782f6762be42c9bf1421e810eb",
+      "number_of_notes": 627,
+      "v1_notes_sha256": "09a1e6316e0fef20adcd936e3bdd59c657c210975b67f63fe4cbb399d20baf41",
+      "v1_number_of_notes": 548
+    },
+    "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+      "harmony_npz_sha256": "85afd1bad7e91ede57a76c428cf590357042e8008afb403becc88d15133fc746",
+      "metadata_sha256": "5134aec2e9c7466ab8634b89ae3cad7b4b68c9fa96ecdb47256ee4115874ac27",
+      "notes_npz_content_sha256": "42a429e7e128dc69e3912e9c9669d90f236268102b1e73df6e2c206f6eeefd9a",
+      "notes_sha256": "e0c52168eca8502bc2d6e497bf68c59aa4de8f53c82fc25d9931de92d91d95c3",
+      "number_of_notes": 607,
+      "v1_notes_sha256": "4c36f8cb533263fc8eed9c594ea51fd7b1d57611141dd6fc525149b35a839b62",
+      "v1_number_of_notes": 530
+    },
+    "jazmine_sullivan_bust_your_windows_audio": {
+      "harmony_npz_sha256": "df1e6f3b0f60ba62dbc807fc8a457cc91bddd758835b23a820459613c8f8405d",
+      "metadata_sha256": "ba49e1f88b4ca247cf199bf2df00d505317e841eacea484038be85428f7431b8",
+      "notes_npz_content_sha256": "b536c8fa825e12e6f59f8490ffbd3ed8ef3dc9f01d3605aee94ec51e973b3a13",
+      "notes_sha256": "a7c09d8603842d2cf45c534ce15c98272cd6ed51210b5fe02c1d0aa65010b7e5",
+      "number_of_notes": 754,
+      "v1_notes_sha256": "106f060d9bbc6487431f9bdf332591f2ede191b1935dfb457cad19671522fade",
+      "v1_number_of_notes": 645
+    },
+    "jeff_buckley_hallelujah": {
+      "harmony_npz_sha256": "a433525cf6f679f923dc995a761d2f6ea23ac273b15054ceab4fa28fc50da860",
+      "metadata_sha256": "d1cf97f559e8e49ebc3d9697ac96de24ccf97ccf7b737b09592c9caea471d2e8",
+      "notes_npz_content_sha256": "98a37bf693adece48c8e56a8ac70c69f79e605a42653747a4789535505d76f54",
+      "notes_sha256": "dda1f7bebadc6bebef8d2f28735d04345f719ad557df25b6e148500963bfd1a3",
+      "number_of_notes": 748,
+      "v1_notes_sha256": "e359a76b3b003a11d458e36ebbb8a4caebd9593bbea93fe88318207e39bf837e",
+      "v1_number_of_notes": 680
+    },
+    "jennifer_hudson_spotlight": {
+      "harmony_npz_sha256": "9c2f42748fe5876bfb65f5b3a422df84ab163445643736c849f3a80e381ab637",
+      "metadata_sha256": "36d7bc268261362fedeb542829fa20c04e2cb7eb2a029fbf6415d92916621ea2",
+      "notes_npz_content_sha256": "fcf15b7d8543106ccbac80df766826368621aef7986451e40064281a401ba6ee",
+      "notes_sha256": "45ed61de879c995ce6c2faeab0f1af438a669d2a896327e61659efd29f7de656",
+      "number_of_notes": 739,
+      "v1_notes_sha256": "ff5c05d74f53b6050f49fb7b08ab861d3e1779621ed81b39b562a813d29f8491",
+      "v1_number_of_notes": 619
+    },
+    "jessie_j_who_you_are_audio": {
+      "harmony_npz_sha256": "6be1750aa12cdc40cba59c15daa6a75a833b2681ed038fc4afa5d368a7675858",
+      "metadata_sha256": "ad07be3c6af88f622c82f4629832255de5b82a658137478dd20988e61676c04b",
+      "notes_npz_content_sha256": "4f8eb70b0d53f7b33de82eb5f87eb04e8cfd076bf47295442cbbb635933248d0",
+      "notes_sha256": "644092a34d4757070b2ea223ba107131566c19f35cb386e35c955bdf6df5ff2d",
+      "number_of_notes": 512,
+      "v1_notes_sha256": "56e440a2c9d67b512f0d8d42348c79731faf7879804d100f6a2c16712f367ede",
+      "v1_number_of_notes": 467
+    },
+    "jingle_bells_with_lyrics_christmas_songs_hd_christmas_songs_and_carols": {
+      "harmony_npz_sha256": "d06f3dd4a96432f55ef8eeba9fa5fba29fc4d1e444056f8fa2b0dd45545bb0fa",
+      "metadata_sha256": "c49cfe89b2f86c7b5c61a06dfd857bfa66f8cf054bc11761814d790393db68c2",
+      "notes_npz_content_sha256": "1f4dadd320990f8479ccb78fb7a990e66cdd860ab60f91c14d8c188e5eb28fee",
+      "notes_sha256": "3f9bac7fcbfa3673931dfa80f0985af4ae569d8c90c6ecdee19c8c95f76e0328",
+      "number_of_notes": 157,
+      "v1_notes_sha256": "92a76c7287d391c09b713e40ff746ec63366719024385e4451d66eab9672f134",
+      "v1_number_of_notes": 145
+    },
+    "john_legend_ordinary_people_hq": {
+      "harmony_npz_sha256": "5684a2b296d7de53508d8f86c384520e17850d2f3af1d3cb1f32e95d62eaebdb",
+      "metadata_sha256": "cb881f68b848fb96f42caf09fbfc6522c4823cece8d310c91582ab8921774cc7",
+      "notes_npz_content_sha256": "377eb2ff64e7d2449643cf0df57b5b6335bcf59047a460b97536300b4397c557",
+      "notes_sha256": "3a009035aa4607391a49e634f6432227ee5ede2d47e1cc1b77665172b0acf6dc",
+      "number_of_notes": 638,
+      "v1_notes_sha256": "a23c4da8339c72cba0422239591b90c1d677721888bfa17fe9c006042292272f",
+      "v1_number_of_notes": 539
+    },
+    "justin_bieber_baby_ft_ludacris": {
+      "harmony_npz_sha256": "980fc5d5a1e73882672ddd24fbe481508f15e1ed6ace5545c258ba90110d41ff",
+      "metadata_sha256": "4646e3088dd85b79b37db0caf8458d877763ad2c63f341b6ca463cccb6b0c9e6",
+      "notes_npz_content_sha256": "3822ab18a54690c17fb69a3814c7b01951ba4db50a3457669a47f7dc9064bb26",
+      "notes_sha256": "c76d809ff77cc8a64bef9fd23a74ca7d87f80514b027958c22ff5bb0b35950a4",
+      "number_of_notes": 525,
+      "v1_notes_sha256": "d2725d11b75b407ebc7e617e917b4ffa20a6edd398275b3dd873ac3b4598ffd9",
+      "v1_number_of_notes": 467
+    },
+    "kacey_musgraves_rainbow_official_audio": {
+      "harmony_npz_sha256": "2dcc9d4bf134d47a052bc87c4737b2a9072a3b5cf2f803205109ef66a31086e7",
+      "metadata_sha256": "989885d344c529fcb12e4e229467de40780f05108984267e7e82ff43321f5837",
+      "notes_npz_content_sha256": "82c894dd4574775fd25f3d56035643138fd0b8205318bd01671246746b2ac5db",
+      "notes_sha256": "cfe16c4c73dbee911416f51741fba33495e64b78c5d9d86408dfcbeee50438ab",
+      "number_of_notes": 393,
+      "v1_notes_sha256": "b67596f4d1b60581834b3010fbeaeb8e27d271f66d797c4bbf32a8d2441c8e93",
+      "v1_number_of_notes": 348
+    },
+    "kelly_clarkson_because_of_you_audio": {
+      "harmony_npz_sha256": "35daa551ee9cbb79d99b9daad49243d93f4a1958c7191e107afb3900b8d020bc",
+      "metadata_sha256": "93009190f98307fd8967bbdf530698cf3b1cd42b58555a63d5ebd59bb3e60794",
+      "notes_npz_content_sha256": "4ba4796a64aedb8270728ab404186607f0b6af29ff362ec715ba579c0da2f187",
+      "notes_sha256": "b38cbd67e4d317fabebaeb3a364449116f94dacb146597cdc40ffe4e81a8ef74",
+      "number_of_notes": 496,
+      "v1_notes_sha256": "c455444ecb603a1d98a16b363322eb00f96d34065aa687a1e6bfe9c986d3f6fc",
+      "v1_number_of_notes": 445
+    },
+    "lady_gaga_million_reasons_official_audio": {
+      "harmony_npz_sha256": "6a9a807ff025f99b2e920d49b527fdbac7cf6864d5f9c50658e79feeeffdd4db",
+      "metadata_sha256": "60b44f98433ffdb1cdcfd8b4a54bf67a82b62a1a968978017a3df404ccea4206",
+      "notes_npz_content_sha256": "cc6810dc0c3e695001655d248b6a5881c707b983420d8069e31956952d65516d",
+      "notes_sha256": "be5e009b258f7987934ceef5d4693b6cc0b2711df439b97d6a47bfcd19741564",
+      "number_of_notes": 372,
+      "v1_notes_sha256": "c5f12fe2c9b1ecf42fca7855e74c0b65db22db43484872aff226c79a51c1b52c",
+      "v1_number_of_notes": 311
+    },
+    "lately": {
+      "harmony_npz_sha256": "d71f42945190e9f7eb7eb1dac608eb67f7dfa41570f75a64cded409ca1bf5a46",
+      "metadata_sha256": "aa3fd3d1f3418b1dc9fa3e48d60a26e49ce6e55b688ef412daf27fa9a86b611d",
+      "notes_npz_content_sha256": "d881e649eb94f47a29630d97e97c1dbbf60ac8f786b44a64d39fe6e1eb272da7",
+      "notes_sha256": "0549d6045c0981d252bc9431e2ad68a6e65e68dd1b1c2a1b52ef851fc51bcbe7",
+      "number_of_notes": 493,
+      "v1_notes_sha256": "8cbab6f95c2eb57908b0f1a355ee4caeea677fd1b094eac44db56cc9b05ceeab",
+      "v1_number_of_notes": 439
+    },
+    "love_of_my_life": {
+      "harmony_npz_sha256": "a2020e3af33cdb0364767e647414aaad47d89996e0290604a425e6db6c531b0f",
+      "metadata_sha256": "dca5a2b8b5963eeedc0601908e4c5157c517cf82775b55a0cf1d437fd8e4f565",
+      "notes_npz_content_sha256": "67ad0d88d675751c0784ada7f1f6ab384e7133d8cd7eca9ea1288fe63537ae8b",
+      "notes_sha256": "97f2fa1f4528d6d208c4d78850b8d0a8892fd12768684a5c403550aa028c3175",
+      "number_of_notes": 311,
+      "v1_notes_sha256": "eb5259bdb7be3825a2df03727d385e593c0422b16091b57da1b9a7888297302c",
+      "v1_number_of_notes": 278
+    },
+    "luis_fonsi_despacito_lyrics_lyric_video_ft_daddy_yankee": {
+      "harmony_npz_sha256": "7bbded54bde7713bc489fb3c3a486711566f61d879774a3575bc4ab432f889e7",
+      "metadata_sha256": "93e963e6b2507a8424b614c8e340a0028a9af4930f323dcfe282724e8c40c87a",
+      "notes_npz_content_sha256": "9f16868b4fde46f226f86bf360c79a377e25c4f7223baecb2ce5f8d3d3050f26",
+      "notes_sha256": "3d506081ed493e32a431b0f350679e9e38a75fe3b15663f1e94b8b60ad8ba3cc",
+      "number_of_notes": 537,
+      "v1_notes_sha256": "c5264796d0c0ad943069fce5689245103cd1b118bd0e39746ac9a1278fa61275",
+      "v1_number_of_notes": 459
+    },
+    "luis_miguel_hasta_que_me_olvides_video_con_letra": {
+      "harmony_npz_sha256": "599a0f965201249b14af8ccb4296365786786f002ef1c09117061ee06eea9aae",
+      "metadata_sha256": "9dd05de10ab861a3e293d48961ae74b9eea82e018bdd2dcbcc811b1eafc2eed9",
+      "notes_npz_content_sha256": "8c2d9253b111c3b42ef3b0a3e07b0f24b3c54b868d8d193d33381c5c3b016e8b",
+      "notes_sha256": "4db742687983d8ba243fd86da1d7192ccfa7265c53a294ba1cab398a9b3819b1",
+      "number_of_notes": 478,
+      "v1_notes_sha256": "80dd9c501d721530ee73d89bd9915c4213e9eaac70a9c842c0522baddbeabe82",
+      "v1_number_of_notes": 411
+    },
+    "luther_vandross_here_and_now": {
+      "harmony_npz_sha256": "3a1b6ecf6019e5cccd340e45d10f31ca948f172058632513c22b502c33bd4abb",
+      "metadata_sha256": "091ed1dd116849deb12cb2dc39a492b37c4053ae2628132ee333eddbeceea34b",
+      "notes_npz_content_sha256": "f6f3e3132b7bef5c449429a919219f81753d3ce2bb18b8d53265b4bbc9ca3e7a",
+      "notes_sha256": "ae664ec306157c50783a6b071e33c9c600be938d48282277a7df88a625406a5a",
+      "number_of_notes": 876,
+      "v1_notes_sha256": "7e76905250d6b75408467d86b7f82c0bb1b620701162c1c628fe3c1401cbd47c",
+      "v1_number_of_notes": 746
+    },
+    "marc_anthony_ahora_quien_cover_audio_video": {
+      "harmony_npz_sha256": "03f04b8afd0a041e0df75f150c120571d0b5cd7e93dd41e5c93ea4f2b408595d",
+      "metadata_sha256": "55cf20a77c421ee1b9665ba2e152026ff0a6217a07b867299f2c04f1780a6b87",
+      "notes_npz_content_sha256": "beaa2c8b974d4ef0efc8e5ea71f94749f5c3efefa7cde4d94026b7a0be4e12eb",
+      "notes_sha256": "cd4f69d348bc103ca40132d7c676cd2d48aea675b7907dd9b5e1467661c0c18b",
+      "number_of_notes": 531,
+      "v1_notes_sha256": "6f8e3912ee3bcd99faa6443b79b236a5273c06b8128d2e8c643bbc9eff87423a",
+      "v1_number_of_notes": 469
+    },
+    "mariah_carey_all_i_want_for_christmas_is_you": {
+      "harmony_npz_sha256": "a3cccc72df92004265756c34f8d7df5dccdd39b581f7567fd446df20b0d85e08",
+      "metadata_sha256": "729f13e7db8a3306f59ff37a0dfbb0bbfb52b6375b906708294164bb903cc8a5",
+      "notes_npz_content_sha256": "3a64c2a3f18e4fd3a8414f27cf1e4d678edba1a84373ba95807596a2b2f845a0",
+      "notes_sha256": "0425c82e938379d0f96aadbada1f708acb714f4a047b2c088f5dbe421cf63fbf",
+      "number_of_notes": 647,
+      "v1_notes_sha256": "033fdd06d2de5672afa9243c2fecd285e9962552309e60b27ad9201465fd666d",
+      "v1_number_of_notes": 548
+    },
+    "mark_ronson_uptown_funk_official_audio_ft_bruno_mars": {
+      "harmony_npz_sha256": "529eca06482e9535c150200426ad4d951d43aee1bd605739ac62fec588f619c3",
+      "metadata_sha256": "8f5a5c285b0bd4afc121784f3b3cee249c96d81d3e6d98a44ee6d1d7a01b5046",
+      "notes_npz_content_sha256": "69182797b4ebc520139cef0d247ce6cf5aa936ffaf3803151f961198089a67ab",
+      "notes_sha256": "1457fa8adee6edd2ef6bc2ac59c783cc27fe15f93f4bcb5cc5d10a3549dc36a2",
+      "number_of_notes": 449,
+      "v1_notes_sha256": "fa79083585f6425d11dfe28d1008e1f26a0ab51d8bbb28d2d717f5cde145695c",
+      "v1_number_of_notes": 314
+    },
+    "michael_jackson_chicago_official_audio": {
+      "harmony_npz_sha256": "2ab2327080615dd770d79d3d8bfad1575979aa5c7dcf895004b9a33d49962285",
+      "metadata_sha256": "635cdda5ac3b8168d13265e228f3ca090cba2f7f37c329c018b0690b984daf61",
+      "notes_npz_content_sha256": "91a09f2b869b94fa4a219d82047d3d48dfc53f22dad0098ee5ec92927470fae5",
+      "notes_sha256": "61e50730052ed5a0dbac3d659eb4e72506feed2166d2e4c6d0ce2920e70f481b",
+      "number_of_notes": 450,
+      "v1_notes_sha256": "1f1382f0e3aeb2eed2395181af1cd74daa1b19053cf54f71f3f19ef8ab2633a3",
+      "v1_number_of_notes": 333
+    },
+    "midas_the_jagaban_party_with_a_jagaban_lyrics": {
+      "harmony_npz_sha256": "0033ec51c212fbfdd63bbeabd94b5a7f0864dba267558ce0a71c5f963fc4938a",
+      "metadata_sha256": "12a41ab6b04a04433e0d1b92df2c851487b8fd78724ca0fb0765d4e0750e79f8",
+      "notes_npz_content_sha256": "d8b36895e3effb1a43c8a369b7e07e3f4cea25a1c99dabe90dadafe6a3b9c021",
+      "notes_sha256": "27440bfee74df46775d42d95a22f102af2c387358355b58d2170d07bc94bcd26",
+      "number_of_notes": 536,
+      "v1_notes_sha256": "10a003a62012ab43fc3d4bcb590f72d25e3c8196674eab914d7863ded2e047d5",
+      "v1_number_of_notes": 456
+    },
+    "miguel_adorn_audio": {
+      "harmony_npz_sha256": "8cd129c6a2d45f6b758394d6402723bba519e5374f63352adee11645a8d557d4",
+      "metadata_sha256": "5ac68d3daac2f7e393c137fd0847eb2577c3ade1b0ed8469d7634ceaeb0cb9c4",
+      "notes_npz_content_sha256": "e4134c702f02464963e04e049bf8c235a60607ba44dd865eeb2b5467e197434a",
+      "notes_sha256": "48aafdd95aee2b1504b5b4f3dceb20043e45b592ef3782880dd0bb339a41ec9f",
+      "number_of_notes": 539,
+      "v1_notes_sha256": "443f17a9319226ef717ddd926ce126c3cd8c7e5459778be5ecbaef24a0372438",
+      "v1_number_of_notes": 457
+    },
+    "miley_cyrus_party_in_the_u_s_a_audio": {
+      "harmony_npz_sha256": "8f8322c3cb176e27c7e656f88f215dd75d6afab9b77ebbf7879e095f5bb53eb8",
+      "metadata_sha256": "469b1643551fc4237180bb48aba8bc573e9a9ca8f05b11a2a1d9c4ad5cb07522",
+      "notes_npz_content_sha256": "be1da0126aacd9d7152775a7e60fb83d92d6d286221d143103d00e88fb957893",
+      "notes_sha256": "044ab6b27fd27edad080937ed1da0d063fd71f90018412d852c920bfb7f6b62f",
+      "number_of_notes": 393,
+      "v1_notes_sha256": "e5916853f3f3c59dae3c112712cf0fbb98f8cc20a3c6951a442f2559f3cef8df",
+      "v1_number_of_notes": 347
+    },
+    "ne_yo_so_sick": {
+      "harmony_npz_sha256": "04ae4a94aa27bfa7e4af3a9ffc84f717a06957312fbebc2089ca05c193cbd8a9",
+      "metadata_sha256": "7ba8ab7aa6220a653d863acf63b551745f95774d128edc2c54811643fc6b49c1",
+      "notes_npz_content_sha256": "d3d4b44baf7b8579418a758d7289d5e189eee61e12e8b7e9bbdaf07f77966873",
+      "notes_sha256": "7f1a5caf0983fa0dfe3392b736cc6140c9d6b7db40417a9e790bc6c04ade1877",
+      "number_of_notes": 579,
+      "v1_notes_sha256": "d5f9f4d0c1318b2cb8e29acfff2c985adc447b973582b78d2464ea47b51324a8",
+      "v1_number_of_notes": 508
+    },
+    "no_ordinary_love": {
+      "harmony_npz_sha256": "14974e7b89b82a1cb936e35606a7e2f5cf4084b21d8c9695680cf2463f7116ef",
+      "metadata_sha256": "1f679bb8ea635325dd622c933353af6fac46b766d9ebde660cbeb5ebe841ce47",
+      "notes_npz_content_sha256": "6b86d9c65e464c558cfa902535b2cae336652a0c5febe3583cdd7f25ce0ec2e5",
+      "notes_sha256": "045a8418591027027ce83235df464da0f1a03c04b1de7ae04772b95c514f9477",
+      "number_of_notes": 542,
+      "v1_notes_sha256": "5ce1fbd0236c22e828310ddf90cd1f27d5d7a79b1542d3b8043662507f9d68f6",
+      "v1_number_of_notes": 475
+    },
+    "norah_jones_don_t_know_why": {
+      "harmony_npz_sha256": "8ca91f5c6e77f61ca118d73afe33e64bc465fbd4031fef7cda612727ab34530e",
+      "metadata_sha256": "bc005ff51554134409ff2c5713d4b6546bd1354ad9f1375e81de4051d2ffc2bd",
+      "notes_npz_content_sha256": "296c26f30513850819e0be6edca645f3f911f4548aed50d343d38fc993240eb4",
+      "notes_sha256": "612863ae627605cc00586bbba394a59fbf48869c09312eee4a6e0e52bef54dbb",
+      "number_of_notes": 363,
+      "v1_notes_sha256": "d24119d13b8725d143eedf3a4b43af5209aa84edbf375051041a6450022060be",
+      "v1_number_of_notes": 325
+    },
+    "one_dance_drake_full_song": {
+      "harmony_npz_sha256": "1a130a9f53b527b26776a9404edff15c7f30dd001cdd6bf6fb211d97dac5e010",
+      "metadata_sha256": "13cd179dc50d5f3b2ff67c38568c6f7bd5b61b04a41f7dc534f3bb6d5663d9c2",
+      "notes_npz_content_sha256": "8689d85a637871c28e35d65cb03a2422d01d454f89be9d3bee6432f7b2ae32ea",
+      "notes_sha256": "2cadc6b9f366218d38129f7680b264c2e51035495e53d3aabf6876f69a1fffb0",
+      "number_of_notes": 426,
+      "v1_notes_sha256": "b025203e88e94bfb34cfb916f3eee8c66406768ee4769388233db7902f575434",
+      "v1_number_of_notes": 390
+    },
+    "paramore_the_only_exception_audio": {
+      "harmony_npz_sha256": "a19a943b51f3cb61e83022b6bee969213e1e3dc87146bfd6bbe6109e0289d581",
+      "metadata_sha256": "5a3b1e65c455e6c191997077537bae5c9f32ea5b76dcdd5e34ca61cdf15df0ec",
+      "notes_npz_content_sha256": "e5149c209c0309d2a24a96ee266a641d2e17eec95ffc786425ee8375c396180a",
+      "notes_sha256": "3cf3f419a01498d8c2f9e79827c959437ac44105b8771ed971e61278d3239ac7",
+      "number_of_notes": 451,
+      "v1_notes_sha256": "6b4a736641ef907a3b6b8054bcb201252465df9cf9b3051592a6dc842b9b5074",
+      "v1_number_of_notes": 390
+    },
+    "post_malone_swae_lee_sunflower_spider_man_into_the_spider_verse": {
+      "harmony_npz_sha256": "531ba6986f33254ddc11a37288ffd1d9e194e1c6762c8398f345e224dbb287bb",
+      "metadata_sha256": "4fa0857ca1d27e7141ab4b64f28bee1043b97ad80ea40c25d6ab5335820c0f61",
+      "notes_npz_content_sha256": "05dbba0640ba8677d10af97f14309d5e827bc5884e9033b0916a2daf180f324a",
+      "notes_sha256": "58dfaf7d1f9d6b0fdf3e10d374acdf3cfadece57133be943fb7a42e5cd281088",
+      "number_of_notes": 278,
+      "v1_notes_sha256": "f12de4824ae7c30ab64a54ea44bcfe10abfc4fe824ee281fb36cc67836fcd01e",
+      "v1_number_of_notes": 262
+    },
+    "prince_royce_corazon_sin_cara_audio": {
+      "harmony_npz_sha256": "052ac21062692fc37f3ae3dc5fd620d03f665bb6e01c46ffcee8612b28c777f3",
+      "metadata_sha256": "15ca8692b70cf2306d6aad6a93ce19a79e4a6566755235a19dde9dc92a47398f",
+      "notes_npz_content_sha256": "195f988440ecfa2900480eada25b1099ae11549e9547cd7c86c3f211e5372ead",
+      "notes_sha256": "9506a90d5fd573b1897c35ac1a2d72f27f3d93be488311e1e04fe53ce272fe2c",
+      "number_of_notes": 440,
+      "v1_notes_sha256": "617e8ac54fd46917cce6676a9d237fd762ee4a55123952fe5f03ca9901e4ff2c",
+      "v1_number_of_notes": 389
+    },
+    "romeo_santos_propuesta_indecente_audio": {
+      "harmony_npz_sha256": "1dd9e01e0ed50384441d88bc605053ffe11ba431cffc118e43152c131fec344d",
+      "metadata_sha256": "78b7b27f78f5b835d6e2639b3f515adb13a0b5a6b74d502161d1882962c2af75",
+      "notes_npz_content_sha256": "5dedeba5c0cb9eb4149950174d06f86d177d74b40aeb8f58707b46c2b1024020",
+      "notes_sha256": "38c6fa28e8057c1ef3340f5cdd797a9040e60bc471bad1aa1ce2e5cb9113aa08",
+      "number_of_notes": 485,
+      "v1_notes_sha256": "c203bcc91aa30f5a89414883882787787c0c1b89b2069f55e79aa7e43adf8bf0",
+      "v1_number_of_notes": 400
+    },
+    "sam_smith_lay_me_down_lyric_video": {
+      "harmony_npz_sha256": "543dc2e360ee0a25087017361fb1a023c085d05cf02a464291d68b1283b2ec55",
+      "metadata_sha256": "8146f1f93715ef6bf767e1c60d20d1fcc17c60ab6f1b0e92d27cd3a29bf52e6d",
+      "notes_npz_content_sha256": "e0c60e75863c9400e4f3a66ad3203e7961dabb36a0e67d588703ab0f6d7323b5",
+      "notes_sha256": "0bf5a4ff4b7077e48e75d4bc39d1294d4ec4fa3055f9adbcfe04c0029c6d54e2",
+      "number_of_notes": 526,
+      "v1_notes_sha256": "636646a705cbde0f9fb92ac8a20b7a9ed9e70fbacfcfdb5a3bea6478e048da1a",
+      "v1_number_of_notes": 483
+    },
+    "sheila_ki_jawani_audio_song_tees_maar_khan_katrina_kaif_vishal_dadlani_sunidhi_chauhan": {
+      "harmony_npz_sha256": "1877c105279d59411775b6d7303151640c28987d074f175b7362e3d50d0ca018",
+      "metadata_sha256": "f5d5b057af29aa02edd308e4a76790165c053c99838ac70305d6b8b702e6e7a7",
+      "notes_npz_content_sha256": "9ded67b17517735101807ccbfee48d090aa6ab7e9f7026b9f41eb1ce1f56e737",
+      "notes_sha256": "5e5e85d0ec2d6f40b7cec930edc512a8b5b203d0fe4f34ddd0389297acb27fa3",
+      "number_of_notes": 634,
+      "v1_notes_sha256": "2f8955b38c04304e92f755b077a78bcbd20a768618a5198f61c4b15f1278fc92",
+      "v1_number_of_notes": 562
+    },
+    "tame_impala_let_it_happen_official_audio": {
+      "harmony_npz_sha256": "d5118be990901a33ec5ca92f2eef0a6b28b28ee61a5075e6d43cfa9b1c9fa4cf",
+      "metadata_sha256": "c1ab63248b6e83e39e31d6bc31c8708e723f99025d81978cddb56f926b431e17",
+      "notes_npz_content_sha256": "0587504bf35296b93f0734ae09e9efc5356aea235be3adc5fdc23423019e3b58",
+      "notes_sha256": "9377fd72617cbfd87132277176421ff68f16cdba3c73c8e6855d41269d037e79",
+      "number_of_notes": 398,
+      "v1_notes_sha256": "bca241a10a612593f454badf96e76b70fc258d858268d0e7cb46db74b6659e92",
+      "v1_number_of_notes": 331
+    },
+    "teri_ore_full_audio_singh_is_kinng_akshay_kkatrina_kpritamrahat_fateh_ali_khanshreya_ghoshal": {
+      "harmony_npz_sha256": "ae1ce82f55ebb0fdb61c46ff86a89d9ba820a87c5a0945e51490b610d70b19ea",
+      "metadata_sha256": "412e385702dd28b1d01a2e0a4de0a88816c3aff19c5b55750f685ab9bc0520b6",
+      "notes_npz_content_sha256": "6c526b9a953d0c76cab63c66dfdef46c33643888c2917a88b5619fa69c26baa0",
+      "notes_sha256": "b4bb7aa380d6bb251ad324895560997c59241d8a8f2f172c89d1ef244a81c0c6",
+      "number_of_notes": 761,
+      "v1_notes_sha256": "eb77e4bfc699bb22cea55561af894a7fa6109806c6eda8f2e6758887a4fdf4cb",
+      "v1_number_of_notes": 662
+    },
+    "the_weeknd_starboy_audio_ft_daft_punk": {
+      "harmony_npz_sha256": "2b17cc9f2ab0aab2aa132f4fdfd00b4594d8ad094c4c831bb0ebc528f09dd2d4",
+      "metadata_sha256": "8a0ff855ee1a03458d0f2c1e8d9d02fd56e374044eace637c18a2525c8fbd9af",
+      "notes_npz_content_sha256": "082fa3442b13d32ff679b73b1a23e4ed735fb17de4a28892edf1c502d65c813e",
+      "notes_sha256": "991ab98e9977541bfbd8cf7ca07f51e0d7d932181517557441ddba7ed0827890",
+      "number_of_notes": 347,
+      "v1_notes_sha256": "5f75628daeb0c58f2d522707b7cf08d7b2e8e8ea8c398b4d7f2aa7165dd4da6e",
+      "v1_number_of_notes": 314
+    },
+    "tum_hi_ho_lyrics_arijit_singhaashiqui_2_tseries": {
+      "harmony_npz_sha256": "f3b6d2b4a43e481bba18be907c45daf7e75dcd9dfde684f8f739a72fd81fcd86",
+      "metadata_sha256": "2366a05ec345545ecd07359e632da66a83ea616d987c8df0d1610b223ceb2be1",
+      "notes_npz_content_sha256": "d75e3e2a9898bd1be7e5d3a5d25c8878d1ab853c298e5a6e85a4f6ac446ad071",
+      "notes_sha256": "716f5a1a21b8bfe90387e126f4cf0d99d314cf2561d7ac88e50f74cc999d08ac",
+      "number_of_notes": 489,
+      "v1_notes_sha256": "d05e670bd48d2fa1a8cbeb26aca7c00bec7e5dcd1ff1449ce61193cd7484ae6e",
+      "v1_number_of_notes": 423
+    },
+    "usher_burn": {
+      "harmony_npz_sha256": "c6131b2fcac6b7b525222aa213ba8ad4c00965e56ad4e32e4499ec740db5a04b",
+      "metadata_sha256": "1cb4dd31ba68dcb882279a5d51957540666fdb044d78249eea658b6adbcf2af9",
+      "notes_npz_content_sha256": "c3b5ea9e5b2306a399c0190364a57ee4905c83441b9cc530175465014d4386ee",
+      "notes_sha256": "75a88ab9ae7413305b96c758ead87c066d4f1d1e765917607d175463c5edd364",
+      "number_of_notes": 667,
+      "v1_notes_sha256": "7e8443ce8d0712506a7fa52aa8dce9ba6bd4cb94cd4330d4571925a4a1cdee0b",
+      "v1_number_of_notes": 561
+    },
+    "wild_thoughts": {
+      "harmony_npz_sha256": "152780e623d0295212447cd4dbee5306d070651ff7654b81a32c5bf4482b0e78",
+      "metadata_sha256": "383517d7214926a82753038fb5030c853dbbfe73ad637cd1a0d61f598492d05d",
+      "notes_npz_content_sha256": "5bcf967c67952f7b0195dce70469c5b5bfa956f837abfa749b7a226ef2e3faab",
+      "notes_sha256": "38ba9038671ef72c4fd117d9694c283352672e484bd1d281b703ee843d7415f7",
+      "number_of_notes": 475,
+      "v1_notes_sha256": "e28a7c9b264cf0e819f8e466dfa145e43e4a5c279de491a9b1cdbae1d09bf75d",
+      "v1_number_of_notes": 405
+    },
+    "work_rihanna_full_song": {
+      "harmony_npz_sha256": "fcaa9ce6fc1a726906a8130062689c9a429abffb8cb411ea98e47ca348a1b5bb",
+      "metadata_sha256": "c092dacab2c22b36eec7f17a62561eed166f653f26960819209b13fc048fb818",
+      "notes_npz_content_sha256": "f75eed6c821771e996089042570955c519d32e7a3b9c207b2fe002d66459b45e",
+      "notes_sha256": "ca723a0d4f54858b410d6d853418bd936f0812f16f325961ad6b19ae625add81",
+      "number_of_notes": 592,
+      "v1_notes_sha256": "6e99d11411ad63937512825c22d90fbb5396e7e66eae85c0ddfd87482fcc679c",
+      "v1_number_of_notes": 527
+    },
+    "you_make_me_feel_like_a_natural_woman": {
+      "harmony_npz_sha256": "d11b8ad746f6ef582dcab535015a7fabd7ca7a11e0819d5d5aa4ed019409c8ac",
+      "metadata_sha256": "b73236bdd8578c1333b9af4762079bc5dedd1f6021803d471bffc451edf6e4bd",
+      "notes_npz_content_sha256": "06ed79cfe80c6297a27d53918c36e4d837940e30ef26ea745049550230c636f6",
+      "notes_sha256": "2acab5f95138e07d8bfadb16b0863cfc79f8b68e792eda4166da8c8f43df6e71",
+      "number_of_notes": 368,
+      "v1_notes_sha256": "3f9435b6816dca007a766803e922ef1dc70b028ab5803579ea3967f946bab8dd",
+      "v1_number_of_notes": 302
+    },
+    "you_raise_me_up": {
+      "harmony_npz_sha256": "62de100d51dd961bcf4687ebe0a7ba84d5cdd196c64aee5a0fc1cdc06c1ca689",
+      "metadata_sha256": "593e461b71fb85f4f2aae59d74357328e05388c046d7bcf5b8e8de14e26ecef5",
+      "notes_npz_content_sha256": "3a9843c4215a7a9bc6f8a39976b92a098fb612c88ca76c59081b40c5c0b1bf81",
+      "notes_sha256": "84fc1e7a7491b03dcf785b5e6438de55188f67cdea197acf0411af035851236a",
+      "number_of_notes": 364,
+      "v1_notes_sha256": "5a09735b229e3ed73d456fe060db953b92f55dd21d99526c891ad86611021200",
+      "v1_number_of_notes": 327
+    }
+  },
+  "timestamp_utc": "2026-10-14T18:42:42+00:00",
+  "total_notes": 31803
+}
