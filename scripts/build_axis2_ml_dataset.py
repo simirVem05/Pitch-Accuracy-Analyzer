@@ -95,7 +95,7 @@ def build(args: argparse.Namespace, out: Path) -> Dict[str, Any]:
     note_counts = {k: 0 for k in SPLITS}
     schemas, filtered, source_hashes = set(), 0, {}
     for si, song in enumerate(songs):
-        sd = MAIN_DIR / song
+        sd = args.main_dir / song
         meta = json.loads((sd / ("metadata_v1.json" if args.notes_file == "notes_v1.npz" else "metadata.json"))
                           .read_text(encoding="utf-8"))
         schemas.add(int(meta["dataset_schema_version"]))
@@ -218,7 +218,7 @@ def build(args: argparse.Namespace, out: Path) -> Dict[str, Any]:
     })
     if schema >= 2:
         # provenance only a re-segmented source has; absent from axis2_v1 by construction
-        seg = json.loads((MAIN_DIR / songs[0] / "metadata.json").read_text(encoding="utf-8"))
+        seg = json.loads((args.main_dir / songs[0] / "metadata.json").read_text(encoding="utf-8"))
         summary.update({
             "source_feature_store_schema_version": schema,
             "source_notes_file": args.notes_file,
@@ -255,7 +255,7 @@ def validate(out: Path, args: argparse.Namespace) -> Dict[str, Any]:
     # per-note: clean contour verbatim from canonical notes; corrupted = clean + shift; confidence unchanged
     ok_contour = True
     for si, song in enumerate(songs):
-        with np.load(MAIN_DIR / song / args.notes_file, allow_pickle=False) as z:
+        with np.load(args.main_dir / song / args.notes_file, allow_pickle=False) as z:
             nn = {k: z[k] for k in z.files}
         no = nn["contour_offsets"]
         rows = np.flatnonzero((d["song_index"] == si) & (d["variant_index"] == 0))
@@ -336,10 +336,13 @@ def main() -> int:
     p.add_argument("--notes-file", choices=("notes.npz", "notes_v1.npz"), required=True)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--splits-from", type=Path, default=DEFAULT_SPLITS)
+    p.add_argument("--main-dir", type=Path, default=MAIN_DIR,
+                   help="feature store to read notes from (a staging directory before promotion)")
     p.add_argument("--created-at", help="fixed ISO timestamp for reproducible output")
     p.add_argument("--reproduce-check", type=Path, help="compare the build with this existing dataset")
     args = p.parse_args()
 
+    args.main_dir = args.main_dir.resolve()
     out = args.out.resolve()
     if out.exists():
         raise SystemExit(f"{out} already exists; refusing to overwrite a dataset")

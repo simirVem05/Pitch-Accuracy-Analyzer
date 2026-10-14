@@ -141,6 +141,14 @@ def _code_hashes() -> Dict[str, str]:
     return {f: _sha256(REPO_ROOT / f) for f in CODE_FILES}
 
 
+def _rel(p: Path) -> str:
+    """Repo-relative path when inside the repo (as the manifest records), absolute otherwise."""
+    try:
+        return str(p.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(p)
+
+
 def _copy_atomic(src: Path, dst: Path) -> None:
     with tempfile.NamedTemporaryFile(dir=dst.parent, prefix=dst.name + ".", suffix=".tmp", delete=False) as tmp:
         tmp_path = Path(tmp.name)
@@ -213,8 +221,8 @@ def stage(args: argparse.Namespace) -> int:
                          metadata_sha256=_sha256(dst / "metadata.json"))
             rec = records[song]
             rec.update(number_of_notes=len(segs), validation_status="passed", segmentation_version="v2",
-                       notes_v1_path=str((song_dir / "notes_v1.npz").relative_to(REPO_ROOT)),
-                       metadata_v1_path=str((song_dir / "metadata_v1.json").relative_to(REPO_ROOT)),
+                       notes_v1_path=_rel(song_dir / "notes_v1.npz"),
+                       metadata_v1_path=_rel(song_dir / "metadata_v1.json"),
                        resegmented_at_utc=timestamp)
         entry["notes_sha256"] = _sha256(dst / "notes.npz")
         report["songs"][song] = entry
@@ -275,11 +283,11 @@ def _protected_hashes(main_dir: Path) -> Dict[str, str]:
     out = {"data/dataset_selections.json": _sha256(SELECTIONS)}
     for p in sorted(ML_V1_DIR.rglob("*")):
         if p.is_file():
-            out[str(p.relative_to(REPO_ROOT))] = _sha256(p)
+            out[_rel(p)] = _sha256(p)
     for song in _manifest_songs(main_dir):
         for name in PROTECTED_PER_SONG:
             p = main_dir / song / name
-            out[str(p.relative_to(REPO_ROOT))] = _sha256(p)
+            out[_rel(p)] = _sha256(p)
     return out
 
 
