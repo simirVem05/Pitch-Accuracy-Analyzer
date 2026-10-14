@@ -1,0 +1,1475 @@
+{
+  "experiment": "axis2_v2_core_median_baseline",
+  "prediction_rule": "production_core_median_of_own_cents_contour",
+  "features_used": [
+    "cents_contour"
+  ],
+  "test_evaluated": false,
+  "dataset": {
+    "path": "data/ml_dataset/axis2_v2/examples.npz",
+    "dataset_name": "axis2_v2",
+    "schema_version": 1,
+    "label_field": "injected_shift_cents",
+    "split_encoding": {
+      "train": 0,
+      "validation": 1,
+      "test": 2
+    },
+    "variant_encoding": {
+      "clean": 0,
+      "corruption_1": 1,
+      "corruption_2": 2,
+      "corruption_3": 3,
+      "corruption_4": 4
+    },
+    "sealed_split": "test",
+    "sealed_split_metadata_only": {
+      "example_count": 20350,
+      "clean_note_count": 4070
+    }
+  },
+  "core_definition": {
+    "helper": "backend/note_segmentation.py:_core_slice",
+    "helper_source": "def _core_slice(cents_all: np.ndarray) -> np.ndarray:\n    n = cents_all.size\n    if n < MIN_VOICED_FOR_CORE:\n        return cents_all\n    trim = int(np.floor(n * CORE_TRIM_FRACTION))\n    lo, hi = trim, n - trim\n    return cents_all if hi <= lo + 1 else cents_all[lo:hi]\n",
+    "min_voiced_for_core": 10,
+    "core_trim_fraction": 0.2,
+    "rule": "index-based over the note's voiced frames (gaps already removed): if n < 10 the whole contour; else drop floor(0.2 * n) frames from each end, keeping the middle ~60% (fallback to whole if fewer than 2 frames would remain, which cannot happen for n >= 10)",
+    "trim_is_noop_when": "num_frames < 10",
+    "production_uses": [
+      "notes.npz core_median_cents_deviation",
+      "target MIDI selection in _finalize_segment",
+      "examples.npz core_median_cents"
+    ],
+    "module_file": "backend/note_segmentation.py"
+  },
+  "verification": {
+    "prediction_inputs": [
+      "own_example_cents_contour"
+    ],
+    "sibling_variants_used_for_prediction": false,
+    "clean_reference_used_for_prediction": false,
+    "song_or_artist_used_for_prediction": false,
+    "harmonic_fit_or_chroma_used": false,
+    "predicted_example_count": 107385,
+    "predictions_all_finite": true,
+    "targets_all_finite": true,
+    "independent_core_median_vs_stored_core_median_cents": {
+      "compared_example_count": 107385,
+      "max_abs_difference_cents": 0.0,
+      "median_abs_difference_cents": 0.0,
+      "mismatches_above_tolerance": 0,
+      "tolerance_cents": 1e-09,
+      "matches_stored_core_median_cents": true
+    },
+    "full_median_recomputation_matches_saved_baseline_2": {
+      "train": {
+        "example_count": {
+          "recomputed": 88685,
+          "saved": 88685
+        },
+        "mae": {
+          "recomputed": 16.858183175391222,
+          "saved": 16.858183175391222
+        },
+        "rmse": {
+          "recomputed": 23.22196668600043,
+          "saved": 23.22196668600043
+        },
+        "mean_signed_error": {
+          "recomputed": -0.29546114489123626,
+          "saved": -0.29546114489123626
+        },
+        "median_absolute_error": {
+          "recomputed": 12.263930377406437,
+          "saved": 12.263930377406437
+        }
+      },
+      "validation": {
+        "example_count": {
+          "recomputed": 18700,
+          "saved": 18700
+        },
+        "mae": {
+          "recomputed": 18.604491702740603,
+          "saved": 18.604491702740603
+        },
+        "rmse": {
+          "recomputed": 25.201577979948617,
+          "saved": 25.201577979948617
+        },
+        "mean_signed_error": {
+          "recomputed": -0.32897457120387463,
+          "saved": -0.32897457120387463
+        },
+        "median_absolute_error": {
+          "recomputed": 14.543082009839267,
+          "saved": 14.543082009839267
+        }
+      }
+    }
+  },
+  "train": {
+    "overall": {
+      "example_count": 88685,
+      "mae": 16.26238448705922,
+      "rmse": 21.00234107981449,
+      "mean_signed_error": -0.4282142845120254,
+      "median_absolute_error": 12.402398123605932
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 17737,
+        "mae": 16.262384487059222,
+        "rmse": 21.002341079814492,
+        "mean_signed_error": -0.4282142845120253,
+        "median_absolute_error": 12.402398123605932
+      },
+      "corruption_1": {
+        "example_count": 17737,
+        "mae": 16.26238448705922,
+        "rmse": 21.00234107981449,
+        "mean_signed_error": -0.42821428451202537,
+        "median_absolute_error": 12.402398123605932
+      },
+      "corruption_2": {
+        "example_count": 17737,
+        "mae": 16.262384487059222,
+        "rmse": 21.00234107981449,
+        "mean_signed_error": -0.4282142845120253,
+        "median_absolute_error": 12.40239812360593
+      },
+      "corruption_3": {
+        "example_count": 17737,
+        "mae": 16.26238448705922,
+        "rmse": 21.00234107981449,
+        "mean_signed_error": -0.4282142845120253,
+        "median_absolute_error": 12.402398123605932
+      },
+      "corruption_4": {
+        "example_count": 17737,
+        "mae": 16.262384487059222,
+        "rmse": 21.002341079814492,
+        "mean_signed_error": -0.42821428451202537,
+        "median_absolute_error": 12.402398123605934
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 35474,
+        "mae": 16.262384487059222,
+        "rmse": 21.00234107981449,
+        "mean_signed_error": -0.4282142845120253,
+        "median_absolute_error": 12.402398123605932
+      },
+      "negative": {
+        "example_count": 35474,
+        "mae": 16.262384487059222,
+        "rmse": 21.00234107981449,
+        "mean_signed_error": -0.42821428451202537,
+        "median_absolute_error": 12.402398123605932
+      }
+    },
+    "tail": {
+      "example_count": 88685,
+      "absolute_error_quantiles": {
+        "p50": 12.402398123605932,
+        "p75": 25.33981130280903,
+        "p90": 37.298893963193194,
+        "p95": 42.82851734750338,
+        "p99": 48.43823087167196,
+        "p99_5": 49.276716228154555,
+        "p99_9": 49.8660264670594
+      },
+      "max_absolute_error": 49.99273950830566,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 22615,
+          "percent": 25.500366465580424
+        },
+        "gt_50_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_100_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_200_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    }
+  },
+  "validation": {
+    "overall": {
+      "example_count": 18700,
+      "mae": 17.42551270554066,
+      "rmse": 21.900161152420697,
+      "mean_signed_error": -0.2577731842260168,
+      "median_absolute_error": 14.36526377835438
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 3740,
+        "mae": 17.42551270554066,
+        "rmse": 21.9001611524207,
+        "mean_signed_error": -0.25777318422601686,
+        "median_absolute_error": 14.365263778354382
+      },
+      "corruption_1": {
+        "example_count": 3740,
+        "mae": 17.42551270554066,
+        "rmse": 21.9001611524207,
+        "mean_signed_error": -0.25777318422601686,
+        "median_absolute_error": 14.365263778354382
+      },
+      "corruption_2": {
+        "example_count": 3740,
+        "mae": 17.42551270554066,
+        "rmse": 21.900161152420697,
+        "mean_signed_error": -0.25777318422601697,
+        "median_absolute_error": 14.365263778354382
+      },
+      "corruption_3": {
+        "example_count": 3740,
+        "mae": 17.42551270554066,
+        "rmse": 21.9001611524207,
+        "mean_signed_error": -0.2577731842260169,
+        "median_absolute_error": 14.36526377835438
+      },
+      "corruption_4": {
+        "example_count": 3740,
+        "mae": 17.425512705540655,
+        "rmse": 21.9001611524207,
+        "mean_signed_error": -0.25777318422601714,
+        "median_absolute_error": 14.365263778354379
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 7480,
+        "mae": 17.42551270554066,
+        "rmse": 21.900161152420697,
+        "mean_signed_error": -0.25777318422601697,
+        "median_absolute_error": 14.36526377835438
+      },
+      "negative": {
+        "example_count": 7480,
+        "mae": 17.42551270554066,
+        "rmse": 21.900161152420697,
+        "mean_signed_error": -0.2577731842260168,
+        "median_absolute_error": 14.36526377835438
+      }
+    },
+    "tail": {
+      "example_count": 18700,
+      "absolute_error_quantiles": {
+        "p50": 14.36526377835438,
+        "p75": 26.479082669694748,
+        "p90": 38.263886336911916,
+        "p95": 43.348031677453434,
+        "p99": 48.80799856170759,
+        "p99_5": 49.32215493455756,
+        "p99_9": 49.9104775090629
+      },
+      "max_absolute_error": 49.984671231951154,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 5210,
+          "percent": 27.86096256684492
+        },
+        "gt_50_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_100_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_200_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    },
+    "by_song": {
+      "bruno_mars_when_i_was_your_man_audio": {
+        "example_count": 2405,
+        "mae": 16.94552567846207,
+        "rmse": 21.689929477971713,
+        "mean_signed_error": -0.8099861185854808,
+        "median_absolute_error": 13.514058791974888,
+        "p95_absolute_error": 43.079122888381434,
+        "p99_absolute_error": 48.97395188339646,
+        "max_absolute_error": 49.6516648433105,
+        "clean_mae": 16.945525678462065,
+        "clean_example_count": 481,
+        "clean_note_count": 481
+      },
+      "christina_aguilera_hurt_audio": {
+        "example_count": 2550,
+        "mae": 14.117223244411111,
+        "rmse": 18.349476307965606,
+        "mean_signed_error": 0.8625122545452075,
+        "median_absolute_error": 10.40995088670453,
+        "p95_absolute_error": 38.71149681843831,
+        "p99_absolute_error": 46.12500933667867,
+        "max_absolute_error": 49.36712873773621,
+        "clean_mae": 14.117223244411113,
+        "clean_example_count": 510,
+        "clean_note_count": 510
+      },
+      "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+        "example_count": 3035,
+        "mae": 19.53948965898102,
+        "rmse": 23.702536779753213,
+        "mean_signed_error": 0.3174781904612586,
+        "median_absolute_error": 17.015630405111573,
+        "p95_absolute_error": 44.22418427413159,
+        "p99_absolute_error": 49.666844048375694,
+        "max_absolute_error": 49.984671231951154,
+        "clean_mae": 19.539489658981015,
+        "clean_example_count": 607,
+        "clean_note_count": 607
+      },
+      "lady_gaga_million_reasons_official_audio": {
+        "example_count": 1860,
+        "mae": 16.96168131864499,
+        "rmse": 21.27050529313071,
+        "mean_signed_error": 0.7799997496143968,
+        "median_absolute_error": 13.281614289488502,
+        "p95_absolute_error": 43.31088546938544,
+        "p99_absolute_error": 48.44163069779542,
+        "max_absolute_error": 49.9104775090629,
+        "clean_mae": 16.96168131864499,
+        "clean_example_count": 372,
+        "clean_note_count": 372
+      },
+      "luther_vandross_here_and_now": {
+        "example_count": 4380,
+        "mae": 19.668239858391402,
+        "rmse": 24.049107170336928,
+        "mean_signed_error": 0.8123676776838801,
+        "median_absolute_error": 16.99290720054769,
+        "p95_absolute_error": 45.83591196069471,
+        "p99_absolute_error": 48.97111401014736,
+        "max_absolute_error": 49.89423447893436,
+        "clean_mae": 19.6682398583914,
+        "clean_example_count": 876,
+        "clean_note_count": 876
+      },
+      "marc_anthony_ahora_quien_cover_audio_video": {
+        "example_count": 2655,
+        "mae": 14.750645408525603,
+        "rmse": 19.257162159513474,
+        "mean_signed_error": -3.167156463887829,
+        "median_absolute_error": 11.37010542609083,
+        "p95_absolute_error": 41.997165822160184,
+        "p99_absolute_error": 48.17949994554114,
+        "max_absolute_error": 49.826805297180314,
+        "clean_mae": 14.750645408525601,
+        "clean_example_count": 531,
+        "clean_note_count": 531
+      },
+      "norah_jones_don_t_know_why": {
+        "example_count": 1815,
+        "mae": 18.150549066988333,
+        "rmse": 22.445446024083974,
+        "mean_signed_error": -1.452046301864805,
+        "median_absolute_error": 16.172737667996206,
+        "p95_absolute_error": 41.83729792540001,
+        "p99_absolute_error": 48.73501052199103,
+        "max_absolute_error": 49.40822745952758,
+        "clean_mae": 18.150549066988333,
+        "clean_example_count": 363,
+        "clean_note_count": 363
+      }
+    },
+    "song_extremes": {
+      "best_by_mae": {
+        "song_id": "christina_aguilera_hurt_audio",
+        "mae": 14.117223244411111
+      },
+      "worst_by_mae": {
+        "song_id": "luther_vandross_here_and_now",
+        "mae": 19.668239858391402
+      },
+      "best_by_rmse": {
+        "song_id": "christina_aguilera_hurt_audio",
+        "rmse": 18.349476307965606
+      },
+      "worst_by_rmse": {
+        "song_id": "luther_vandross_here_and_now",
+        "rmse": 24.049107170336928
+      }
+    },
+    "by_frame_count": {
+      "3-4": {
+        "note_count": 412,
+        "full_median_mae": 17.68325269353016,
+        "core_median_mae": 17.68325269353016,
+        "mae_improvement": 0.0,
+        "percent_mae_improvement": 0.0,
+        "full_median_rmse": 21.446776543357654,
+        "core_median_rmse": 21.446776543357654,
+        "rmse_improvement": 0.0,
+        "percent_rmse_improvement": 0.0,
+        "fraction_full_equals_core": 1.0,
+        "median_abs_core_minus_full_cents": 0.0
+      },
+      "5-6": {
+        "note_count": 678,
+        "full_median_mae": 19.633994102623834,
+        "core_median_mae": 19.633994102623834,
+        "mae_improvement": 0.0,
+        "percent_mae_improvement": 0.0,
+        "full_median_rmse": 23.83286142408739,
+        "core_median_rmse": 23.83286142408739,
+        "rmse_improvement": 0.0,
+        "percent_rmse_improvement": 0.0,
+        "fraction_full_equals_core": 1.0,
+        "median_abs_core_minus_full_cents": 0.0
+      },
+      "7-9": {
+        "note_count": 760,
+        "full_median_mae": 20.053502359141163,
+        "core_median_mae": 20.053502359141163,
+        "mae_improvement": 0.0,
+        "percent_mae_improvement": 0.0,
+        "full_median_rmse": 24.1666527979699,
+        "core_median_rmse": 24.1666527979699,
+        "rmse_improvement": 0.0,
+        "percent_rmse_improvement": 0.0,
+        "fraction_full_equals_core": 1.0,
+        "median_abs_core_minus_full_cents": 0.0
+      },
+      "10-20": {
+        "note_count": 1132,
+        "full_median_mae": 20.386065061078583,
+        "core_median_mae": 17.677680538867385,
+        "mae_improvement": 2.7083845222111975,
+        "percent_mae_improvement": 13.285469825082087,
+        "full_median_rmse": 29.1105497492845,
+        "core_median_rmse": 22.336315176843144,
+        "rmse_improvement": 6.774234572441355,
+        "percent_rmse_improvement": 23.2707201711567,
+        "fraction_full_equals_core": 0.2941696113074205,
+        "median_abs_core_minus_full_cents": 3.0310553013911807
+      },
+      "21-50": {
+        "note_count": 619,
+        "full_median_mae": 15.357209210483637,
+        "core_median_mae": 13.083860020868617,
+        "mae_improvement": 2.27334918961502,
+        "percent_mae_improvement": 14.803140065729604,
+        "full_median_rmse": 24.567582523017094,
+        "core_median_rmse": 17.547938116238782,
+        "rmse_improvement": 7.019644406778312,
+        "percent_rmse_improvement": 28.572792622968436,
+        "fraction_full_equals_core": 0.13408723747980614,
+        "median_abs_core_minus_full_cents": 4.153053578840154
+      },
+      "51+": {
+        "note_count": 139,
+        "full_median_mae": 8.34281232776157,
+        "core_median_mae": 8.801179075869344,
+        "mae_improvement": -0.45836674810777467,
+        "percent_mae_improvement": -5.494151493525894,
+        "full_median_rmse": 13.135184335719531,
+        "core_median_rmse": 11.970701108976723,
+        "rmse_improvement": 1.1644832267428082,
+        "percent_rmse_improvement": 8.865374074546775,
+        "fraction_full_equals_core": 0.07194244604316546,
+        "median_abs_core_minus_full_cents": 2.4759762763948547
+      },
+      "_note": "9|10 boundary = MIN_VOICED_FOR_CORE; below it core == full contour, so full and core medians are equal by construction"
+    },
+    "by_duration": {
+      "<0.10s": {
+        "note_count": 954,
+        "full_median_mae": 18.80250260405976,
+        "core_median_mae": 18.80250260405976,
+        "mae_improvement": 0.0,
+        "percent_mae_improvement": 0.0,
+        "full_median_rmse": 22.864692768033443,
+        "core_median_rmse": 22.864692768033443,
+        "rmse_improvement": 0.0,
+        "percent_rmse_improvement": 0.0,
+        "fraction_full_equals_core": 1.0,
+        "median_abs_core_minus_full_cents": 0.0
+      },
+      "0.10-0.20s": {
+        "note_count": 1098,
+        "full_median_mae": 19.75335099015872,
+        "core_median_mae": 19.783222602130884,
+        "mae_improvement": -0.02987161197216537,
+        "percent_mae_improvement": -0.15122301014672218,
+        "full_median_rmse": 24.171630445103403,
+        "core_median_rmse": 23.993206415622513,
+        "rmse_improvement": 0.1784240294808903,
+        "percent_rmse_improvement": 0.7381547135850522,
+        "fraction_full_equals_core": 0.8642987249544627,
+        "median_abs_core_minus_full_cents": 0.0
+      },
+      "0.20-0.40s": {
+        "note_count": 855,
+        "full_median_mae": 20.964211308522298,
+        "core_median_mae": 17.218351209302163,
+        "mae_improvement": 3.7458600992201347,
+        "percent_mae_improvement": 17.867879903010618,
+        "full_median_rmse": 30.604715933650056,
+        "core_median_rmse": 21.890321882320656,
+        "rmse_improvement": 8.7143940513294,
+        "percent_rmse_improvement": 28.4740236446628,
+        "fraction_full_equals_core": 0.30526315789473685,
+        "median_abs_core_minus_full_cents": 2.9999560336732216
+      },
+      "0.40-0.80s": {
+        "note_count": 551,
+        "full_median_mae": 16.61484687007003,
+        "core_median_mae": 14.168197385943923,
+        "mae_improvement": 2.4466494841261053,
+        "percent_mae_improvement": 14.725681814940453,
+        "full_median_rmse": 25.95523636439266,
+        "core_median_rmse": 18.826324474518,
+        "rmse_improvement": 7.1289118898746615,
+        "percent_rmse_improvement": 27.466179809692033,
+        "fraction_full_equals_core": 0.15063520871143377,
+        "median_abs_core_minus_full_cents": 4.153053578840154
+      },
+      ">=0.80s": {
+        "note_count": 282,
+        "full_median_mae": 10.194506392153976,
+        "core_median_mae": 10.579732530854203,
+        "mae_improvement": -0.3852261387002276,
+        "percent_mae_improvement": -3.778762049692864,
+        "full_median_rmse": 14.95220906613828,
+        "core_median_rmse": 14.333509548307944,
+        "rmse_improvement": 0.6186995178303363,
+        "percent_rmse_improvement": 4.137846890005587,
+        "fraction_full_equals_core": 0.10283687943262411,
+        "median_abs_core_minus_full_cents": 2.9711832540876513
+      }
+    },
+    "by_song_full_vs_core": {
+      "bruno_mars_when_i_was_your_man_audio": {
+        "clean_note_count": 481,
+        "full_median_mae": 16.963599880830245,
+        "core_median_mae": 16.94552567846207,
+        "mae_change": -0.018074202368175918,
+        "full_median_rmse": 22.022392597724775,
+        "core_median_rmse": 21.689929477971713,
+        "rmse_change": -0.3324631197530614
+      },
+      "christina_aguilera_hurt_audio": {
+        "clean_note_count": 510,
+        "full_median_mae": 13.786834758113315,
+        "core_median_mae": 14.117223244411111,
+        "mae_change": 0.33038848629779594,
+        "full_median_rmse": 18.28355737516221,
+        "core_median_rmse": 18.349476307965606,
+        "rmse_change": 0.06591893280339534
+      },
+      "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+        "clean_note_count": 607,
+        "full_median_mae": 20.468040493848946,
+        "core_median_mae": 19.53948965898102,
+        "mae_change": -0.9285508348679272,
+        "full_median_rmse": 25.895437061248412,
+        "core_median_rmse": 23.702536779753213,
+        "rmse_change": -2.1929002814951986
+      },
+      "lady_gaga_million_reasons_official_audio": {
+        "clean_note_count": 372,
+        "full_median_mae": 18.794511422555193,
+        "core_median_mae": 16.96168131864499,
+        "mae_change": -1.8328301039102008,
+        "full_median_rmse": 26.94240211673454,
+        "core_median_rmse": 21.27050529313071,
+        "rmse_change": -5.671896823603831
+      },
+      "luther_vandross_here_and_now": {
+        "clean_note_count": 876,
+        "full_median_mae": 22.275855421285293,
+        "core_median_mae": 19.668239858391402,
+        "mae_change": -2.6076155628938906,
+        "full_median_rmse": 30.353849685455785,
+        "core_median_rmse": 24.049107170336928,
+        "rmse_change": -6.304742515118857
+      },
+      "marc_anthony_ahora_quien_cover_audio_video": {
+        "clean_note_count": 531,
+        "full_median_mae": 16.460250872866162,
+        "core_median_mae": 14.750645408525603,
+        "mae_change": -1.7096054643405587,
+        "full_median_rmse": 23.4838789538705,
+        "core_median_rmse": 19.257162159513474,
+        "rmse_change": -4.226716794357028
+      },
+      "norah_jones_don_t_know_why": {
+        "clean_note_count": 363,
+        "full_median_mae": 18.513279083851312,
+        "core_median_mae": 18.150549066988333,
+        "mae_change": -0.36273001686297945,
+        "full_median_rmse": 23.15124402711123,
+        "core_median_rmse": 22.445446024083974,
+        "rmse_change": -0.7057980030272546
+      }
+    },
+    "by_song_full_vs_core_extremes": {
+      "largest_mae_improvement": {
+        "song_id": "luther_vandross_here_and_now",
+        "clean_note_count": 876,
+        "full_median_mae": 22.275855421285293,
+        "core_median_mae": 19.668239858391402,
+        "mae_change": -2.6076155628938906,
+        "full_median_rmse": 30.353849685455785,
+        "core_median_rmse": 24.049107170336928,
+        "rmse_change": -6.304742515118857
+      },
+      "largest_mae_degradation_or_smallest_improvement": {
+        "song_id": "christina_aguilera_hurt_audio",
+        "clean_note_count": 510,
+        "full_median_mae": 13.786834758113315,
+        "core_median_mae": 14.117223244411111,
+        "mae_change": 0.33038848629779594,
+        "full_median_rmse": 18.28355737516221,
+        "core_median_rmse": 18.349476307965606,
+        "rmse_change": 0.06591893280339534
+      },
+      "songs_improved_mae": 6,
+      "songs_worsened_mae": 1
+    }
+  },
+  "group_sanity_checks": {
+    "note_groups_checked": 21477,
+    "expected_members_per_group": 5,
+    "groups_with_unexpected_member_count": 0,
+    "tolerance_cents": 1e-09,
+    "max_within_note_error_spread_cents": 2.842170943040401e-14,
+    "median_within_note_error_spread_cents": 3.552713678800501e-15,
+    "groups_violating_tolerance": 0,
+    "grouping_used_for_prediction": false
+  },
+  "variant_identity_checks": {
+    "train": {
+      "corruption_1": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_2": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_3": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_4": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "all_variants_identical_within_tolerance": true,
+      "tolerance_cents": 1e-09
+    },
+    "validation": {
+      "corruption_1": {
+        "max_abs_difference_from_clean_cents": 7.105427357601002e-15,
+        "same_note_count": true
+      },
+      "corruption_2": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_3": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_4": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "all_variants_identical_within_tolerance": true,
+      "tolerance_cents": 1e-09
+    }
+  },
+  "comparison_to_full_median": {
+    "full_median_results_path": "ml/results/axis2_v2/median_cents_baseline.json",
+    "split": "validation",
+    "mae": {
+      "full_median": 18.604491702740603,
+      "core_median": 17.42551270554066,
+      "absolute_improvement": 1.1789789971999447,
+      "percent_improvement": 6.337066424804666
+    },
+    "rmse": {
+      "full_median": 25.201577979948617,
+      "core_median": 21.900161152420697,
+      "absolute_improvement": 3.3014168275279197,
+      "percent_improvement": 13.100040125085258
+    },
+    "median_absolute_error": {
+      "full_median": 14.543082009839267,
+      "core_median": 14.36526377835438,
+      "absolute_improvement": 0.17781823148488662,
+      "percent_improvement": 1.2226997782490805
+    },
+    "mean_signed_error": {
+      "full_median": -0.32897457120387463,
+      "core_median": -0.2577731842260168
+    },
+    "p90_abs_error": {
+      "full_median": 40.068453703934,
+      "core_median": 38.263886336911916,
+      "absolute_improvement": 1.8045673670220808,
+      "percent_improvement": 4.503711025027414
+    },
+    "p95_abs_error": {
+      "full_median": 46.43908553866495,
+      "core_median": 43.348031677453434,
+      "absolute_improvement": 3.0910538612115133,
+      "percent_improvement": 6.656147134159043
+    },
+    "p99_abs_error": {
+      "full_median": 71.83107871952377,
+      "core_median": 48.80799856170759,
+      "absolute_improvement": 23.02308015781618,
+      "percent_improvement": 32.051697633156216
+    },
+    "p99_9_abs_error": {
+      "full_median": 139.90049119191283,
+      "core_median": 49.9104775090629,
+      "absolute_improvement": 89.99001368284993,
+      "percent_improvement": 64.32430144895156
+    },
+    "max_abs_error": {
+      "full_median": 272.1339010810089,
+      "core_median": 49.984671231951154,
+      "absolute_improvement": 222.14922984905775,
+      "percent_improvement": 81.6323247366848
+    },
+    "exceedances": {
+      "gt_25_cents": {
+        "full_median": {
+          "count": 5365,
+          "percent": 28.689839572192515
+        },
+        "core_median": {
+          "count": 5210,
+          "percent": 27.86096256684492
+        }
+      },
+      "gt_50_cents": {
+        "full_median": {
+          "count": 515,
+          "percent": 2.7540106951871657
+        },
+        "core_median": {
+          "count": 0,
+          "percent": 0.0
+        }
+      },
+      "gt_100_cents": {
+        "full_median": {
+          "count": 75,
+          "percent": 0.40106951871657753
+        },
+        "core_median": {
+          "count": 0,
+          "percent": 0.0
+        }
+      },
+      "gt_200_cents": {
+        "full_median": {
+          "count": 5,
+          "percent": 0.026737967914438502
+        },
+        "core_median": {
+          "count": 0,
+          "percent": 0.0
+        }
+      },
+      "gt_400_cents": {
+        "full_median": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "core_median": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    },
+    "by_variant_mae": {
+      "clean": {
+        "full_median": 18.6044917027406,
+        "core_median": 17.42551270554066,
+        "absolute_improvement": 1.1789789971999411,
+        "percent_improvement": 6.337066424804648
+      },
+      "corruption_1": {
+        "full_median": 18.604491702740603,
+        "core_median": 17.42551270554066,
+        "absolute_improvement": 1.1789789971999447,
+        "percent_improvement": 6.337066424804666
+      },
+      "corruption_2": {
+        "full_median": 18.604491702740603,
+        "core_median": 17.42551270554066,
+        "absolute_improvement": 1.1789789971999447,
+        "percent_improvement": 6.337066424804666
+      },
+      "corruption_3": {
+        "full_median": 18.604491702740603,
+        "core_median": 17.42551270554066,
+        "absolute_improvement": 1.1789789971999447,
+        "percent_improvement": 6.337066424804666
+      },
+      "corruption_4": {
+        "full_median": 18.6044917027406,
+        "core_median": 17.425512705540655,
+        "absolute_improvement": 1.1789789971999447,
+        "percent_improvement": 6.337066424804667
+      }
+    },
+    "train": {
+      "mae": {
+        "full_median": 16.858183175391222,
+        "core_median": 16.26238448705922,
+        "absolute_improvement": 0.5957986883320032,
+        "percent_improvement": 3.534180890866828
+      },
+      "rmse": {
+        "full_median": 23.22196668600043,
+        "core_median": 21.00234107981449,
+        "absolute_improvement": 2.219625606185943,
+        "percent_improvement": 9.558301569367352
+      }
+    }
+  },
+  "comparison_to_zero_baseline": {
+    "zero_results_path": "ml/results/axis2_v2/zero_baseline.json",
+    "split": "validation",
+    "ladder": {
+      "zero": {
+        "mae": 20.512054673471397,
+        "rmse": 25.50662572076404,
+        "median_absolute_error": 20.0458565668888
+      },
+      "full_median": {
+        "mae": 18.604491702740603,
+        "rmse": 25.201577979948617,
+        "median_absolute_error": 14.543082009839267
+      },
+      "core_median": {
+        "mae": 17.42551270554066,
+        "rmse": 21.900161152420697,
+        "median_absolute_error": 14.36526377835438
+      }
+    },
+    "core_vs_zero": {
+      "mae": {
+        "zero": 20.512054673471397,
+        "core_median": 17.42551270554066,
+        "absolute_improvement": 3.0865419679307387,
+        "percent_improvement": 15.047453885361461
+      },
+      "rmse": {
+        "zero": 25.50662572076404,
+        "core_median": 21.900161152420697,
+        "absolute_improvement": 3.606464568343341,
+        "percent_improvement": 14.139324455635252
+      },
+      "median_absolute_error": {
+        "zero": 20.0458565668888,
+        "core_median": 14.36526377835438,
+        "absolute_improvement": 5.680592788534421,
+        "percent_improvement": 28.337989796442365
+      }
+    },
+    "by_variant": {
+      "clean": {
+        "zero_mae": 0.0,
+        "full_median_mae": 18.6044917027406,
+        "core_median_mae": 17.42551270554066,
+        "zero_rmse": 0.0,
+        "full_median_rmse": 25.201577979948617,
+        "core_median_rmse": 21.9001611524207
+      },
+      "corruption_1": {
+        "zero_mae": 10.013701771237821,
+        "full_median_mae": 18.604491702740603,
+        "core_median_mae": 17.42551270554066,
+        "zero_rmse": 10.428766707764632,
+        "full_median_rmse": 25.201577979948617,
+        "core_median_rmse": 21.9001611524207
+      },
+      "corruption_2": {
+        "zero_mae": 20.023901411193954,
+        "full_median_mae": 18.604491702740603,
+        "core_median_mae": 17.42551270554066,
+        "zero_rmse": 20.23388892182026,
+        "full_median_rmse": 25.20157797994862,
+        "core_median_rmse": 21.900161152420697
+      },
+      "corruption_3": {
+        "zero_mae": 30.019781849955333,
+        "full_median_mae": 18.604491702740603,
+        "core_median_mae": 17.42551270554066,
+        "zero_rmse": 30.15649898048658,
+        "full_median_rmse": 25.201577979948617,
+        "core_median_rmse": 21.9001611524207
+      },
+      "corruption_4": {
+        "zero_mae": 42.50288833496988,
+        "full_median_mae": 18.6044917027406,
+        "core_median_mae": 17.425512705540655,
+        "zero_rmse": 42.72418415359245,
+        "full_median_rmse": 25.201577979948617,
+        "core_median_rmse": 21.9001611524207
+      }
+    }
+  },
+  "full_vs_core_difference_analysis": {
+    "population": "clean validation notes (targets are 0, so errors equal the medians)",
+    "note_count": 3740,
+    "abs_core_minus_full_cents": {
+      "p50": 0.0,
+      "p75": 3.489469615629804,
+      "p90": 13.00146413372251,
+      "p95": 23.26260002836936,
+      "p99": 64.18374275218116,
+      "max": 253.1617605629916,
+      "percent_identical_within_1e-9": 60.85561497326203,
+      "percent_gt_5_cents": 20.855614973262032,
+      "percent_gt_10_cents": 12.860962566844918,
+      "percent_gt_20_cents": 5.909090909090909,
+      "percent_gt_50_cents": 1.6042780748663104
+    },
+    "trim_noop": {
+      "validation_clean_notes_percent": 49.465240641711226,
+      "validation_clean_notes_count": 1850,
+      "train_clean_notes_count": 8660,
+      "train_clean_notes_percent": 48.82449117663641,
+      "trimmed_notes_with_identical_median_percent_of_trimmed": 22.53968253968254
+    },
+    "per_note_outcome": {
+      "percent_improved": 19.83957219251337,
+      "percent_unchanged_within_1e-9": 60.85561497326203,
+      "percent_worsened": 19.3048128342246,
+      "median_improvement_among_improved_cents": 4.910323392506799,
+      "median_degradation_among_worsened_cents": 4.5842153889147195,
+      "improved_count": 742,
+      "worsened_count": 722
+    },
+    "biggest_improvements": [
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 758,
+        "frame_count": 16,
+        "duration_s": 0.3599999999999568,
+        "full_median": 272.13390108100884,
+        "core_median": 18.972140518017255,
+        "full_abs_error": 272.13390108100884,
+        "core_abs_error": 18.972140518017255,
+        "delta_core_minus_full": -253.1617605629916
+      },
+      {
+        "song_id": "lady_gaga_million_reasons_official_audio",
+        "source_note_index": 322,
+        "frame_count": 28,
+        "duration_s": 0.539999999999992,
+        "full_median": -192.05997464012552,
+        "core_median": 6.626866818492418,
+        "full_abs_error": 192.05997464012552,
+        "core_abs_error": 6.626866818492418,
+        "delta_core_minus_full": -185.4331078216331
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 787,
+        "frame_count": 21,
+        "duration_s": 0.4000000000000341,
+        "full_median": 154.59958031002242,
+        "core_median": 3.1616122011471806,
+        "full_abs_error": 154.59958031002242,
+        "core_abs_error": 3.1616122011471806,
+        "delta_core_minus_full": -151.43796810887522
+      },
+      {
+        "song_id": "lady_gaga_million_reasons_official_audio",
+        "source_note_index": 255,
+        "frame_count": 13,
+        "duration_s": 0.30000000000001137,
+        "full_median": -139.90049119191283,
+        "core_median": 6.963699603570959,
+        "full_abs_error": 139.90049119191283,
+        "core_abs_error": 6.963699603570959,
+        "delta_core_minus_full": -132.93679158834186
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 769,
+        "frame_count": 22,
+        "duration_s": 0.4199999999999591,
+        "full_median": 125.6101472984221,
+        "core_median": 11.234927390584538,
+        "full_abs_error": 125.6101472984221,
+        "core_abs_error": 11.234927390584538,
+        "delta_core_minus_full": -114.37521990783756
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 377,
+        "frame_count": 17,
+        "duration_s": 0.3200000000000216,
+        "full_median": 131.13849803029223,
+        "core_median": 16.861587925916158,
+        "full_abs_error": 131.13849803029223,
+        "core_abs_error": 16.861587925916158,
+        "delta_core_minus_full": -114.27691010437607
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 776,
+        "frame_count": 11,
+        "duration_s": 0.20000000000004547,
+        "full_median": 121.77127921622419,
+        "core_median": 11.470825122095878,
+        "full_abs_error": 121.77127921622419,
+        "core_abs_error": 11.470825122095878,
+        "delta_core_minus_full": -110.30045409412831
+      },
+      {
+        "song_id": "lady_gaga_million_reasons_official_audio",
+        "source_note_index": 258,
+        "frame_count": 18,
+        "duration_s": 0.37999999999999545,
+        "full_median": 118.96581337368312,
+        "core_median": -10.352964630789575,
+        "full_abs_error": 118.96581337368312,
+        "core_abs_error": 10.352964630789575,
+        "delta_core_minus_full": -108.61284874289355
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 35,
+        "frame_count": 15,
+        "duration_s": 0.28000000000000114,
+        "full_median": 131.14437816844315,
+        "core_median": 25.48340296213588,
+        "full_abs_error": 131.14437816844315,
+        "core_abs_error": 25.48340296213588,
+        "delta_core_minus_full": -105.66097520630727
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 102,
+        "frame_count": 33,
+        "duration_s": 0.7199999999999989,
+        "full_median": -97.56719098221461,
+        "core_median": -1.1415883920020558,
+        "full_abs_error": 97.56719098221461,
+        "core_abs_error": 1.1415883920020558,
+        "delta_core_minus_full": -96.42560259021256
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 156,
+        "frame_count": 15,
+        "duration_s": 0.28000000000000114,
+        "full_median": 88.15152067303211,
+        "core_median": 1.600635483589806,
+        "full_abs_error": 88.15152067303211,
+        "core_abs_error": 1.600635483589806,
+        "delta_core_minus_full": -86.5508851894423
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 343,
+        "frame_count": 21,
+        "duration_s": 0.7199999999999989,
+        "full_median": -134.1907258669411,
+        "core_median": -47.79195560187913,
+        "full_abs_error": 134.1907258669411,
+        "core_abs_error": 47.79195560187913,
+        "delta_core_minus_full": -86.39877026506198
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 147,
+        "frame_count": 21,
+        "duration_s": 0.3999999999999986,
+        "full_median": -92.5684779049313,
+        "core_median": -10.097526377198127,
+        "full_abs_error": 92.5684779049313,
+        "core_abs_error": 10.097526377198127,
+        "delta_core_minus_full": -82.47095152773318
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 52,
+        "frame_count": 16,
+        "duration_s": 0.3000000000000007,
+        "full_median": 83.92415802532395,
+        "core_median": 5.842361000253996,
+        "full_abs_error": 83.92415802532395,
+        "core_abs_error": 5.842361000253996,
+        "delta_core_minus_full": -78.08179702506995
+      },
+      {
+        "song_id": "lady_gaga_million_reasons_official_audio",
+        "source_note_index": 126,
+        "frame_count": 17,
+        "duration_s": 0.3199999999999932,
+        "full_median": 106.3601966442694,
+        "core_median": -29.55174740864331,
+        "full_abs_error": 106.3601966442694,
+        "core_abs_error": 29.55174740864331,
+        "delta_core_minus_full": -76.80844923562609
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 607,
+        "frame_count": 16,
+        "duration_s": 0.30000000000001137,
+        "full_median": -117.0071467047656,
+        "core_median": -40.659326768578204,
+        "full_abs_error": 117.0071467047656,
+        "core_abs_error": 40.659326768578204,
+        "delta_core_minus_full": -76.34781993618739
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 195,
+        "frame_count": 13,
+        "duration_s": 0.23999999999999488,
+        "full_median": 84.60866599095513,
+        "core_median": -11.3862980351298,
+        "full_abs_error": 84.60866599095513,
+        "core_abs_error": 11.3862980351298,
+        "delta_core_minus_full": -73.22236795582533
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 396,
+        "frame_count": 12,
+        "duration_s": 0.21999999999999886,
+        "full_median": 77.10537391775584,
+        "core_median": 7.171902588133022,
+        "full_abs_error": 77.10537391775584,
+        "core_abs_error": 7.171902588133022,
+        "delta_core_minus_full": -69.93347132962282
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 564,
+        "frame_count": 15,
+        "duration_s": 0.28000000000000114,
+        "full_median": -101.30935617200825,
+        "core_median": -32.4806450671653,
+        "full_abs_error": 101.30935617200825,
+        "core_abs_error": 32.4806450671653,
+        "delta_core_minus_full": -68.82871110484295
+      },
+      {
+        "song_id": "norah_jones_don_t_know_why",
+        "source_note_index": 177,
+        "frame_count": 13,
+        "duration_s": 0.23999999999999488,
+        "full_median": -70.08118657638016,
+        "core_median": 1.4264570570567576,
+        "full_abs_error": 70.08118657638016,
+        "core_abs_error": 1.4264570570567576,
+        "delta_core_minus_full": -68.65472951932341
+      }
+    ],
+    "biggest_degradations": [
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 721,
+        "frame_count": 25,
+        "duration_s": 0.4800000000000182,
+        "full_median": 3.9642194635116352,
+        "core_median": 48.376348194043395,
+        "full_abs_error": 3.9642194635116352,
+        "core_abs_error": 48.376348194043395,
+        "delta_core_minus_full": 44.41212873053176
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 45,
+        "frame_count": 11,
+        "duration_s": 0.1999999999999993,
+        "full_median": -3.019488882417418,
+        "core_median": -46.05595706132643,
+        "full_abs_error": 3.019488882417418,
+        "core_abs_error": 46.05595706132643,
+        "delta_core_minus_full": 43.03646817890901
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 141,
+        "frame_count": 11,
+        "duration_s": 0.19999999999998863,
+        "full_median": 9.677285539225501,
+        "core_median": 47.95910565415727,
+        "full_abs_error": 9.677285539225501,
+        "core_abs_error": 47.95910565415727,
+        "delta_core_minus_full": 38.28182011493177
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 568,
+        "frame_count": 32,
+        "duration_s": 0.6599999999999966,
+        "full_median": 8.7132094828012,
+        "core_median": 46.42446385412008,
+        "full_abs_error": 8.7132094828012,
+        "core_abs_error": 46.42446385412008,
+        "delta_core_minus_full": 37.71125437131887
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 338,
+        "frame_count": 20,
+        "duration_s": 0.5,
+        "full_median": 8.109245959659217,
+        "core_median": 45.16163728704882,
+        "full_abs_error": 8.109245959659217,
+        "core_abs_error": 45.16163728704882,
+        "delta_core_minus_full": 37.0523913273896
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 404,
+        "frame_count": 16,
+        "duration_s": 0.29999999999998295,
+        "full_median": 15.274885591805855,
+        "core_median": 49.666844048375694,
+        "full_abs_error": 15.274885591805855,
+        "core_abs_error": 49.666844048375694,
+        "delta_core_minus_full": 34.39195845656984
+      },
+      {
+        "song_id": "bruno_mars_when_i_was_your_man_audio",
+        "source_note_index": 316,
+        "frame_count": 10,
+        "duration_s": 0.18000000000000682,
+        "full_median": -13.269232509310925,
+        "core_median": -46.88776271646414,
+        "full_abs_error": 13.269232509310925,
+        "core_abs_error": 46.88776271646414,
+        "delta_core_minus_full": 33.61853020715321
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 49,
+        "frame_count": 15,
+        "duration_s": 0.28000000000000114,
+        "full_median": 3.486997917650319,
+        "core_median": -37.09877875352721,
+        "full_abs_error": 3.486997917650319,
+        "core_abs_error": 37.09877875352721,
+        "delta_core_minus_full": 33.61178083587689
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 34,
+        "frame_count": 15,
+        "duration_s": 0.2799999999999976,
+        "full_median": -6.285063978287935,
+        "core_median": -38.985246270712786,
+        "full_abs_error": 6.285063978287935,
+        "core_abs_error": 38.985246270712786,
+        "delta_core_minus_full": 32.70018229242485
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 480,
+        "frame_count": 11,
+        "duration_s": 0.20000000000001705,
+        "full_median": -11.15402795357515,
+        "core_median": -43.30918020469735,
+        "full_abs_error": 11.15402795357515,
+        "core_abs_error": 43.30918020469735,
+        "delta_core_minus_full": 32.155152251122196
+      },
+      {
+        "song_id": "christina_aguilera_hurt_audio",
+        "source_note_index": 102,
+        "frame_count": 10,
+        "duration_s": 0.17999999999999972,
+        "full_median": 13.002170603791255,
+        "core_median": 45.07317920282215,
+        "full_abs_error": 13.002170603791255,
+        "core_abs_error": 45.07317920282215,
+        "delta_core_minus_full": 32.0710085990309
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 361,
+        "frame_count": 46,
+        "duration_s": 0.960000000000008,
+        "full_median": 2.174009885188357,
+        "core_median": 32.381733747155565,
+        "full_abs_error": 2.174009885188357,
+        "core_abs_error": 32.381733747155565,
+        "delta_core_minus_full": 30.207723861967207
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 88,
+        "frame_count": 15,
+        "duration_s": 0.28000000000000114,
+        "full_median": -20.508963563221048,
+        "core_median": -49.68289387756236,
+        "full_abs_error": 20.508963563221048,
+        "core_abs_error": 49.68289387756236,
+        "delta_core_minus_full": 29.17393031434131
+      },
+      {
+        "song_id": "luther_vandross_here_and_now",
+        "source_note_index": 230,
+        "frame_count": 21,
+        "duration_s": 0.4000000000000057,
+        "full_median": -14.887264359857141,
+        "core_median": -43.71343124661665,
+        "full_abs_error": 14.887264359857141,
+        "core_abs_error": 43.71343124661665,
+        "delta_core_minus_full": 28.82616688675951
+      },
+      {
+        "song_id": "norah_jones_don_t_know_why",
+        "source_note_index": 202,
+        "frame_count": 22,
+        "duration_s": 0.4199999999999875,
+        "full_median": 2.96097972066081,
+        "core_median": -31.52982304398749,
+        "full_abs_error": 2.96097972066081,
+        "core_abs_error": 31.52982304398749,
+        "delta_core_minus_full": 28.568843323326682
+      },
+      {
+        "song_id": "marc_anthony_ahora_quien_cover_audio_video",
+        "source_note_index": 434,
+        "frame_count": 44,
+        "duration_s": 1.259999999999991,
+        "full_median": -14.581504909296953,
+        "core_median": -42.56506724372494,
+        "full_abs_error": 14.581504909296953,
+        "core_abs_error": 42.56506724372494,
+        "delta_core_minus_full": 27.983562334427987
+      },
+      {
+        "song_id": "christina_aguilera_hurt_audio",
+        "source_note_index": 200,
+        "frame_count": 20,
+        "duration_s": 0.37999999999999545,
+        "full_median": 0.5308377789569811,
+        "core_median": -27.471589477599476,
+        "full_abs_error": 0.5308377789569811,
+        "core_abs_error": 27.471589477599476,
+        "delta_core_minus_full": 26.940751698642494
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 159,
+        "frame_count": 18,
+        "duration_s": 0.3400000000000034,
+        "full_median": -11.521412397649444,
+        "core_median": 38.293046367700505,
+        "full_abs_error": 11.521412397649444,
+        "core_abs_error": 38.293046367700505,
+        "delta_core_minus_full": 26.771633970051063
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 265,
+        "frame_count": 25,
+        "duration_s": 0.480000000000004,
+        "full_median": -23.344247264581497,
+        "core_median": 49.78125337405359,
+        "full_abs_error": 23.344247264581497,
+        "core_abs_error": 49.78125337405359,
+        "delta_core_minus_full": 26.437006109472094
+      },
+      {
+        "song_id": "if_i_ain_t_got_you_alicia_keys_hq_audio",
+        "source_note_index": 599,
+        "frame_count": 26,
+        "duration_s": 0.5,
+        "full_median": 3.935732787200633,
+        "core_median": 30.217030627679037,
+        "full_abs_error": 3.935732787200633,
+        "core_abs_error": 30.217030627679037,
+        "delta_core_minus_full": 26.281297840478405
+      }
+    ]
+  },
+  "target_coupling_analysis": {
+    "explanation": "target_midi = round(median(_core_slice(midi_float))), cents = 100*(midi_float - target); so median(_core_slice(clean cents)) lies in [-50, +50] c for every note by construction. The full median has no such bound. Errors above 50 c are therefore impossible for this baseline, and its tail improvement over the full median is partly structural.",
+    "clean_validation_notes": 3740,
+    "max_abs_core_median_cents": 49.984671231951154,
+    "notes_with_abs_core_median_gt_50": 0,
+    "notes_with_abs_full_median_gt_50": {
+      "note_count": 103,
+      "full_median_mae": 76.47349146936445,
+      "core_median_mae": 25.611367635888747,
+      "mae_improvement": 50.8621238334757,
+      "percent_mae_improvement": 66.50948303289022,
+      "full_median_rmse": 82.74574137064566,
+      "core_median_rmse": 29.702725694573164,
+      "rmse_improvement": 53.0430156760725,
+      "percent_rmse_improvement": 64.10362007450657,
+      "fraction_full_equals_core": 0.0,
+      "median_abs_core_minus_full_cents": 48.548621488698146
+    },
+    "percent_notes_with_abs_full_median_gt_50": 2.7540106951871657,
+    "notes_with_abs_full_median_le_50": {
+      "note_count": 3637,
+      "full_median_mae": 16.96563908355934,
+      "core_median_mae": 17.193688933798605,
+      "mae_improvement": -0.22804985023926605,
+      "percent_mae_improvement": -1.344186618117199,
+      "full_median_rmse": 21.429018505010532,
+      "core_median_rmse": 21.63826290833721,
+      "rmse_improvement": -0.2092444033266787,
+      "percent_rmse_improvement": -0.9764535098877869,
+      "fraction_full_equals_core": 0.6257904866648336,
+      "median_abs_core_minus_full_cents": 0.0
+    },
+    "full_median_clipped_to_plus_minus_50": {
+      "mae": 17.875408916284844,
+      "rmse": 22.702568275513993,
+      "note": "full-median errors capped at the same +-50 c bound the core median has by construction; a descriptive reference, not a baseline"
+    },
+    "core_median": {
+      "mae": 17.42551270554066,
+      "rmse": 21.9001611524207
+    },
+    "full_median": {
+      "mae": 18.6044917027406,
+      "rmse": 25.201577979948617
+    }
+  },
+  "train_vs_validation": {
+    "train_mae": 16.26238448705922,
+    "validation_mae": 17.42551270554066,
+    "mae_gap_validation_minus_train": 1.1631282184814395,
+    "train_rmse": 21.00234107981449,
+    "validation_rmse": 21.900161152420697,
+    "rmse_gap_validation_minus_train": 0.8978200726062084,
+    "interpretation": "no learned parameters: the gap reflects which songs and notes each split holds, not overfitting"
+  },
+  "interpretation_caveat": "The production core trim is symmetric. An improvement shows trimming helps; it does not show that symmetric trimming is optimal (earlier audits found releases deviate from note centers more than onsets). Because the dataset's target MIDI is itself chosen from the core median, this baseline's errors are bounded by +-50 c by construction; see target_coupling_analysis."
+}

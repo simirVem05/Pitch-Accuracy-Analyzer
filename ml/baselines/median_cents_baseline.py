@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Median-cents baseline for Axis 2 V1: predict each example's own contour median.
+Median-cents baseline for Axis 2: predict each example's own contour median.
 
 The rule is `prediction = median(own cents contour)`, which assumes the observed
 median deviation *is* the injected synthetic shift — i.e. that a professional
@@ -17,31 +17,35 @@ constant-shift corruption.
 
 The test split is sealed: no test contour median is computed and no test metric
 is reported.
+
+Runs against any dataset version with the same encoding; reads that version's
+zero-baseline results for the comparison section, so run zero_baseline.py first:
+  python median_cents_baseline.py                              # axis2_v1
+  python median_cents_baseline.py --dataset-version axis2_v2   # axis2_v2
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+from pathlib import Path
 from typing import Any, Dict, Mapping, Sequence
 
 import numpy as np
 
 from zero_baseline import (
+    DATASET_VERSIONS,
+    DEFAULT_DATASET_VERSION,
     EXPECTED_SPLIT_ORDER,
     EXPECTED_VARIANT_ORDER,
     REPO_ROOT,
-    SPLITS_PATH,
-    SUMMARY_PATH,
     DatasetContractError,
     _metrics,
     _resolve_lookup,
+    _tail,
     _verify_counts,
+    dataset_paths,
 )
-from zero_baseline import EXAMPLES_PATH
-
-
-RESULTS_PATH = REPO_ROOT / "ml" / "results" / "axis2_v1" / "median_cents_baseline.json"
-ZERO_BASELINE_PATH = REPO_ROOT / "ml" / "results" / "axis2_v1" / "zero_baseline.json"
 
 EVALUATED_SPLITS = ("train", "validation")
 SEALED_SPLIT = "test"
@@ -111,6 +115,7 @@ def _evaluate(
         "overall": _metrics(targets, predictions),
         "by_variant": by_variant,
         "by_sign": by_sign,
+        "tail": _tail(np.abs(predictions - targets)),
     }
 
 
@@ -126,14 +131,64 @@ def _by_song(
     for code in np.unique(song_index):
         mask = song_index == code
         metrics = _metrics(targets[mask], predictions[mask])
-        metrics.pop("median_absolute_error")
+        absolute_error = np.abs(predictions[mask] - targets[mask])
+        metrics["p95_absolute_error"] = float(np.percentile(absolute_error, 95))
+        metrics["p99_absolute_error"] = float(np.percentile(absolute_error, 99))
+        metrics["max_absolute_error"] = float(np.max(absolute_error))
 
         clean_mask = mask & (variant_index == clean_code)
         clean_error = predictions[clean_mask] - targets[clean_mask]
         metrics["clean_mae"] = float(np.mean(np.abs(clean_error))) if clean_error.size else None
         metrics["clean_example_count"] = int(clean_error.size)
+        metrics["clean_note_count"] = int(clean_error.size)
 
         out[str(song_ids[code])] = metrics
+    return out
+
+
+def _song_extremes(by_song: Mapping[str, Mapping[str, Any]]) -> Dict[str, Any]:
+    """Which recordings this naive estimator fits best and worst; not a ranking of singers."""
+    by = lambda key: sorted(by_song, key=lambda song: by_song[song][key])
+    return {
+        "best_by_mae": {"song_id": by("mae")[0], "mae": by_song[by("mae")[0]]["mae"]},
+        "worst_by_mae": {"song_id": by("mae")[-1], "mae": by_song[by("mae")[-1]]["mae"]},
+        "best_by_rmse": {"song_id": by("rmse")[0], "rmse": by_song[by("rmse")[0]]["rmse"]},
+        "worst_by_rmse": {"song_id": by("rmse")[-1], "rmse": by_song[by("rmse")[-1]]["rmse"]},
+    }
+
+
+def _variant_identity_check(
+    errors: np.ndarray,
+    variant_index: np.ndarray,
+    song_index: np.ndarray,
+    source_note_index: np.ndarray,
+    variant_codes: Mapping[str, int],
+) -> Dict[str, Any]:
+    """
+    Post-hoc: is each corruption variant's error vector, note for note, the clean
+    variant's? Under a pure constant shift it must be, which makes every
+    per-variant error distribution identical.
+    """
+    def ordered(code: int) -> np.ndarray:
+        m = variant_index == code
+        order = np.lexsort((source_note_index[m], song_index[m]))
+        return errors[m][order]
+
+    clean = ordered(variant_codes["clean"])
+    out = {}
+    for name, code in variant_codes.items():
+        if name == "clean":
+            continue
+        other = ordered(code)
+        out[name] = {
+            "max_abs_difference_from_clean_cents": float(np.max(np.abs(other - clean))) if other.size == clean.size else None,
+            "same_note_count": bool(other.size == clean.size),
+        }
+    out["all_variants_identical_within_tolerance"] = all(
+        v["same_note_count"] and v["max_abs_difference_from_clean_cents"] <= GROUP_TOLERANCE_CENTS
+        for k, v in out.items() if isinstance(v, dict)
+    )
+    out["tolerance_cents"] = GROUP_TOLERANCE_CENTS
     return out
 
 
@@ -184,12 +239,23 @@ def _improvement(zero_mae: float | None, median_mae: float | None) -> Dict[str, 
     }
 
 
-def main() -> int:
-    splits = json.loads(SPLITS_PATH.read_text(encoding="utf-8"))
-    summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
-    zero_results = json.loads(ZERO_BASELINE_PATH.read_text(encoding="utf-8"))
+def compute(
+    version: str = DEFAULT_DATASET_VERSION,
+    zero_results: Mapping[str, Any] | None = None,
+    zero_results_path: str | None = None,
+) -> Dict[str, Any]:
+    """All median-cents results for one dataset version. Writes nothing."""
+    paths = dataset_paths(version)
+    splits = json.loads(paths["splits"].read_text(encoding="utf-8"))
+    summary = json.loads(paths["summary"].read_text(encoding="utf-8"))
+    if zero_results is None:
+        zero_path = paths["results_dir"] / "zero_baseline.json"
+        zero_results = json.loads(zero_path.read_text(encoding="utf-8"))
+        zero_results_path = str(zero_path.relative_to(REPO_ROOT))
+    if zero_results["dataset"]["dataset_name"] != version:
+        raise DatasetContractError("zero-baseline results belong to a different dataset version")
 
-    with np.load(EXAMPLES_PATH, allow_pickle=False) as data:
+    with np.load(paths["examples"], allow_pickle=False) as data:
         split_codes = _resolve_lookup(data["split_names"], EXPECTED_SPLIT_ORDER, "split_names")
         variant_codes = _resolve_lookup(data["variant_names"], EXPECTED_VARIANT_ORDER, "variant_names")
 
@@ -204,6 +270,8 @@ def main() -> int:
         contour_offsets = np.asarray(data["contour_offsets"], dtype=np.int64)
 
     _verify_counts(split_index, split_codes, splits)
+    if summary.get("dataset_name") != version:
+        raise DatasetContractError(f"{paths['summary']} names dataset {summary.get('dataset_name')!r}, not {version!r}")
 
     # Test indices are never placed in this set, so no test contour is ever read.
     evaluated_codes = [split_codes[name] for name in EVALUATED_SPLITS]
@@ -226,12 +294,12 @@ def main() -> int:
     eval_note = source_note_index[evaluated_indices]
 
     results: Dict[str, Any] = {
-        "experiment": "axis2_v1_median_cents_baseline",
+        "experiment": f"{version}_median_cents_baseline",
         "prediction_rule": "predict_median_cents_contour",
         "features_used": ["cents_contour"],
         "test_evaluated": False,
         "dataset": {
-            "path": str(EXAMPLES_PATH.relative_to(REPO_ROOT)),
+            "path": str(paths["examples"].relative_to(REPO_ROOT)),
             "dataset_name": summary.get("dataset_name"),
             "schema_version": summary.get("schema_version"),
             "label_field": summary.get("label_field"),
@@ -261,13 +329,21 @@ def main() -> int:
                 song_ids,
                 variant_codes["clean"],
             )
+            section["song_extremes"] = _song_extremes(section["by_song"])
         results[name] = section
 
     results["group_sanity_checks"] = _group_sanity_checks(errors, eval_song, eval_note)
+    results["variant_identity_checks"] = {
+        name: _variant_identity_check(
+            errors[eval_split == split_codes[name]], eval_variant[eval_split == split_codes[name]],
+            eval_song[eval_split == split_codes[name]], eval_note[eval_split == split_codes[name]], variant_codes,
+        )
+        for name in EVALUATED_SPLITS
+    }
 
     zero_validation = zero_results["validation"]
     comparison: Dict[str, Any] = {
-        "zero_baseline_results_path": str(ZERO_BASELINE_PATH.relative_to(REPO_ROOT)),
+        "zero_baseline_results_path": zero_results_path,
         "split": "validation",
         "overall": _improvement(
             zero_validation["overall"]["mae"], results["validation"]["overall"]["mae"]
@@ -281,16 +357,31 @@ def main() -> int:
         },
     }
     results["comparison_to_zero_baseline"] = comparison
+    return results
 
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--dataset-version", choices=DATASET_VERSIONS, default=DEFAULT_DATASET_VERSION)
+    parser.add_argument("--results-dir", type=Path, help="override ml/results/<dataset-version>/")
+    args = parser.parse_args()
+
+    results_dir = (args.results_dir or dataset_paths(args.dataset_version)["results_dir"]).resolve()
+    zero_path = results_dir / "zero_baseline.json"
+    zero_label = str(zero_path.relative_to(REPO_ROOT)) if zero_path.is_relative_to(REPO_ROOT) else str(zero_path)
+    results = compute(args.dataset_version, json.loads(zero_path.read_text(encoding="utf-8")), zero_label)
+    comparison = results["comparison_to_zero_baseline"]
+    results_path = results_dir / "median_cents_baseline.json"
+
+    results_path.parent.mkdir(parents=True, exist_ok=True)
+    results_path.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
 
     train = results["train"]["overall"]
     validation = results["validation"]["overall"]
     clean = results["validation"]["by_variant"]["clean"]
     overall_comparison = comparison["overall"]
 
-    print("Axis 2 V1 — Median-Cents Baseline")
+    print(f"{args.dataset_version} — Median-Cents Baseline")
     print()
     print("TRAIN")
     print(f"Examples: {train['example_count']:,}")
@@ -339,7 +430,7 @@ def main() -> int:
     print("Test evaluated: NO")
     print()
     print("Results written to:")
-    print(f"{RESULTS_PATH.relative_to(REPO_ROOT)}")
+    print(f"{results_path}")
     return 0
 
 

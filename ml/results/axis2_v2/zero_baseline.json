@@ -1,0 +1,276 @@
+{
+  "experiment": "axis2_v2_zero_baseline",
+  "prediction_rule": "always_predict_zero_cents",
+  "test_evaluated": false,
+  "dataset": {
+    "path": "data/ml_dataset/axis2_v2/examples.npz",
+    "dataset_name": "axis2_v2",
+    "schema_version": 1,
+    "label_field": "injected_shift_cents",
+    "total_example_count": 127735,
+    "split_encoding": {
+      "train": 0,
+      "validation": 1,
+      "test": 2
+    },
+    "variant_encoding": {
+      "clean": 0,
+      "corruption_1": 1,
+      "corruption_2": 2,
+      "corruption_3": 3,
+      "corruption_4": 4
+    },
+    "sealed_split": "test"
+  },
+  "features_used": [],
+  "train": {
+    "overall": {
+      "example_count": 88685,
+      "mae": 20.49854355578729,
+      "rmse": 25.498323090663586,
+      "mean_signed_error": -0.05051244660030788,
+      "median_absolute_error": 19.96091640203993
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 17737,
+        "mae": 0.0,
+        "rmse": 0.0,
+        "mean_signed_error": 0.0,
+        "median_absolute_error": 0.0
+      },
+      "corruption_1": {
+        "example_count": 17737,
+        "mae": 10.00114927491083,
+        "rmse": 10.406301807235769,
+        "mean_signed_error": 0.11122425385931835,
+        "median_absolute_error": 9.997130367664994
+      },
+      "corruption_2": {
+        "example_count": 17737,
+        "mae": 19.97839812452587,
+        "rmse": 20.18625451054664,
+        "mean_signed_error": 0.0022458145146529566,
+        "median_absolute_error": 19.96091640203993
+      },
+      "corruption_3": {
+        "example_count": 17737,
+        "mae": 29.980232994253008,
+        "rmse": 30.119281778040335,
+        "mean_signed_error": -0.031355995746905604,
+        "median_absolute_error": 29.972329283183686
+      },
+      "corruption_4": {
+        "example_count": 17737,
+        "mae": 42.53293738524672,
+        "rmse": 42.75365807608166,
+        "mean_signed_error": -0.33467630562860506,
+        "median_absolute_error": 42.5598637050116
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 35474,
+        "mae": 25.68632000298449,
+        "rmse": 28.57266296493493,
+        "mean_signed_error": -25.68632000298449
+      },
+      "negative": {
+        "example_count": 35474,
+        "mae": 25.560038886483717,
+        "rmse": 28.443173736098885,
+        "mean_signed_error": 25.560038886483717
+      }
+    },
+    "tail": {
+      "example_count": 88685,
+      "absolute_error_quantiles": {
+        "p50": 19.96091640203993,
+        "p75": 32.48960562305773,
+        "p90": 42.5596749119116,
+        "p95": 46.30539411119183,
+        "p99": 49.266700342834376,
+        "p99_5": 49.62549958634086,
+        "p99_9": 49.93219187719273
+      },
+      "max_absolute_error": 49.999988184834635,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 35474,
+          "percent": 40.0
+        },
+        "gt_50_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_100_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_200_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    },
+    "sanity_checks": {
+      "all_predictions_exactly_zero": true,
+      "all_clean_targets_exactly_zero": true,
+      "predictions_all_finite": true,
+      "targets_all_finite": true,
+      "max_abs_error_minus_abs_target": 0.0,
+      "abs_error_equals_abs_target": true
+    }
+  },
+  "validation": {
+    "overall": {
+      "example_count": 18700,
+      "mae": 20.512054673471397,
+      "rmse": 25.50662572076404,
+      "mean_signed_error": 0.053113312438031954,
+      "median_absolute_error": 20.0458565668888
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 3740,
+        "mae": 0.0,
+        "rmse": 0.0,
+        "mean_signed_error": 0.0,
+        "median_absolute_error": 0.0
+      },
+      "corruption_1": {
+        "example_count": 3740,
+        "mae": 10.013701771237821,
+        "rmse": 10.428766707764632,
+        "mean_signed_error": -0.19308694160381637,
+        "median_absolute_error": 9.983816187284448
+      },
+      "corruption_2": {
+        "example_count": 3740,
+        "mae": 20.023901411193954,
+        "rmse": 20.23388892182026,
+        "mean_signed_error": 0.22114430969531187,
+        "median_absolute_error": 20.0458565668888
+      },
+      "corruption_3": {
+        "example_count": 3740,
+        "mae": 30.019781849955333,
+        "rmse": 30.15649898048658,
+        "mean_signed_error": -0.40464108822745687,
+        "median_absolute_error": 30.047440232740705
+      },
+      "corruption_4": {
+        "example_count": 3740,
+        "mae": 42.50288833496988,
+        "rmse": 42.72418415359245,
+        "mean_signed_error": 0.6421502823261209,
+        "median_absolute_error": 42.46590631458767
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 7480,
+        "mae": 25.573676701291706,
+        "rmse": 28.42827338497524,
+        "mean_signed_error": -25.573676701291706
+      },
+      "negative": {
+        "example_count": 7480,
+        "mae": 25.70645998238679,
+        "rmse": 28.605998697772513,
+        "mean_signed_error": 25.70645998238679
+      }
+    },
+    "tail": {
+      "example_count": 18700,
+      "absolute_error_quantiles": {
+        "p50": 20.0458565668888,
+        "p75": 32.51278777509589,
+        "p90": 42.46039467500148,
+        "p95": 46.273624651683875,
+        "p99": 49.24056527745154,
+        "p99_5": 49.607401119111316,
+        "p99_9": 49.88546616257437
+      },
+      "max_absolute_error": 49.98768582560741,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 7480,
+          "percent": 40.0
+        },
+        "gt_50_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_100_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_200_cents": {
+          "count": 0,
+          "percent": 0.0
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    },
+    "sanity_checks": {
+      "all_predictions_exactly_zero": true,
+      "all_clean_targets_exactly_zero": true,
+      "predictions_all_finite": true,
+      "targets_all_finite": true,
+      "max_abs_error_minus_abs_target": 0.0,
+      "abs_error_equals_abs_target": true
+    },
+    "by_song": {
+      "bruno_mars_when_i_was_your_man_audio": {
+        "example_count": 2405,
+        "mae": 20.535245621931168,
+        "rmse": 25.522476772839962,
+        "mean_signed_error": -0.1601545907604513
+      },
+      "christina_aguilera_hurt_audio": {
+        "example_count": 2550,
+        "mae": 20.54379919428171,
+        "rmse": 25.530949217940876,
+        "mean_signed_error": -0.22945641677415926
+      },
+      "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+        "example_count": 3035,
+        "mae": 20.48902073961897,
+        "rmse": 25.487016292340464,
+        "mean_signed_error": 0.12914465025555844
+      },
+      "lady_gaga_million_reasons_official_audio": {
+        "example_count": 1860,
+        "mae": 20.468527953402404,
+        "rmse": 25.399309584974645,
+        "mean_signed_error": 0.31423337605979346
+      },
+      "luther_vandross_here_and_now": {
+        "example_count": 4380,
+        "mae": 20.49693924267195,
+        "rmse": 25.513622137365996,
+        "mean_signed_error": 0.21806630450630649
+      },
+      "marc_anthony_ahora_quien_cover_audio_video": {
+        "example_count": 2655,
+        "mae": 20.564313175343784,
+        "rmse": 25.548875254780114,
+        "mean_signed_error": -0.2953174089898368
+      },
+      "norah_jones_don_t_know_why": {
+        "example_count": 1815,
+        "mae": 20.479880675613977,
+        "rmse": 25.515207085522846,
+        "mean_signed_error": 0.4495943858279603
+      }
+    }
+  }
+}

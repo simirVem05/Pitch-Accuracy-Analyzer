@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Zero baseline for Axis 2 V1: predict 0.0 cents of injected shift for every example.
+Zero baseline for Axis 2: predict 0.0 cents of injected shift for every example.
 
 This is the no-information floor that a learned model must beat. It reads no
 features at all — not the cents contour, not CREPE confidence, not duration,
@@ -9,10 +9,15 @@ absolute error of every example is exactly `abs(injected_shift_cents)`, which
 makes the resulting MAE a direct readout of the label distribution.
 
 The test split is sealed: it is never sliced and no test metric is computed.
+
+Runs against any dataset version with the same encoding:
+  python zero_baseline.py                              # axis2_v1 -> ml/results/axis2_v1/
+  python zero_baseline.py --dataset-version axis2_v2   # axis2_v2 -> ml/results/axis2_v2/
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Any, Dict, Mapping
@@ -21,11 +26,8 @@ import numpy as np
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-DATASET_DIR = REPO_ROOT / "data" / "ml_dataset" / "axis2_v1"
-EXAMPLES_PATH = DATASET_DIR / "examples.npz"
-SPLITS_PATH = DATASET_DIR / "splits.json"
-SUMMARY_PATH = DATASET_DIR / "summary.json"
-RESULTS_PATH = REPO_ROOT / "ml" / "results" / "axis2_v1" / "zero_baseline.json"
+DEFAULT_DATASET_VERSION = "axis2_v1"
+DATASET_VERSIONS = ("axis2_v1", "axis2_v2")
 
 EVALUATED_SPLITS = ("train", "validation")
 SEALED_SPLIT = "test"
@@ -34,8 +36,47 @@ EXPECTED_SPLIT_ORDER = ("train", "validation", "test")
 EXPECTED_VARIANT_ORDER = ("clean", "corruption_1", "corruption_2", "corruption_3", "corruption_4")
 
 
+# Descriptive tail of the absolute-error distribution. Added for the v1/v2
+# comparison; these do not enter any prediction.
+TAIL_QUANTILES = (50.0, 75.0, 90.0, 95.0, 99.0, 99.5, 99.9)
+TAIL_THRESHOLDS_CENTS = (25.0, 50.0, 100.0, 200.0, 400.0)
+
+
 class DatasetContractError(RuntimeError):
     """Raised when the dataset does not match the encoding this baseline assumes."""
+
+
+def dataset_paths(version: str) -> Dict[str, Path]:
+    if version not in DATASET_VERSIONS:
+        raise DatasetContractError(f"unknown dataset version {version!r}; expected one of {DATASET_VERSIONS}")
+    dataset_dir = REPO_ROOT / "data" / "ml_dataset" / version
+    return {
+        "dataset_dir": dataset_dir,
+        "examples": dataset_dir / "examples.npz",
+        "splits": dataset_dir / "splits.json",
+        "summary": dataset_dir / "summary.json",
+        "results_dir": REPO_ROOT / "ml" / "results" / version,
+    }
+
+
+def _tail(absolute_error: np.ndarray) -> Dict[str, Any]:
+    n = int(absolute_error.size)
+    if not n:
+        return {"example_count": 0}
+    return {
+        "example_count": n,
+        "absolute_error_quantiles": {
+            f"p{q:g}".replace(".", "_"): float(np.percentile(absolute_error, q)) for q in TAIL_QUANTILES
+        },
+        "max_absolute_error": float(np.max(absolute_error)),
+        "absolute_error_exceeding": {
+            f"gt_{t:g}_cents": {
+                "count": int(np.count_nonzero(absolute_error > t)),
+                "percent": 100.0 * float(np.count_nonzero(absolute_error > t)) / n,
+            }
+            for t in TAIL_THRESHOLDS_CENTS
+        },
+    }
 
 
 def _resolve_lookup(names: np.ndarray, expected: tuple[str, ...], label: str) -> Dict[str, int]:
@@ -128,6 +169,7 @@ def _evaluate_split(
         "overall": _metrics(targets, predictions),
         "by_variant": by_variant,
         "by_sign": by_sign,
+        "tail": _tail(np.abs(predictions - targets)),
         "sanity_checks": _check_invariants(targets, predictions, is_clean),
     }
 
@@ -144,11 +186,13 @@ def _by_song(targets: np.ndarray, song_index: np.ndarray, song_ids: np.ndarray) 
     return out
 
 
-def main() -> int:
-    splits = json.loads(SPLITS_PATH.read_text(encoding="utf-8"))
-    summary = json.loads(SUMMARY_PATH.read_text(encoding="utf-8"))
+def compute(version: str = DEFAULT_DATASET_VERSION) -> Dict[str, Any]:
+    """All zero-baseline results for one dataset version. Writes nothing."""
+    paths = dataset_paths(version)
+    splits = json.loads(paths["splits"].read_text(encoding="utf-8"))
+    summary = json.loads(paths["summary"].read_text(encoding="utf-8"))
 
-    with np.load(EXAMPLES_PATH, allow_pickle=False) as data:
+    with np.load(paths["examples"], allow_pickle=False) as data:
         split_codes = _resolve_lookup(data["split_names"], EXPECTED_SPLIT_ORDER, "split_names")
         variant_codes = _resolve_lookup(data["variant_names"], EXPECTED_VARIANT_ORDER, "variant_names")
 
@@ -159,13 +203,15 @@ def main() -> int:
         target = np.asarray(data["injected_shift_cents"], dtype=np.float64)
 
     _verify_counts(split_index, split_codes, splits)
+    if summary.get("dataset_name") != version:
+        raise DatasetContractError(f"{paths['summary']} names dataset {summary.get('dataset_name')!r}, not {version!r}")
 
     results: Dict[str, Any] = {
-        "experiment": "axis2_v1_zero_baseline",
+        "experiment": f"{version}_zero_baseline",
         "prediction_rule": "always_predict_zero_cents",
         "test_evaluated": False,
         "dataset": {
-            "path": str(EXAMPLES_PATH.relative_to(REPO_ROOT)),
+            "path": str(paths["examples"].relative_to(REPO_ROOT)),
             "dataset_name": summary.get("dataset_name"),
             "schema_version": summary.get("schema_version"),
             "label_field": summary.get("label_field"),
@@ -183,14 +229,24 @@ def main() -> int:
         if name == "validation":
             section["by_song"] = _by_song(target[mask], song_index[mask], song_ids)
         results[name] = section
+    return results
 
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--dataset-version", choices=DATASET_VERSIONS, default=DEFAULT_DATASET_VERSION)
+    parser.add_argument("--results-dir", type=Path, help="override ml/results/<dataset-version>/")
+    args = parser.parse_args()
+
+    results = compute(args.dataset_version)
+    results_path = (args.results_dir or dataset_paths(args.dataset_version)["results_dir"]).resolve() / "zero_baseline.json"
+    results_path.parent.mkdir(parents=True, exist_ok=True)
+    results_path.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
 
     train = results["train"]["overall"]
     validation = results["validation"]["overall"]
 
-    print("Axis 2 V1 — Zero Baseline")
+    print(f"{args.dataset_version} — Zero Baseline")
     print()
     print("TRAIN")
     print(f"Examples: {train['example_count']:,}")
@@ -210,7 +266,7 @@ def main() -> int:
     print("Test evaluated: NO")
     print()
     print("Results written to:")
-    print(f"{RESULTS_PATH.relative_to(REPO_ROOT)}")
+    print(f"{results_path}")
     return 0
 
 

@@ -1,0 +1,441 @@
+{
+  "experiment": "axis2_v2_median_cents_baseline",
+  "prediction_rule": "predict_median_cents_contour",
+  "features_used": [
+    "cents_contour"
+  ],
+  "test_evaluated": false,
+  "dataset": {
+    "path": "data/ml_dataset/axis2_v2/examples.npz",
+    "dataset_name": "axis2_v2",
+    "schema_version": 1,
+    "label_field": "injected_shift_cents",
+    "split_encoding": {
+      "train": 0,
+      "validation": 1,
+      "test": 2
+    },
+    "variant_encoding": {
+      "clean": 0,
+      "corruption_1": 1,
+      "corruption_2": 2,
+      "corruption_3": 3,
+      "corruption_4": 4
+    },
+    "sealed_split": "test"
+  },
+  "verification": {
+    "prediction_inputs": [
+      "own_example_cents_contour"
+    ],
+    "sibling_variants_used_for_prediction": false,
+    "clean_reference_used_for_prediction": false,
+    "predictions_all_finite": true,
+    "targets_all_finite": true,
+    "independent_median_vs_stored_median_cents": {
+      "compared_example_count": 107385,
+      "max_abs_difference_cents": 0.0,
+      "tolerance_cents": 1e-09,
+      "matches_stored_median_cents": true
+    }
+  },
+  "train": {
+    "overall": {
+      "example_count": 88685,
+      "mae": 16.858183175391222,
+      "rmse": 23.22196668600043,
+      "mean_signed_error": -0.29546114489123626,
+      "median_absolute_error": 12.263930377406437
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 17737,
+        "mae": 16.858183175391215,
+        "rmse": 23.221966686000428,
+        "mean_signed_error": -0.29546114489123626,
+        "median_absolute_error": 12.263930377406437
+      },
+      "corruption_1": {
+        "example_count": 17737,
+        "mae": 16.858183175391215,
+        "rmse": 23.221966686000428,
+        "mean_signed_error": -0.2954611448912363,
+        "median_absolute_error": 12.263930377406437
+      },
+      "corruption_2": {
+        "example_count": 17737,
+        "mae": 16.85818317539122,
+        "rmse": 23.221966686000428,
+        "mean_signed_error": -0.29546114489123637,
+        "median_absolute_error": 12.263930377406435
+      },
+      "corruption_3": {
+        "example_count": 17737,
+        "mae": 16.85818317539122,
+        "rmse": 23.22196668600043,
+        "mean_signed_error": -0.2954611448912362,
+        "median_absolute_error": 12.263930377406439
+      },
+      "corruption_4": {
+        "example_count": 17737,
+        "mae": 16.85818317539122,
+        "rmse": 23.221966686000428,
+        "mean_signed_error": -0.29546114489123626,
+        "median_absolute_error": 12.263930377406439
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 35474,
+        "mae": 16.858183175391215,
+        "rmse": 23.22196668600043,
+        "mean_signed_error": -0.2954611448912363,
+        "median_absolute_error": 12.263930377406437
+      },
+      "negative": {
+        "example_count": 35474,
+        "mae": 16.858183175391215,
+        "rmse": 23.22196668600043,
+        "mean_signed_error": -0.2954611448912362,
+        "median_absolute_error": 12.263930377406439
+      }
+    },
+    "tail": {
+      "example_count": 88685,
+      "absolute_error_quantiles": {
+        "p50": 12.263930377406437,
+        "p75": 25.015233229768867,
+        "p90": 37.953195462654044,
+        "p95": 44.59993005345249,
+        "p99": 68.14118649384876,
+        "p99_5": 86.20040983223437,
+        "p99_9": 143.65327808462118
+      },
+      "max_absolute_error": 248.53725410853397,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 22205,
+          "percent": 25.038056041044143
+        },
+        "gt_50_cents": {
+          "count": 1640,
+          "percent": 1.8492416981451203
+        },
+        "gt_100_cents": {
+          "count": 205,
+          "percent": 0.23115521226814004
+        },
+        "gt_200_cents": {
+          "count": 20,
+          "percent": 0.022551728026160005
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    }
+  },
+  "validation": {
+    "overall": {
+      "example_count": 18700,
+      "mae": 18.604491702740603,
+      "rmse": 25.201577979948617,
+      "mean_signed_error": -0.32897457120387463,
+      "median_absolute_error": 14.543082009839267
+    },
+    "by_variant": {
+      "clean": {
+        "example_count": 3740,
+        "mae": 18.6044917027406,
+        "rmse": 25.201577979948617,
+        "mean_signed_error": -0.3289745712038745,
+        "median_absolute_error": 14.543082009839264
+      },
+      "corruption_1": {
+        "example_count": 3740,
+        "mae": 18.604491702740603,
+        "rmse": 25.201577979948617,
+        "mean_signed_error": -0.32897457120387447,
+        "median_absolute_error": 14.543082009839265
+      },
+      "corruption_2": {
+        "example_count": 3740,
+        "mae": 18.604491702740603,
+        "rmse": 25.20157797994862,
+        "mean_signed_error": -0.3289745712038745,
+        "median_absolute_error": 14.543082009839264
+      },
+      "corruption_3": {
+        "example_count": 3740,
+        "mae": 18.604491702740603,
+        "rmse": 25.201577979948617,
+        "mean_signed_error": -0.3289745712038745,
+        "median_absolute_error": 14.543082009839264
+      },
+      "corruption_4": {
+        "example_count": 3740,
+        "mae": 18.6044917027406,
+        "rmse": 25.201577979948617,
+        "mean_signed_error": -0.32897457120387463,
+        "median_absolute_error": 14.543082009839267
+      }
+    },
+    "by_sign": {
+      "positive": {
+        "example_count": 7480,
+        "mae": 18.604491702740603,
+        "rmse": 25.20157797994862,
+        "mean_signed_error": -0.32897457120387463,
+        "median_absolute_error": 14.543082009839267
+      },
+      "negative": {
+        "example_count": 7480,
+        "mae": 18.604491702740603,
+        "rmse": 25.20157797994862,
+        "mean_signed_error": -0.32897457120387463,
+        "median_absolute_error": 14.543082009839264
+      }
+    },
+    "tail": {
+      "example_count": 18700,
+      "absolute_error_quantiles": {
+        "p50": 14.543082009839267,
+        "p75": 26.957635722430553,
+        "p90": 40.068453703934,
+        "p95": 46.43908553866495,
+        "p99": 71.83107871952377,
+        "p99_5": 88.36382741845966,
+        "p99_9": 139.90049119191283
+      },
+      "max_absolute_error": 272.1339010810089,
+      "absolute_error_exceeding": {
+        "gt_25_cents": {
+          "count": 5365,
+          "percent": 28.689839572192515
+        },
+        "gt_50_cents": {
+          "count": 515,
+          "percent": 2.7540106951871657
+        },
+        "gt_100_cents": {
+          "count": 75,
+          "percent": 0.40106951871657753
+        },
+        "gt_200_cents": {
+          "count": 5,
+          "percent": 0.026737967914438502
+        },
+        "gt_400_cents": {
+          "count": 0,
+          "percent": 0.0
+        }
+      }
+    },
+    "by_song": {
+      "bruno_mars_when_i_was_your_man_audio": {
+        "example_count": 2405,
+        "mae": 16.963599880830245,
+        "rmse": 22.022392597724775,
+        "mean_signed_error": -0.28406373120722334,
+        "median_absolute_error": 13.119151188919359,
+        "p95_absolute_error": 43.13509484815704,
+        "p99_absolute_error": 49.63557241076026,
+        "max_absolute_error": 72.06509818471982,
+        "clean_mae": 16.963599880830248,
+        "clean_example_count": 481,
+        "clean_note_count": 481
+      },
+      "christina_aguilera_hurt_audio": {
+        "example_count": 2550,
+        "mae": 13.786834758113315,
+        "rmse": 18.28355737516221,
+        "mean_signed_error": 0.7875808207756599,
+        "median_absolute_error": 9.60419785646603,
+        "p95_absolute_error": 37.775826903606664,
+        "p99_absolute_error": 46.166142673779966,
+        "max_absolute_error": 68.23152773193397,
+        "clean_mae": 13.786834758113315,
+        "clean_example_count": 510,
+        "clean_note_count": 510
+      },
+      "if_i_ain_t_got_you_alicia_keys_hq_audio": {
+        "example_count": 3035,
+        "mae": 20.468040493848946,
+        "rmse": 25.895437061248412,
+        "mean_signed_error": -0.9384525541440956,
+        "median_absolute_error": 16.815400078372694,
+        "p95_absolute_error": 47.94104131453073,
+        "p99_absolute_error": 69.49167755501637,
+        "max_absolute_error": 97.56719098221461,
+        "clean_mae": 20.468040493848946,
+        "clean_example_count": 607,
+        "clean_note_count": 607
+      },
+      "lady_gaga_million_reasons_official_audio": {
+        "example_count": 1860,
+        "mae": 18.794511422555193,
+        "rmse": 26.94240211673454,
+        "mean_signed_error": 0.6963861218272279,
+        "median_absolute_error": 14.18081626015029,
+        "p95_absolute_error": 45.270041467837245,
+        "p99_absolute_error": 106.3601966442694,
+        "max_absolute_error": 192.05997464012555,
+        "clean_mae": 18.794511422555193,
+        "clean_example_count": 372,
+        "clean_note_count": 372
+      },
+      "luther_vandross_here_and_now": {
+        "example_count": 4380,
+        "mae": 22.275855421285293,
+        "rmse": 30.353849685455785,
+        "mean_signed_error": 1.260795212906494,
+        "median_absolute_error": 17.918430466388735,
+        "p95_absolute_error": 49.48325268025381,
+        "p99_absolute_error": 101.30935617200824,
+        "max_absolute_error": 272.1339010810089,
+        "clean_mae": 22.27585542128529,
+        "clean_example_count": 876,
+        "clean_note_count": 876
+      },
+      "marc_anthony_ahora_quien_cover_audio_video": {
+        "example_count": 2655,
+        "mae": 16.460250872866162,
+        "rmse": 23.4838789538705,
+        "mean_signed_error": -2.92662979454636,
+        "median_absolute_error": 11.330067744166007,
+        "p95_absolute_error": 46.144488425480304,
+        "p99_absolute_error": 82.2717346653368,
+        "max_absolute_error": 134.1907258669411,
+        "clean_mae": 16.460250872866162,
+        "clean_example_count": 531,
+        "clean_note_count": 531
+      },
+      "norah_jones_don_t_know_why": {
+        "example_count": 1815,
+        "mae": 18.513279083851312,
+        "rmse": 23.15124402711123,
+        "mean_signed_error": -2.025420338136744,
+        "median_absolute_error": 16.835048325021617,
+        "p95_absolute_error": 42.29925706378731,
+        "p99_absolute_error": 56.155989681603316,
+        "max_absolute_error": 73.1560349834586,
+        "clean_mae": 18.513279083851312,
+        "clean_example_count": 363,
+        "clean_note_count": 363
+      }
+    },
+    "song_extremes": {
+      "best_by_mae": {
+        "song_id": "christina_aguilera_hurt_audio",
+        "mae": 13.786834758113315
+      },
+      "worst_by_mae": {
+        "song_id": "luther_vandross_here_and_now",
+        "mae": 22.275855421285293
+      },
+      "best_by_rmse": {
+        "song_id": "christina_aguilera_hurt_audio",
+        "rmse": 18.28355737516221
+      },
+      "worst_by_rmse": {
+        "song_id": "luther_vandross_here_and_now",
+        "rmse": 30.353849685455785
+      }
+    }
+  },
+  "group_sanity_checks": {
+    "note_groups_checked": 21477,
+    "expected_members_per_group": 5,
+    "groups_with_unexpected_member_count": 0,
+    "tolerance_cents": 1e-09,
+    "max_within_note_error_spread_cents": 5.684341886080802e-14,
+    "median_within_note_error_spread_cents": 3.552713678800501e-15,
+    "groups_violating_tolerance": 0,
+    "grouping_used_for_prediction": false
+  },
+  "variant_identity_checks": {
+    "train": {
+      "corruption_1": {
+        "max_abs_difference_from_clean_cents": 2.842170943040401e-14,
+        "same_note_count": true
+      },
+      "corruption_2": {
+        "max_abs_difference_from_clean_cents": 2.842170943040401e-14,
+        "same_note_count": true
+      },
+      "corruption_3": {
+        "max_abs_difference_from_clean_cents": 2.842170943040401e-14,
+        "same_note_count": true
+      },
+      "corruption_4": {
+        "max_abs_difference_from_clean_cents": 2.842170943040401e-14,
+        "same_note_count": true
+      },
+      "all_variants_identical_within_tolerance": true,
+      "tolerance_cents": 1e-09
+    },
+    "validation": {
+      "corruption_1": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_2": {
+        "max_abs_difference_from_clean_cents": 5.684341886080802e-14,
+        "same_note_count": true
+      },
+      "corruption_3": {
+        "max_abs_difference_from_clean_cents": 1.4210854715202004e-14,
+        "same_note_count": true
+      },
+      "corruption_4": {
+        "max_abs_difference_from_clean_cents": 2.842170943040401e-14,
+        "same_note_count": true
+      },
+      "all_variants_identical_within_tolerance": true,
+      "tolerance_cents": 1e-09
+    }
+  },
+  "comparison_to_zero_baseline": {
+    "zero_baseline_results_path": "ml/results/axis2_v2/zero_baseline.json",
+    "split": "validation",
+    "overall": {
+      "zero_mae": 20.512054673471397,
+      "median_cents_mae": 18.604491702740603,
+      "absolute_mae_improvement": 1.907562970730794,
+      "percent_mae_improvement": 9.299716684150022
+    },
+    "by_variant": {
+      "clean": {
+        "zero_mae": 0.0,
+        "median_cents_mae": 18.6044917027406,
+        "absolute_mae_improvement": -18.6044917027406,
+        "percent_mae_improvement": null
+      },
+      "corruption_1": {
+        "zero_mae": 10.013701771237821,
+        "median_cents_mae": 18.604491702740603,
+        "absolute_mae_improvement": -8.590789931502782,
+        "percent_mae_improvement": -85.790351338183
+      },
+      "corruption_2": {
+        "zero_mae": 20.023901411193954,
+        "median_cents_mae": 18.604491702740603,
+        "absolute_mae_improvement": 1.419409708453351,
+        "percent_mae_improvement": 7.088577192354029
+      },
+      "corruption_3": {
+        "zero_mae": 30.019781849955333,
+        "median_cents_mae": 18.604491702740603,
+        "absolute_mae_improvement": 11.41529014721473,
+        "percent_mae_improvement": 38.02589307367573
+      },
+      "corruption_4": {
+        "zero_mae": 42.50288833496988,
+        "median_cents_mae": 18.6044917027406,
+        "absolute_mae_improvement": 23.898396632229282,
+        "percent_mae_improvement": 56.22770020682694
+      }
+    }
+  }
+}
