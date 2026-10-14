@@ -14,6 +14,12 @@ REPO_ROOT = OUT_DIR.parents[2]
 CSV_PATH = OUT_DIR / "stable_center_audit.csv"
 CANONICAL_DIR = REPO_ROOT / "data" / "main_data"
 
+
+def _v1_notes(song_dir: Path) -> Path:
+    """This audit describes v1 notes: notes_v1.npz once the store is re-segmented (schema 2), notes.npz before."""
+    p = song_dir / "notes_v1.npz"
+    return p if p.exists() else song_dir / "notes.npz"
+
 N_EX = 10
 
 
@@ -29,7 +35,7 @@ def load_rows():
 
 
 def contour(song_id: str, note_index: int):
-    c = np.load(CANONICAL_DIR / song_id / "notes.npz", allow_pickle=False)
+    c = np.load(_v1_notes(CANONICAL_DIR / song_id), allow_pickle=False)
     off = c["contour_offsets"]
     lo, hi = int(off[note_index]), int(off[note_index + 1])
     return (c["contour_cents_deviation"][lo:hi],

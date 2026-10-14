@@ -55,6 +55,12 @@ from segmentation_tail_audit import (  # noqa: E402
 
 MAIN = REPO / "data" / "main_data"
 
+
+def _v1_notes(song_dir: Path) -> Path:
+    """This audit describes v1 notes: notes_v1.npz once the store is re-segmented (schema 2), notes.npz before."""
+    p = song_dir / "notes_v1.npz"
+    return p if p.exists() else song_dir / "notes.npz"
+
 # ---------------------------------------------------------------- configs
 
 HARD_GAPS = (0.25, 0.35, 0.50, 0.75)
@@ -376,7 +382,7 @@ def verify_v1(songs):
     """v1 on the saved track == canonical notes.npz, exactly."""
     report = {"songs": 0, "notes": 0, "mismatching_songs": []}
     for s in songs:
-        n = np.load(MAIN / s / "notes.npz", allow_pickle=False)
+        n = np.load(_v1_notes(MAIN / s), allow_pickle=False)
         segs, idx = v1_segment(_SONGS[s]["times"], _SONGS[s]["f0"], _SONGS[s]["tuning"])
         off, src = n["contour_offsets"], n["contour_source_frame_index"]
         ok = len(segs) == n["note_index"].size and all(

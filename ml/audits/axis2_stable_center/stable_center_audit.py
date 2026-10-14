@@ -33,6 +33,12 @@ DATASET_DIR = REPO_ROOT / "data" / "ml_dataset" / "axis2_v1"
 EXAMPLES_PATH = DATASET_DIR / "examples.npz"
 MANIFEST_CSV = DATASET_DIR / "manifest.csv"
 CANONICAL_DIR = REPO_ROOT / "data" / "main_data"
+
+
+def _v1_notes(song_dir: Path) -> Path:
+    """This audit describes v1 notes: notes_v1.npz once the store is re-segmented (schema 2), notes.npz before."""
+    p = song_dir / "notes_v1.npz"
+    return p if p.exists() else song_dir / "notes.npz"
 OUT_DIR = Path(__file__).resolve().parent
 
 # A median needs a real interior to mean anything. Below 3 frames a "region
@@ -169,7 +175,7 @@ def main() -> int:
 
     for scode in sorted(by_song):
         sid = song_ids[scode]
-        canon = np.load(CANONICAL_DIR / sid / "notes.npz", allow_pickle=False)
+        canon = np.load(_v1_notes(CANONICAL_DIR / sid), allow_pickle=False)
         c_off = canon["contour_offsets"]
         c_cents = canon["contour_cents_deviation"]
         c_conf = canon["contour_crepe_confidence"]

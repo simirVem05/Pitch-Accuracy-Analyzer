@@ -41,6 +41,12 @@ from note_segmentation import (  # noqa: E402
 
 OUT = Path(__file__).resolve().parent
 MAIN = REPO / "data" / "main_data"
+
+
+def _v1_notes(song_dir: Path) -> Path:
+    """This audit describes v1 notes: notes_v1.npz once the store is re-segmented (schema 2), notes.npz before."""
+    p = song_dir / "notes_v1.npz"
+    return p if p.exists() else song_dir / "notes.npz"
 MANIFEST = REPO / "data" / "ml_dataset" / "axis2_v1" / "manifest.csv"
 VARIANTS_PER_NOTE = 5
 HOP_S = 0.02
@@ -212,7 +218,7 @@ def main() -> int:
     abort_totals = Counter()
 
     for song in songs:
-        n = np.load(MAIN / song / "notes.npz", allow_pickle=False)
+        n = np.load(_v1_notes(MAIN / song), allow_pickle=False)
         h = np.load(MAIN / song / "harmony.npz", allow_pickle=False)
         tuning = float(h["tuning_offset_semitones"])
         ftimes, ff0 = h["vocal_frame_times_s"], h["vocal_f0_hz"]

@@ -4,18 +4,15 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import logging
 import os
 import re
-import subprocess
 import sys
-import tempfile
 import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Tuple
 
 import numpy as np
 
@@ -26,82 +23,28 @@ if str(BACKEND_DIR) not in sys.path:
     sys.path.insert(0, str(BACKEND_DIR))
 
 from harmony import CHROMA_HOP, CHROMA_SR, build_harmonic_context  # noqa: E402
-from note_segmentation import (  # noqa: E402
-    cents_diff,
-    midi_to_hz,
-    segment_notes_with_frame_indices,
-)
+from note_segmentation import segment_notes_with_frame_indices  # noqa: E402
 from preprocess import PreprocessConfig, PitchTrack, detect_pitch  # noqa: E402
 from separation import Stems, separate  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from main_data_io import (  # noqa: E402
+    ValidationError,
+    _atomic_json,
+    _atomic_npz,
+    _git_commit,
+    _note_arrays,
+    _sha256,
+    validate_song_output,
+)
 
 
 DATASET_SCHEMA_VERSION = 1
 DEFAULT_INPUT_DIR = REPO_ROOT / "data" / "test_songs"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "data" / "main_data"
 AUDIO_SUFFIXES = {".mp3", ".wav", ".flac", ".m4a", ".aac", ".ogg", ".opus", ".aiff", ".aif"}
-NOTE_NAMES = ("C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B")
 
 LOGGER = logging.getLogger("build_main_dataset")
-
-
-class ValidationError(ValueError):
-    """Raised when generated dataset files do not satisfy schema invariants."""
-
-
-def _jsonable(value: Any) -> Any:
-    if isinstance(value, Path):
-        return str(value)
-    if isinstance(value, np.integer):
-        return int(value)
-    if isinstance(value, np.floating):
-        return float(value)
-    if isinstance(value, np.ndarray):
-        return value.tolist()
-    if isinstance(value, dict):
-        return {str(key): _jsonable(item) for key, item in value.items()}
-    if isinstance(value, (list, tuple)):
-        return [_jsonable(item) for item in value]
-    return value
-
-
-def _atomic_json(path: Path, payload: Mapping[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile("w", encoding="utf-8", suffix=".json", dir=path.parent, delete=False) as tmp:
-        json.dump(_jsonable(dict(payload)), tmp, indent=2, sort_keys=True)
-        tmp.write("\n")
-        tmp_path = Path(tmp.name)
-    os.replace(tmp_path, path)
-
-
-def _atomic_npz(path: Path, arrays: Mapping[str, np.ndarray]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.NamedTemporaryFile(suffix=".npz", dir=path.parent, delete=False) as tmp:
-        tmp_path = Path(tmp.name)
-    np.savez_compressed(tmp_path, **arrays)
-    os.replace(tmp_path, path)
-
-
-def _sha256(path: Path, chunk_size: int = 4 * 1024 * 1024) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        while chunk := handle.read(chunk_size):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def _git_commit() -> str | None:
-    try:
-        result = subprocess.run(
-            ["git", "rev-parse", "HEAD"],
-            cwd=REPO_ROOT,
-            check=True,
-            capture_output=True,
-            text=True,
-        )
-    except (OSError, subprocess.CalledProcessError):
-        return None
-    commit = result.stdout.strip()
-    return commit or None
 
 
 def _song_slug(filename: str) -> str:
@@ -109,10 +52,6 @@ def _song_slug(filename: str) -> str:
     ascii_stem = unicodedata.normalize("NFKD", stem).encode("ascii", "ignore").decode("ascii")
     slug = re.sub(r"[^a-z0-9]+", "_", ascii_stem.lower()).strip("_")
     return slug or "song"
-
-
-def _midi_note_name(midi_note: int) -> str:
-    return f"{NOTE_NAMES[int(midi_note) % 12]}{int(midi_note) // 12 - 1}"
 
 
 def _load_manifest(output_dir: Path) -> Dict[str, Any]:
@@ -160,59 +99,6 @@ def _choose_song_id(path: Path, source_sha256: str, manifest: Mapping[str, Any],
     if existing.get("source_sha256") == source_sha256 or existing.get("original_filename") == path.name:
         return base
     return f"{base}_{source_sha256[:8]}"
-
-
-def _note_arrays(
-    segments: Sequence[Mapping[str, Any]],
-    frame_indices: Sequence[np.ndarray],
-    track: PitchTrack,
-    tuning_semitones: float,
-) -> Dict[str, np.ndarray]:
-    offsets = np.zeros(len(segments) + 1, dtype=np.int64)
-    times: List[np.ndarray] = []
-    f0_values: List[np.ndarray] = []
-    cents_values: List[np.ndarray] = []
-    confidence_values: List[np.ndarray] = []
-    source_indices: List[np.ndarray] = []
-
-    for note_index, (segment, indices) in enumerate(zip(segments, frame_indices)):
-        indices = np.asarray(indices, dtype=np.int64)
-        f0 = np.asarray(track.frequency[indices], dtype=np.float64)
-        if indices.size == 0 or not np.all(np.isfinite(f0)):
-            raise ValidationError(f"Note {note_index} contains missing or invalid voiced frames")
-        target_hz = midi_to_hz(int(segment["target_note"]), tuning_semitones)
-        cents = np.asarray(cents_diff(f0, target_hz), dtype=np.float64)
-
-        source_indices.append(indices)
-        times.append(np.asarray(track.time[indices], dtype=np.float64))
-        f0_values.append(f0)
-        cents_values.append(cents)
-        confidence_values.append(np.asarray(track.confidence[indices], dtype=np.float64))
-        offsets[note_index + 1] = offsets[note_index] + indices.size
-
-    concatenate = lambda values, dtype: np.concatenate(values).astype(dtype, copy=False) if values else np.empty(0, dtype=dtype)
-    target_midi = np.asarray([int(segment["target_note"]) for segment in segments], dtype=np.int16)
-
-    return {
-        "note_index": np.arange(len(segments), dtype=np.int32),
-        "target_midi_note": target_midi,
-        "target_note_name": np.asarray([_midi_note_name(note) for note in target_midi], dtype="U8"),
-        "pitch_class": np.asarray([int(segment["pitch_class"]) for segment in segments], dtype=np.int8),
-        "start_time_s": np.asarray([float(segment["start"]) for segment in segments], dtype=np.float64),
-        "end_time_s": np.asarray([float(segment["end"]) for segment in segments], dtype=np.float64),
-        "duration_s": np.asarray([float(segment["duration_s"]) for segment in segments], dtype=np.float64),
-        "median_cents_deviation": np.asarray([float(segment["median_cents"]) for segment in segments], dtype=np.float64),
-        "core_median_cents_deviation": np.asarray(
-            [float(segment["core_median_cents"]) for segment in segments], dtype=np.float64
-        ),
-        "voiced_frame_count": np.asarray([int(segment["n_voiced_frames"]) for segment in segments], dtype=np.int32),
-        "contour_offsets": offsets,
-        "contour_source_frame_index": concatenate(source_indices, np.int64),
-        "contour_time_s": concatenate(times, np.float64),
-        "contour_f0_hz": concatenate(f0_values, np.float64),
-        "contour_cents_deviation": concatenate(cents_values, np.float64),
-        "contour_crepe_confidence": concatenate(confidence_values, np.float64),
-    }
 
 
 def _harmony_arrays(context: Any, vocal_track: PitchTrack, bass_track: PitchTrack) -> Dict[str, np.ndarray]:
@@ -284,108 +170,6 @@ def _metadata(
         "processing_timestamp_utc": datetime.now(timezone.utc).isoformat(),
         "git_commit": git_commit,
     }
-
-
-def _require_keys(container: Mapping[str, Any], required: Iterable[str], label: str) -> None:
-    missing = sorted(set(required) - set(container.keys()))
-    if missing:
-        raise ValidationError(f"{label} is missing required fields: {', '.join(missing)}")
-
-
-def validate_song_output(song_dir: Path, expected_source_sha256: str | None = None) -> Dict[str, Any]:
-    notes_path = song_dir / "notes.npz"
-    harmony_path = song_dir / "harmony.npz"
-    metadata_path = song_dir / "metadata.json"
-    for path in (notes_path, harmony_path, metadata_path):
-        if not path.is_file():
-            raise ValidationError(f"Missing required file: {path}")
-
-    try:
-        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
-        raise ValidationError(f"Invalid metadata JSON: {exc}") from exc
-    _require_keys(
-        metadata,
-        ("dataset_schema_version", "song_id", "original_filename", "source_sha256", "number_of_segmented_notes"),
-        "metadata",
-    )
-    if metadata["dataset_schema_version"] != DATASET_SCHEMA_VERSION:
-        raise ValidationError(
-            f"Schema {metadata['dataset_schema_version']} does not match current schema {DATASET_SCHEMA_VERSION}"
-        )
-    if expected_source_sha256 and metadata["source_sha256"] != expected_source_sha256:
-        raise ValidationError("Source SHA-256 does not match the generated metadata")
-
-    with np.load(notes_path, allow_pickle=False) as notes:
-        _require_keys(
-            notes,
-            (
-                "note_index", "target_midi_note", "pitch_class", "start_time_s", "end_time_s", "duration_s",
-                "contour_offsets", "contour_time_s", "contour_f0_hz", "contour_cents_deviation",
-                "contour_crepe_confidence", "median_cents_deviation", "core_median_cents_deviation",
-            ),
-            "notes.npz",
-        )
-        note_count = int(notes["note_index"].size)
-        if note_count < 1:
-            raise ValidationError("No segmented notes were saved")
-        if note_count != int(metadata["number_of_segmented_notes"]):
-            raise ValidationError("Note count differs between notes.npz and metadata.json")
-        for key in ("target_midi_note", "pitch_class", "start_time_s", "end_time_s", "duration_s"):
-            if notes[key].size != note_count:
-                raise ValidationError(f"{key} does not align with the note count")
-        if not np.all(np.isfinite(notes["duration_s"])) or not np.all(notes["duration_s"] > 0):
-            raise ValidationError("Every note duration must be finite and positive")
-
-        offsets = np.asarray(notes["contour_offsets"], dtype=np.int64)
-        if offsets.shape != (note_count + 1,) or offsets[0] != 0 or np.any(np.diff(offsets) <= 0):
-            raise ValidationError("Contour offsets must define one non-empty contour per note")
-        contour_length = int(offsets[-1])
-        for key in (
-            "contour_time_s", "contour_f0_hz", "contour_cents_deviation", "contour_crepe_confidence"
-        ):
-            if notes[key].size != contour_length:
-                raise ValidationError(f"{key} length does not match contour_offsets")
-        if contour_length == 0:
-            raise ValidationError("Saved note contours are unexpectedly empty")
-        if not np.all(np.isfinite(notes["contour_f0_hz"])) or np.any(notes["contour_f0_hz"] <= 0):
-            raise ValidationError("Note F0 contours contain invalid values")
-        if not np.all(np.isfinite(notes["contour_cents_deviation"])):
-            raise ValidationError("Note cents contours contain invalid values")
-        confidence = notes["contour_crepe_confidence"]
-        if not np.all(np.isfinite(confidence)) or np.any((confidence < 0) | (confidence > 1)):
-            raise ValidationError("Note confidence contours fall outside [0, 1]")
-
-    with np.load(harmony_path, allow_pickle=False) as harmony:
-        _require_keys(
-            harmony,
-            (
-                "other_chroma_cens", "chroma_frame_times_s", "global_chroma_profile", "beat_times_s",
-                "vocal_frame_times_s", "vocal_f0_hz", "vocal_crepe_confidence",
-                "bass_frame_times_s", "bass_f0_hz", "bass_crepe_confidence",
-            ),
-            "harmony.npz",
-        )
-        chroma = harmony["other_chroma_cens"]
-        if chroma.ndim != 2 or chroma.shape[0] != 12 or chroma.shape[1] == 0:
-            raise ValidationError("Other-stem chroma must have shape (12, nonzero frames)")
-        if harmony["chroma_frame_times_s"].shape != (chroma.shape[1],):
-            raise ValidationError("Chroma timestamps do not align with chroma frames")
-        if harmony["global_chroma_profile"].shape != (12,):
-            raise ValidationError("Global chroma profile must have 12 values")
-        for prefix in ("vocal", "bass"):
-            lengths = {
-                harmony[f"{prefix}_frame_times_s"].size,
-                harmony[f"{prefix}_f0_hz"].size,
-                harmony[f"{prefix}_crepe_confidence"].size,
-            }
-            if len(lengths) != 1 or next(iter(lengths)) == 0:
-                raise ValidationError(f"{prefix.title()} CREPE arrays are empty or misaligned")
-            confidence = harmony[f"{prefix}_crepe_confidence"]
-            if not np.all(np.isfinite(confidence)) or np.any((confidence < 0) | (confidence > 1)):
-                raise ValidationError(f"{prefix.title()} confidence values fall outside [0, 1]")
-
-    return {"song_id": metadata["song_id"], "note_count": note_count, "status": "valid"}
 
 
 def _existing_output_is_current(song_dir: Path, source_sha256: str) -> Tuple[bool, int]:
@@ -509,6 +293,14 @@ def main() -> int:
         return 0
 
     manifest = _load_manifest(output_dir)
+    if manifest.get("songs") and manifest.get("dataset_schema_version") != DATASET_SCHEMA_VERSION:
+        # This builder writes v1-segmented, schema-1 notes. A store already
+        # re-segmented to a later schema (scripts/resegment_main_dataset.py)
+        # must not be partially rewritten with older notes.
+        raise SystemExit(
+            f"{output_dir} is at schema {manifest.get('dataset_schema_version')}; this builder writes schema "
+            f"{DATASET_SCHEMA_VERSION}. Refusing to mix schemas. Use a new --output-dir."
+        )
     paths = _audio_files(input_dir)
     if not args.force:
         paths = [

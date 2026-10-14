@@ -1,5 +1,7 @@
 """
-Experimental note segmentation v2. Shadow mode only: no production caller uses this.
+Note segmentation v2. Not used by the production backend (main.py / api.py /
+evaluate.py still segment with v1); used to build the canonical Axis 2 feature
+store via scripts/resegment_main_dataset.py with CANONICAL_CONFIG below.
 
 v1 (`note_segmentation.py`) has two measured failure modes (see
 ml/audits/axis2_segmentation_tail/):
@@ -101,6 +103,21 @@ class SegmentationV2Config:
     #   "gap_v1"            short-gap rule, then v1's exact-semitone commit
     #   "gap_v1_sustained"  as gap_v1, then sustained departure as an extra path
     mode: str = "sustained"
+
+
+
+# The configuration adopted for data/main_data (schema 2) and the Axis 2 ML
+# dataset, recommended in ml/audits/axis2_segmentation_v2/segmentation_v2_summary.md
+# as `gapv1local_g0.5_s100`. The dataclass defaults above are the sweep's base
+# configuration and stay unchanged, so every recorded sweep result reproduces.
+CANONICAL_CONFIG = SegmentationV2Config(
+    mode="gap_v1",
+    hard_gap_s=0.5,
+    separation_cents=100,
+    gap_before="local",
+    gap_context_frames=10,
+    target_estimator="core_median",
+)
 
 
 def _robust_center(p: np.ndarray) -> float:
