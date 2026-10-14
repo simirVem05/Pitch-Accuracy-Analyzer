@@ -1,0 +1,99 @@
+{
+ "criteria": {
+  "C1_v1_reproduced_exactly": {
+   "rule": "v1 re-run on harmony.npz equals canonical notes.npz for every song [50/50]",
+   "passed": true,
+   "value": {
+    "songs": 13,
+    "notes": 5313,
+    "mismatching_songs": []
+   }
+  },
+  "C2_no_gap_over_0.5s": {
+   "rule": "recommended notes with an internal gap > 0.5 s == 0 [0]",
+   "passed": true,
+   "value": 0
+  },
+  "C3_clear_invalid_relative_reduction_ge_75pct": {
+   "rule": "clear-invalid rate falls by >= 75% relative to v1 [92.4%]",
+   "passed": true,
+   "value": {
+    "v1_pct": 12.704686617730095,
+    "v2_pct": 0.5115089514066496,
+    "relative_reduction_pct": 95.97385620915033
+   }
+  },
+  "C4_no_song_clear_invalid_increase": {
+   "rule": "no song has more clear-invalid notes than under v1",
+   "passed": true,
+   "value": []
+  },
+  "C5_likely_invalid_decreases": {
+   "rule": "likely-invalid rate is lower than v1's [20.4% -> 8.2%]",
+   "passed": true,
+   "value": {
+    "v1_pct": 20.62864671560324,
+    "v2_pct": 7.512787723785166
+   }
+  },
+  "C6_valid_notes_preserved_ge_90pct": {
+   "rule": ">= 90% of v1-valid notes unchanged (IoU >= 0.8) [94.4%]",
+   "passed": true,
+   "value": 92.69622954707138
+  },
+  "C7_adjacent_merge_not_worse": {
+   "rule": "adjacent-pitch merge rate (pct_multi_semitone) <= v1's [0.82% -> 0.42%]",
+   "passed": true,
+   "value": {
+    "v1_pct": 0.5270092226613966,
+    "v2_pct": 0.2237851662404092
+   }
+  },
+  "C8_vibrato_like_split_le_2pct": {
+   "rule": "<= 2% of v1 vibrato-like notes split; informational if < 20 such notes [0.76%]",
+   "passed": true,
+   "value": {
+    "vibrato_like_total": 42,
+    "split": 0,
+    "pct": 0.0,
+    "informational_only": false
+   }
+  },
+  "C9_same_pitch_tiny_le_3pct": {
+   "rule": "new same-pitch tiny notes (category F, < 0.10 s) <= 3% of notes [1.6%]",
+   "passed": true,
+   "value": {
+    "n": 114,
+    "pct_of_notes": 1.8222506393861893
+   }
+  },
+  "C10_no_invalid_from_valid_le_0.1pct": {
+   "rule": "clear-invalid notes built only from v1-valid notes <= 0.1% of notes [0]",
+   "passed": true,
+   "value": {
+    "n": 0,
+    "pct_of_notes": 0.0
+   }
+  },
+  "C11_every_song_has_notes": {
+   "rule": "every song yields >= 1 recommended note",
+   "passed": true,
+   "value": {
+    "billiejean_mj_full_song": 563,
+    "black_beatles": 752,
+    "floyymenor_gata_only_ft_cris_mj_letralyrics": 547,
+    "gotye_somebody_that_i_used_to_know_2015_remaster": 387,
+    "jingle_bells_with_lyrics_christmas_songs_hd_christmas_songs_and_carols": 157,
+    "luis_fonsi_despacito_lyrics_lyric_video_ft_daddy_yankee": 537,
+    "mark_ronson_uptown_funk_official_audio_ft_bruno_mars": 449,
+    "midas_the_jagaban_party_with_a_jagaban_lyrics": 536,
+    "one_dance_drake_full_song": 426,
+    "post_malone_swae_lee_sunflower_spider_man_into_the_spider_verse": 278,
+    "sheila_ki_jawani_audio_song_tees_maar_khan_katrina_kaif_vishal_dadlani_sunidhi_chauhan": 634,
+    "tame_impala_let_it_happen_official_audio": 398,
+    "work_rihanna_full_song": 592
+   }
+  }
+ },
+ "all_passed": true
+}

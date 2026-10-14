@@ -1,0 +1,31 @@
+{
+ "songs": [
+  "billiejean_mj_full_song",
+  "black_beatles",
+  "floyymenor_gata_only_ft_cris_mj_letralyrics",
+  "gotye_somebody_that_i_used_to_know_2015_remaster",
+  "jingle_bells_with_lyrics_christmas_songs_hd_christmas_songs_and_carols",
+  "luis_fonsi_despacito_lyrics_lyric_video_ft_daddy_yankee",
+  "mark_ronson_uptown_funk_official_audio_ft_bruno_mars",
+  "midas_the_jagaban_party_with_a_jagaban_lyrics",
+  "one_dance_drake_full_song",
+  "post_malone_swae_lee_sunflower_spider_man_into_the_spider_verse",
+  "sheila_ki_jawani_audio_song_tees_maar_khan_katrina_kaif_vishal_dadlani_sunidhi_chauhan",
+  "tame_impala_let_it_happen_official_audio",
+  "work_rihanna_full_song"
+ ],
+ "v1_reproduction": {
+  "songs": 13,
+  "notes": 5313,
+  "mismatching_songs": []
+ },
+ "subset_sizes": {
+  "v1_plausible_A": 1330,
+  "v1_unflagged": 2669,
+  "vibrato_like": 42,
+  "scoop": 6,
+  "fall": 214,
+  "portamento_drift": 103,
+  "stable_center_examples": 0
+ }
+}

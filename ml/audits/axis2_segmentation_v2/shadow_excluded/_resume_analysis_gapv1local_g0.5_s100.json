@@ -1,0 +1,369 @@
+{
+ "configs": {
+  "hybrid": {
+   "name": "gapv1local_g0.5_s100",
+   "kind": "v2",
+   "mode": "gap_v1",
+   "hard_gap_s": 0.5,
+   "separation_cents": 100,
+   "persistence_frames": 4,
+   "gap_before": "local"
+  },
+  "pure": {
+   "name": "v2_g0.5_s70_p3",
+   "kind": "v2",
+   "hard_gap_s": 0.5,
+   "separation_cents": 70,
+   "persistence_frames": 3
+  }
+ },
+ "consistency": {
+  "skipped": "no sweep outputs in /Users/simirvempali/Desktop/personal-projects/Pitch-Accuracy-Analyzer/ml/audits/axis2_segmentation_v2/shadow_excluded",
+  "songs": [
+   "billiejean_mj_full_song",
+   "black_beatles",
+   "floyymenor_gata_only_ft_cris_mj_letralyrics",
+   "gotye_somebody_that_i_used_to_know_2015_remaster",
+   "jingle_bells_with_lyrics_christmas_songs_hd_christmas_songs_and_carols",
+   "luis_fonsi_despacito_lyrics_lyric_video_ft_daddy_yankee",
+   "mark_ronson_uptown_funk_official_audio_ft_bruno_mars",
+   "midas_the_jagaban_party_with_a_jagaban_lyrics",
+   "one_dance_drake_full_song",
+   "post_malone_swae_lee_sunflower_spider_man_into_the_spider_verse",
+   "sheila_ki_jawani_audio_song_tees_maar_khan_katrina_kaif_vishal_dadlani_sunidhi_chauhan",
+   "tame_impala_let_it_happen_official_audio",
+   "work_rihanna_full_song"
+  ],
+  "v1_notes_recomputed": 5313,
+  "hybrid_notes_recomputed": 6256,
+  "pure_notes_recomputed": 5808
+ },
+ "counts": {
+  "v1": {
+   "total": 5313,
+   "clear": 675,
+   "likely": 1096,
+   "ambiguous_E": 218,
+   "B_clear": 423,
+   "C_clear": 1,
+   "D_clear": 426,
+   "iqr_gt100": 906,
+   "iqr_gt200": 471,
+   "iqr_gt400": 181,
+   "gap_gt0.1": 1175,
+   "gap_gt0.25": 577,
+   "gap_gt0.5": 249,
+   "gap_gt1.0": 100,
+   "dur_lt0.06": 0,
+   "dur_lt0.08": 279,
+   "dur_lt0.1": 613,
+   "dur_lt0.15": 1472,
+   "max_gap_s": 22.819999999999993
+  },
+  "hybrid": {
+   "total": 6256,
+   "clear": 32,
+   "likely": 470,
+   "ambiguous_E": 366,
+   "B_clear": 24,
+   "C_clear": 0,
+   "D_clear": 9,
+   "iqr_gt100": 918,
+   "iqr_gt200": 346,
+   "iqr_gt400": 65,
+   "gap_gt0.1": 514,
+   "gap_gt0.25": 163,
+   "gap_gt0.5": 0,
+   "gap_gt1.0": 0,
+   "dur_lt0.06": 153,
+   "dur_lt0.08": 622,
+   "dur_lt0.1": 1240,
+   "dur_lt0.15": 2633,
+   "max_gap_s": 0.5
+  },
+  "pure": {
+   "total": 5808,
+   "clear": 24,
+   "likely": 343,
+   "ambiguous_E": 354,
+   "B_clear": 21,
+   "C_clear": 0,
+   "D_clear": 4,
+   "iqr_gt100": 642,
+   "iqr_gt200": 252,
+   "iqr_gt400": 55,
+   "gap_gt0.1": 470,
+   "gap_gt0.25": 147,
+   "gap_gt0.5": 0,
+   "gap_gt1.0": 0,
+   "dur_lt0.06": 189,
+   "dur_lt0.08": 477,
+   "dur_lt0.1": 1003,
+   "dur_lt0.15": 2345,
+   "max_gap_s": 0.5
+  }
+ },
+ "hybrid_remaining_clear": {
+  "n": 32,
+  "by_rule": {
+   "B": 23,
+   "D": 8,
+   "BD": 1
+  },
+  "D_clear_with_gap_0.25_0.50": 9,
+  "C_clear_octave_jump": 0
+ },
+ "fix_accounting": {
+  "v1_clear_total": 675,
+  "v1_clear_fixed": 643,
+  "v1_clear_fixed_to_valid": 528,
+  "v1_likely_total": 1096,
+  "v1_likely_fixed": 624,
+  "changed_total": 848,
+  "changed_v1_likely": 540,
+  "changed_v1_clear": 444,
+  "v1_clear_still_likely": 147,
+  "v1_likely_remaining": 472,
+  "v1_valid_total": 4217,
+  "v1_valid_changed": 308,
+  "v1_valid_touching_likely_v2": 32,
+  "v1_clear_remaining": 32,
+  "v1_valid_touching_clear_v2": 1,
+  "hybrid_likely_from_only_valid_v1": 9
+ },
+ "v1_outcomes": {
+  "all": {
+   "split": 655,
+   "same": 4465,
+   "partial": 105,
+   "merged": 88
+  },
+  "v1_valid": {
+   "same": 3909,
+   "split": 150,
+   "partial": 75,
+   "merged": 83
+  },
+  "v1_likely": {
+   "split": 505,
+   "same": 556,
+   "partial": 30,
+   "merged": 5
+  },
+  "v1_clear": {
+   "split": 414,
+   "same": 231,
+   "partial": 28,
+   "merged": 2
+  }
+ },
+ "v1_pieces_hist": {
+  "all": {
+   "0": 4,
+   "1": 4587,
+   "2": 631,
+   "3": 80,
+   "4": 11
+  },
+  "v1_valid": {
+   "0": 3,
+   "1": 4047,
+   "2": 162,
+   "3": 5
+  },
+  "v1_likely": {
+   "0": 1,
+   "1": 540,
+   "2": 469,
+   "3": 75,
+   "4": 11
+  },
+  "v1_clear": {
+   "0": 1,
+   "1": 224,
+   "2": 375,
+   "3": 64,
+   "4": 11
+  }
+ },
+ "v1_valid_split_boundaries": {
+  "short_step": 108,
+  "short_samepitch": 41,
+  "short_mid": 9,
+  "contig_step": 2,
+  "contig_mid": 1
+ },
+ "hybrid_notes_by_whole_v1_contained": {
+  "0": 1019,
+  "1": 5223,
+  "2": 14
+ },
+ "hybrid_boundaries": {
+  "contig|new|pitchchange": 27,
+  "contig|new|samepitch": 6,
+  "contig|v1_had|pitchchange": 3174,
+  "contig|v1_had|samepitch": 210,
+  "hard|new|pitchchange": 152,
+  "hard|new|samepitch": 91,
+  "hard|v1_had|pitchchange": 223,
+  "hard|v1_had|samepitch": 5,
+  "short|new|pitchchange": 803,
+  "short|new|samepitch": 75,
+  "short|v1_had|pitchchange": 1457,
+  "short|v1_had|samepitch": 20
+ },
+ "new_short_gap_samepitch_boundaries": {
+  "n": 75,
+  "gap_s_quartiles": [
+   0.060000000000002274,
+   0.0800000000000125,
+   0.1799999999999855
+  ]
+ },
+ "tiny_notes": {
+  "lt0.06": {
+   "n_new": 153,
+   "categories": {
+    "A_short_pitch_after_gap": [
+     37,
+     24.18300653594771
+    ],
+    "B_adjacent_note_exposed": [
+     9,
+     5.882352941176471
+    ],
+    "D_v1_restart_glide_fragment": [
+     43,
+     28.104575163398692
+    ],
+    "E_low_confidence": [
+     31,
+     20.26143790849673
+    ],
+    "F_same_pitch_as_neighbor": [
+     31,
+     20.26143790849673
+    ],
+    "G_ambiguous": [
+     2,
+     1.3071895424836601
+    ]
+   },
+   "from_v1_likely_invalid_pct": 76.47058823529412,
+   "from_v1_clear_invalid_pct": 66.66666666666666
+  },
+  "lt0.08": {
+   "n_new": 342,
+   "categories": {
+    "A_short_pitch_after_gap": [
+     83,
+     24.269005847953217
+    ],
+    "B_adjacent_note_exposed": [
+     21,
+     6.140350877192983
+    ],
+    "C_hardgap_isolated_fragment": [
+     10,
+     2.9239766081871346
+    ],
+    "D_v1_restart_glide_fragment": [
+     87,
+     25.43859649122807
+    ],
+    "E_low_confidence": [
+     57,
+     16.666666666666668
+    ],
+    "F_same_pitch_as_neighbor": [
+     81,
+     23.68421052631579
+    ],
+    "G_ambiguous": [
+     3,
+     0.8771929824561403
+    ]
+   },
+   "from_v1_likely_invalid_pct": 68.42105263157895,
+   "from_v1_clear_invalid_pct": 60.81871345029239
+  },
+  "lt0.1": {
+   "n_new": 621,
+   "categories": {
+    "A_short_pitch_after_gap": [
+     156,
+     25.120772946859905
+    ],
+    "B_adjacent_note_exposed": [
+     26,
+     4.186795491143317
+    ],
+    "C_hardgap_isolated_fragment": [
+     85,
+     13.687600644122384
+    ],
+    "D_v1_restart_glide_fragment": [
+     128,
+     20.611916264090176
+    ],
+    "E_low_confidence": [
+     83,
+     13.365539452495975
+    ],
+    "F_same_pitch_as_neighbor": [
+     114,
+     18.357487922705314
+    ],
+    "G_ambiguous": [
+     29,
+     4.669887278582931
+    ]
+   },
+   "from_v1_likely_invalid_pct": 71.01449275362319,
+   "from_v1_clear_invalid_pct": 62.96296296296296
+  },
+  "v1_tiny_lt0.10_total": 613,
+  "hybrid_tiny_lt0.10_total": 1240,
+  "hybrid_tiny_lt0.10_matching_a_v1_note": 619
+ },
+ "target_rule": {
+  "represented_definition": ">= 50% of frames within +-50 c of target",
+  "v1_core_median_pct": 91.51138716356108,
+  "hybrid_core_median_pct": 89.769820971867,
+  "hybrid_modal_pct": 91.75191815856778,
+  "v1_core_median_pct_ge10frames": 88.0036352620418,
+  "hybrid_core_median_pct_ge10frames": 90.40150564617315,
+  "hybrid_unrepresented_n": 640,
+  "fixed_by_modal": 124,
+  "targets_changed_by_modal": 386,
+  "made_unrepresented_by_modal": 0,
+  "unrepresented_reason": {
+   "no_semitone_holds_half": 516,
+   "another_semitone_holds_half": 124
+  },
+  "modal_clear_invalid_pct": 0.5115089514066496
+ },
+ "vibrato": {
+  "v1": {
+   "chains": 65,
+   "notes_in_chains": 219,
+   "pct_notes": 4.121964991530209,
+   "chains_ge5_notes": 4
+  },
+  "hybrid": {
+   "chains": 79,
+   "notes_in_chains": 260,
+   "pct_notes": 4.156010230179028,
+   "chains_ge5_notes": 5
+  },
+  "pure": {
+   "chains": 23,
+   "notes_in_chains": 75,
+   "pct_notes": 1.2913223140495869,
+   "chains_ge5_notes": 2
+  },
+  "hybrid_splits_of_v1_vibrato_like": {
+   "vibrato_like_total": 42
+  }
+ }
+}

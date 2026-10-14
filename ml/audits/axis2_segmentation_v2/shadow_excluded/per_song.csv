@@ -1,0 +1,14 @@
+song_id,exclusion_reason,v1_notes,v2_notes,note_change_pct,v1_clear,v2_clear,v1_likely,v2_likely,v1_gap_gt0_5,v2_gap_gt0_5,v1_max_gap_s,v2_max_gap_s,v1_iqr_gt400,v2_iqr_gt400,v1_tiny_lt0_10,v2_tiny_lt0_10
+billiejean_mj_full_song,"Weakest extraction candidate in the audit: 41.42% vocal coverage, 0.8394 median voiced-frame CREPE confidence, 0.7261 P25 confidence, and only 43.78% of notes with median confidence >= 0.85. Michael Jackson remains represented in Axis 2 by Chicago.",402,563,40.0498,100,5,137,43,56,0,8.0800,0.3800,26,5,57,147
+black_beatles,Predominantly rap/speech-like delivery is not ideal as a clean intonation reference.,616,752,22.0779,90,5,155,72,19,0,1.9200,0.4200,32,6,60,150
+floyymenor_gata_only_ft_cris_mj_letralyrics,Highly processed/stylized multi-artist reggaeton vocal delivery; less suitable as a clean intonation reference.,507,547,7.8895,32,0,65,33,9,0,5.7400,0.5000,4,4,73,100
+gotye_somebody_that_i_used_to_know_2015_remaster,"Two distinct lead singers in one track, complicating its use as a single clean-reference performance.",342,387,13.1579,43,0,65,23,17,0,7.1800,0.5000,8,2,31,68
+jingle_bells_with_lyrics_christmas_songs_hd_christmas_songs_and_carols,Only 145 segmented notes; the only candidate below the 250-note audit threshold.,145,157,8.2759,15,0,27,9,2,0,3.9000,0.3600,4,2,7,15
+luis_fonsi_despacito_lyrics_lyric_video_ft_daddy_yankee,Mixed sung and rap/reggaeton delivery with multiple lead performers.,459,537,16.9935,60,2,90,29,18,0,1.5200,0.5000,17,2,37,93
+mark_ronson_uptown_funk_official_audio_ft_bruno_mars,"Low vocal coverage, weaker confidence diagnostics, strong speech/funk phrasing, and unusually large within-note cents movement.",314,449,42.9936,104,3,127,42,50,0,7.0000,0.4400,28,14,36,119
+midas_the_jagaban_party_with_a_jagaban_lyrics,Strongly stylized rap/speech-like delivery plus weaker extraction-confidence diagnostics.,456,536,17.5439,43,6,95,52,12,0,2.3200,0.4400,17,13,61,115
+one_dance_drake_full_song,Highly stylized speech-like melodic delivery; less suitable as a clean intonation reference.,390,426,9.2308,27,4,65,43,3,0,3.1400,0.4800,7,2,57,87
+post_malone_swae_lee_sunflower_spider_man_into_the_spider_verse,"Two lead vocalists, substantial production processing, and relatively few segmented notes compared with alternatives.",262,278,6.1069,12,0,27,15,5,0,6.8400,0.4800,1,0,17,34
+sheila_ki_jawani_audio_song_tees_maar_khan_katrina_kaif_vishal_dadlani_sunidhi_chauhan,Multiple lead singers plus weaker extraction-confidence diagnostics.,562,634,12.8114,57,2,91,35,17,0,9.2200,0.4600,11,3,80,125
+tame_impala_let_it_happen_official_audio,Very low vocal coverage and heavily effected vocal production.,331,398,20.2417,45,0,69,32,31,0,22.8200,0.4800,8,3,37,80
+work_rihanna_full_song,Highly stylized speech-like delivery despite technically strong CREPE extraction.,527,592,12.3340,47,5,83,42,10,0,2.4000,0.4600,18,9,60,107
