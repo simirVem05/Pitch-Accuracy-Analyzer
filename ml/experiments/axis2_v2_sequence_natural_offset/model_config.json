@@ -1,0 +1,94 @@
+{
+  "input_configuration": "C_contour_context",
+  "config": {
+    "channels": [
+      "centered",
+      "position"
+    ],
+    "context": true
+  },
+  "channels": 32,
+  "architecture": {
+    "kernel_size": 5,
+    "dilations": [
+      1,
+      2,
+      4
+    ],
+    "dropout": 0.1,
+    "head": [
+      64,
+      32
+    ],
+    "activation": "GELU"
+  },
+  "training": {
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 128,
+    "max_epochs": 60,
+    "patience": 12,
+    "grad_clip": 1.0,
+    "loss": "L1Loss"
+  },
+  "final_epochs": 48,
+  "seed": 20260924,
+  "normalization": {
+    "centered_mean": -2.2518668435150357,
+    "centered_std": 88.45743851683226,
+    "confidence_mean": 0.8552164401785024,
+    "confidence_std": 0.12059594747534318,
+    "context_mean": [
+      0.0019168968822236003,
+      0.0019168968822236003,
+      2.5692056153802785,
+      2.5692056153802785,
+      0.15131420195070794,
+      0.15131420195070794,
+      0.31928623780797033,
+      0.32082088290015076,
+      0.3201837965834118,
+      0.998026723797711,
+      0.998026723797711,
+      62.74020409313864,
+      0.017673289912065134,
+      -0.060902341106403544
+    ],
+    "context_std": [
+      3.608481477093988,
+      3.608481477093988,
+      2.5338359755362623,
+      2.5338359755362623,
+      0.4520814569079489,
+      0.4520814569079489,
+      0.4044907861287647,
+      0.40781678687112294,
+      0.4077842528705261,
+      0.0443777239537849,
+      0.044377723953784975,
+      6.063396540684528,
+      0.7024253416815301,
+      0.7089267938475938
+    ]
+  },
+  "context_feature_order": [
+    "interval_in",
+    "interval_out",
+    "abs_interval_in",
+    "abs_interval_out",
+    "gap_before",
+    "gap_after",
+    "prev_duration",
+    "duration",
+    "next_duration",
+    "has_previous",
+    "has_next",
+    "target_midi",
+    "pitch_class_sin",
+    "pitch_class_cos"
+  ],
+  "centering": "round(cents - median(_core_slice(cents)), 9)",
+  "inference_dtype": "float64",
+  "parameter_count": 38177,
+  "torch_version": "2.13.0"
+}
