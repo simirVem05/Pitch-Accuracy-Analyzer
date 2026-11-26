@@ -1,0 +1,102 @@
+{
+  "created_utc": "2026-11-25T00:05:04.074209+00:00",
+  "artifacts": {
+    "rf_model": {
+      "path": "ml/experiments/axis2_v3_rf_compression/selected_rf_model.joblib",
+      "sha256": "eeb77c5b07433b9e8af20fdbe54c4a589d81de45384bea978f88fa3caac134e0",
+      "bytes": 10783734
+    },
+    "dynamic_gate": {
+      "path": "ml/experiments/axis2_v3_rf_compression/selected_dynamic_gate.pt",
+      "sha256": "08ab42c3bc1955b20519a325cbfd88e09b3fc6310dd4d042435dfb247958ab6d",
+      "bytes": 8401
+    },
+    "natural_model": {
+      "path": "ml/experiments/axis2_v3_rf_natural_hybrid/natural_offset_model.joblib",
+      "sha256": "fffb541918578183d8579d3b33c7301490f0e7548a63ff6a16c31bb6c5f34f71",
+      "bytes": 553851
+    }
+  },
+  "configs": {
+    "rf_config": {
+      "path": "ml/experiments/axis2_v3_rf_compression/selected_rf_config.json",
+      "sha256": "86728c4243945f8688f2ade1529198a5996c3b4c9e0dc53eae8531721d38f287"
+    },
+    "dynamic_gate_results": {
+      "path": "ml/experiments/axis2_v3_rf_compression/selected_dynamic_hybrid_results.json",
+      "sha256": "83fa8b09e9b3ad1b978a4475bf71c90d38642df7df331fd87ff30e7f30b5fa01"
+    },
+    "dynamic_gate_config": {
+      "path": "ml/experiments/axis2_v3_rf_natural_hybrid/dynamic_gate_config.json",
+      "sha256": "fe291a74702ac616474d1a370a126448e8342e61cb59e109c0ce5fa77012c491"
+    },
+    "compression_results": {
+      "path": "ml/experiments/axis2_v3_rf_compression/rf_compression_results.json",
+      "sha256": "be0cbb3ce49aaecd2f24fdd759e0a25a9b7eeb44e28a6c054ee0104804dd2467"
+    },
+    "natural_results": {
+      "path": "ml/experiments/axis2_v3_natural_offset/natural_offset_results.json",
+      "sha256": "1a24595c75596c3e84e9d0d80b4a6a84dfefd59c5604614c44bd2a25dda0968f"
+    }
+  },
+  "dataset": {
+    "examples": {
+      "path": "data/ml_dataset/axis2_v3/examples.npz",
+      "sha256": "384580476e3143fcde70f0f611b2e8182e491cfd53c2c4864990e891b8751ed2"
+    },
+    "splits": {
+      "path": "data/ml_dataset/axis2_v3/splits.json",
+      "sha256": "681f7232ec82ad6a30418ba07ebf30b5f4fa10e6989651cc2ec6595341fd44b7"
+    },
+    "summary": {
+      "path": "data/ml_dataset/axis2_v3/summary.json",
+      "sha256": "3faf27497d1a651e391afafb6ffe3c38517bafaf3f550774b77d7aade208741f"
+    },
+    "manifest": {
+      "path": "data/ml_dataset/axis2_v3/manifest.csv",
+      "sha256": "e152b97d31f291b670103b3db2b3b0645cbc8fd581955ed86db02492a0e9cfde"
+    }
+  },
+  "code": {
+    "ml/experiments/axis2_v3_final_test/final_test_evaluation.py": "74ae952ebf47d3bce035a4a43faf485821511339d44f888f9cd60bcd81e434a8",
+    "ml/experiments/axis2_v3_shared/frozen_experts.py": "91908f10bb5d3a3bc44d4f509e43986a858917751b3d73b6fd4177ff1f8bf6f6",
+    "ml/experiments/axis2_v2_dynamic_hybrid/dynamic_hybrid.py": "5b90700be3d77b160cb4ebba6e219eeed2f77e253db6b326f2309036104cd3b1",
+    "ml/experiments/axis2_v2_hybrid/hybrid_ridge_natural.py": "174b6bcbd197af22e6c610cd4cbb67f0c8d145a6191c0ab0a4594b0f165808b9",
+    "ml/experiments/axis2_v2_natural_offset/natural_offset_feature_experiment.py": "a828ec90e744e41d13623388f6cb36d1e4f68dbe25e46de013cf616fba59f222",
+    "ml/baselines/ridge_baseline.py": "7ab25bddced732fd1457ad26fc22ab8ddb158592504024305f18de0890d832e4",
+    "ml/baselines/zero_baseline.py": "5533a677568efbeb486a1cedead72eebeac04f1048b0bc298c2c0d3fbcc7bf55",
+    "ml/baselines/median_cents_baseline.py": "c7a2a3e66b5fb38809501173645f55e82489c6a657c7f90cecc5b166dccec187",
+    "backend/note_segmentation.py": "c47975debb8e4f06e6ba4ee86d889cdcc64303c5611b5e5e2b94800a2a5bc33f"
+  },
+  "git": {
+    "commit": "4af7ec61c509d62bfae872dbbae41818af55bd82",
+    "uncommitted_changes": true,
+    "porcelain_lines": 14,
+    "status": [
+      "M ml/baselines/ridge_baseline.py",
+      " M ml/baselines/zero_baseline.py",
+      " M scripts/build_axis2_ml_dataset.py",
+      "?? ml/experiments/axis2_v2_dynamic_hybrid/",
+      "?? ml/experiments/axis2_v3_dataset_audit/",
+      "?? ml/experiments/axis2_v3_dynamic_hybrid/",
+      "?? ml/experiments/axis2_v3_final_test/",
+      "?? ml/experiments/axis2_v3_hybrid/",
+      "?? ml/experiments/axis2_v3_natural_offset/",
+      "?? ml/experiments/axis2_v3_random_forest/",
+      "?? ml/experiments/axis2_v3_rf_compression/",
+      "?? ml/experiments/axis2_v3_rf_natural_hybrid/",
+      "?? ml/experiments/axis2_v3_shared/",
+      "?? ml/results/axis2_v3/"
+    ]
+  },
+  "environment": {
+    "python": "3.11.15",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.7.1",
+    "torch": "2.13.0",
+    "platform": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "purpose": "manifest after evaluation",
+  "split": "test",
+  "frozen_items_changed_after_evaluation": []
+}

@@ -1,0 +1,53 @@
+{
+  "model": "sklearn.ensemble.RandomForestRegressor",
+  "n_estimators": 300,
+  "max_depth": 20,
+  "min_samples_leaf": 10,
+  "max_features": 0.5,
+  "random_state": 20260824,
+  "n_jobs": -1,
+  "bootstrap": true,
+  "criterion": "squared_error",
+  "features": [
+    "full_median_cents",
+    "core_median_cents",
+    "mean_cents",
+    "confidence_weighted_mean_cents",
+    "std_cents",
+    "mad_cents",
+    "iqr_cents",
+    "p10_cents",
+    "p25_cents",
+    "p75_cents",
+    "p90_cents",
+    "p90_minus_p10_cents",
+    "onset_minus_middle_cents",
+    "release_minus_middle_cents",
+    "release_minus_onset_cents",
+    "linear_slope_cents_per_note",
+    "mean_confidence",
+    "median_confidence",
+    "p25_confidence",
+    "min_confidence",
+    "duration_s",
+    "frame_count",
+    "log1p_frame_count",
+    "target_midi"
+  ],
+  "feature_source": "ml/baselines/ridge_baseline.py build_matrix / extract_features",
+  "scaling": "none",
+  "total_tree_nodes": 2452832,
+  "model_file_saved": true,
+  "model_file_note": null,
+  "center_only_diagnostic": {
+    "max_depth": 12,
+    "min_samples_leaf": 10,
+    "max_features": "sqrt",
+    "features": [
+      "full_median_cents",
+      "core_median_cents",
+      "mean_cents",
+      "confidence_weighted_mean_cents"
+    ]
+  }
+}

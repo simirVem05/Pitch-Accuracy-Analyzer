@@ -19,6 +19,15 @@ Shifts come from a per-note RNG seeded by
 sha256(f"{global_seed}:{song_id}:{note_index}")[:8], so they do not depend on
 iteration order. Splits are song-level and reused verbatim from --splits-from.
 
+--corruption-policy target_preserving (axis2_v3) keeps the target MIDI fixed and
+requires every corrupted core median to stay on that target:
+-49.999 < N + S < 49.999, N = the clean note's production core median. It reuses
+the exact fixed_two_two draws (same magnitude per band, same seeded sign) and
+only flips the sign of a shift that would cross the boundary. Magnitudes are
+never changed; a note that cannot satisfy a band in either direction is an
+error, never a silent fallback. The default policy (fixed_two_two) is the
+axis2_v1/axis2_v2 behaviour and is unchanged.
+
 Never modifies data/main_data, the source split file, or any existing dataset:
 output is built in a temporary sibling directory, validated, then renamed into
 place, and an existing output directory is never overwritten.
@@ -28,6 +37,8 @@ Usage:
       --out /tmp/axis2_v1_rebuild --reproduce-check data/ml_dataset/axis2_v1
   build_axis2_ml_dataset.py --dataset-name axis2_v2 --notes-file notes.npz \\
       --out data/ml_dataset/axis2_v2
+  build_axis2_ml_dataset.py --dataset-name axis2_v3 --notes-file notes.npz \\
+      --corruption-policy target_preserving --out data/ml_dataset/axis2_v3
 """
 
 from __future__ import annotations
@@ -61,6 +72,13 @@ SPLITS = ("train", "validation", "test")
 MANIFEST_COLUMNS = ("example_id", "clean_note_id", "song_id", "source_filename", "source_note_index", "split",
                     "variant", "variant_index", "target_midi", "duration_s", "start_s", "end_s", "num_frames",
                     "injected_shift_cents", "median_cents", "core_median_cents")
+POLICIES = ("fixed_two_two", "target_preserving")
+# A corrupted core median must stay strictly inside this many cents of the
+# unchanged target MIDI. Beyond 50 c the sung pitch is nearer the adjacent
+# semitone, so the label would no longer describe intonation around the note
+# the singer is targeting; the 0.001 c margin keeps float noise off the boundary.
+TARGET_PRESERVING_LIMIT_CENTS = 49.999
+FEASIBILITY = ("both", "positive_only", "negative_only")
 
 
 def note_shifts(song_id: str, note_index: int) -> np.ndarray:
@@ -71,6 +89,31 @@ def note_shifts(song_id: str, note_index: int) -> np.ndarray:
     signs = -np.ones(len(BANDS))
     signs[rng.choice(len(BANDS), 2, replace=False)] = 1.0
     return magnitudes * signs
+
+
+def _on_target(x: float) -> bool:
+    return -TARGET_PRESERVING_LIMIT_CENTS < x < TARGET_PRESERVING_LIMIT_CENTS
+
+
+def target_preserving_shifts(song_id: str, note_index: int, clean_core: float) -> tuple:
+    """
+    The fixed_two_two draws, with a sign flipped only where it would push the
+    core median off the target: keep the drawn sign if N + S stays on target,
+    otherwise use -S. Returns (shifts, per-band feasibility, per-band flipped).
+    """
+    base = note_shifts(song_id, note_index)
+    shifts, feas, flipped = np.empty_like(base), [], []
+    for b, s in enumerate(base):
+        m = abs(float(s))
+        pos, neg = _on_target(clean_core + m), _on_target(clean_core - m)
+        if not (pos or neg):
+            raise SystemExit(f"{song_id}:{note_index} band {VARIANTS[b + 1]}: |S|={m!r} with clean core {clean_core!r} "
+                             f"leaves the target in both directions; refusing to change the magnitude")
+        feas.append("both" if pos and neg else "positive_only" if pos else "negative_only")
+        keep = pos if s > 0 else neg
+        shifts[b] = s if keep else -s
+        flipped.append(not keep)
+    return shifts, feas, flipped
 
 
 def _structurally_valid(cents: np.ndarray, conf: np.ndarray, midi: int, duration: float) -> bool:
@@ -94,6 +137,9 @@ def build(args: argparse.Namespace, out: Path) -> Dict[str, Any]:
     rows, filenames = [], []
     note_counts = {k: 0 for k in SPLITS}
     schemas, filtered, source_hashes = set(), 0, {}
+    preserving = args.corruption_policy == "target_preserving"
+    feas_counts = {VARIANTS[b + 1]: {f: 0 for f in FEASIBILITY} for b in range(len(BANDS))}
+    flip_counts = {VARIANTS[b + 1]: 0 for b in range(len(BANDS))}
     for si, song in enumerate(songs):
         sd = args.main_dir / song
         meta = json.loads((sd / ("metadata_v1.json" if args.notes_file == "notes_v1.npz" else "metadata.json"))
@@ -115,7 +161,15 @@ def build(args: argparse.Namespace, out: Path) -> Dict[str, Any]:
                 note_index = int(n["note_index"][i])
                 start, end = float(n["start_time_s"][i]), float(n["end_time_s"][i])
                 note_counts[split] += 1
-                for v, shift in enumerate((0.0, *note_shifts(song, note_index))):
+                if preserving:
+                    clean_core = float(np.median(_core_slice(cents)))
+                    note_shift_values, feas, flipped = target_preserving_shifts(song, note_index, clean_core)
+                    for b in range(len(BANDS)):
+                        feas_counts[VARIANTS[b + 1]][feas[b]] += 1
+                        flip_counts[VARIANTS[b + 1]] += int(flipped[b])
+                else:
+                    note_shift_values = note_shifts(song, note_index)
+                for v, shift in enumerate((0.0, *note_shift_values)):
                     c = cents + shift
                     med, core = float(np.median(c)), float(np.median(_core_slice(c)))
                     for k, val in (("song_index", si), ("source_note_index", note_index), ("variant_index", v),
@@ -216,6 +270,22 @@ def build(args: argparse.Namespace, out: Path) -> Dict[str, Any]:
         },
         "scope": "V1 models pitch-center corruption only; no vibrato, timing, or timbral corruption",
     })
+    if preserving:
+        cores = arrays["core_median_cents"]
+        summary.update({
+            "corruption_policy": "target_preserving",
+            "corruption_sign_policy": (
+                "per band, the fixed_two_two draw (same magnitude, same seeded sign); the sign is flipped only when "
+                f"clean core + shift would leave (-{TARGET_PRESERVING_LIMIT_CENTS}, +{TARGET_PRESERVING_LIMIT_CENTS}); "
+                "magnitudes are never changed, so 2+/2- per note is no longer guaranteed"),
+            "target_preserving_constraint": f"-{TARGET_PRESERVING_LIMIT_CENTS} < N + S < {TARGET_PRESERVING_LIMIT_CENTS}, "
+                                            "N = clean production core median relative to the unchanged target MIDI",
+            "target_preserving_limit_cents": TARGET_PRESERVING_LIMIT_CENTS,
+            "sign_feasibility_by_band": feas_counts,
+            "sign_flipped_from_fixed_two_two_by_band": flip_counts,
+            "max_abs_core_median_cents": float(np.abs(cores).max()),
+            "max_abs_core_median_cents_corrupted": float(np.abs(cores[arrays["variant_index"] > 0]).max()),
+        })
     if schema >= 2:
         # provenance only a re-segmented source has; absent from axis2_v1 by construction
         seg = json.loads((args.main_dir / songs[0] / "metadata.json").read_text(encoding="utf-8"))
@@ -246,12 +316,35 @@ def validate(out: Path, args: argparse.Namespace) -> Dict[str, Any]:
     checks["five_variants_per_note"] = bool(n % 5 == 0 and np.array_equal(d["variant_index"], np.tile(np.arange(5), n // 5)))
     sh = d["injected_shift_cents"].reshape(-1, 5)
     checks["clean_is_zero"] = bool(np.all(sh[:, 0] == 0.0))
-    checks["two_pos_two_neg"] = bool(np.all((sh[:, 1:] > 0).sum(1) == 2) and np.all((sh[:, 1:] < 0).sum(1) == 2))
+    preserving = args.corruption_policy == "target_preserving"
+    if not preserving:
+        checks["two_pos_two_neg"] = bool(np.all((sh[:, 1:] > 0).sum(1) == 2) and np.all((sh[:, 1:] < 0).sum(1) == 2))
     mags = np.abs(sh[:, 1:])
     checks["magnitudes_in_bands"] = bool(all(np.all((mags[:, i] >= lo) & (mags[:, i] <= hi)) for i, (lo, hi) in enumerate(BANDS)))
     songs = list(d["song_ids"])
-    rederived = np.array([note_shifts(songs[s], k) for s, k in zip(d["song_index"][::5], d["source_note_index"][::5])])
-    checks["shifts_rederived_from_seed"] = bool(np.max(np.abs(rederived - sh[:, 1:])) <= 1e-12)
+    seed_draws = np.array([note_shifts(songs[s], k) for s, k in zip(d["song_index"][::5], d["source_note_index"][::5])])
+    if not preserving:
+        checks["shifts_rederived_from_seed"] = bool(np.max(np.abs(seed_draws - sh[:, 1:])) <= 1e-12)
+    else:
+        # Clean cores recomputed from the stored clean contour (itself checked against the canonical notes below).
+        clean_core = np.array([float(np.median(_core_slice(d["cents_flat"][off[r]:off[r + 1]])))
+                               for r in range(0, n, 5)])
+        rederived = np.array([target_preserving_shifts(songs[s], k, c)[0] for s, k, c
+                              in zip(d["song_index"][::5], d["source_note_index"][::5], clean_core)])
+        checks["shifts_rederived_from_seed"] = bool(np.max(np.abs(rederived - sh[:, 1:])) <= 1e-12)
+        checks["magnitudes_equal_fixed_two_two_draws"] = bool(np.array_equal(mags, np.abs(seed_draws)))
+        checks["signs_changed_only_where_required"] = bool(np.all(
+            (np.sign(sh[:, 1:]) == np.sign(seed_draws)) | ~np.vectorize(_on_target)(clean_core[:, None] + seed_draws)))
+        recomputed = np.array([float(np.median(_core_slice(d["cents_flat"][off[r]:off[r + 1]]))) for r in range(n)])
+        checks["core_medians_recomputed"] = bool(np.max(np.abs(recomputed - d["core_median_cents"])) <= 1e-9)
+        expected = np.repeat(clean_core, 5) + d["injected_shift_cents"]
+        checks["core_equals_clean_core_plus_shift"] = bool(np.max(np.abs(recomputed - expected)) <= 1e-9)
+        corrupted = d["variant_index"] > 0
+        checks["corrupted_cores_on_target"] = bool(np.all(np.abs(expected[corrupted]) < TARGET_PRESERVING_LIMIT_CENTS)
+                                                   and np.all(np.abs(recomputed[corrupted]) < TARGET_PRESERVING_LIMIT_CENTS + 1e-9))
+        checks["all_cores_below_50"] = bool(np.all(np.abs(recomputed) < 50.0))
+        tm = d["target_midi"].reshape(-1, 5)
+        checks["target_midi_identical_across_variants"] = bool(np.all(tm == tm[:, :1]))
     # per-note: clean contour verbatim from canonical notes; corrupted = clean + shift; confidence unchanged
     ok_contour = True
     for si, song in enumerate(songs):
@@ -329,6 +422,39 @@ Counts are in `summary.json` and `splits.json`; the source notes' hashes are in
 were computed on axis2_v1 and do not describe this dataset.
 """
 
+README_V3 = """# Axis 2 V3 — target-preserving synthetic pitch-center corruption
+
+Same clean notes, splits, array schema, seed scheme and corruption magnitudes as
+`../axis2_v2/` (read its README and `../axis2_v1/README.md` for label semantics
+and leakage caveats). Built by `scripts/build_axis2_ml_dataset.py
+--corruption-policy target_preserving`.
+
+**What differs from axis2_v2: only the signs of some corruption shifts.**
+Axis 2 measures intonation around the note the singer is targeting, and the
+target MIDI is never recomputed after shifting. In axis2_v2 a shift could carry
+the core median past +-50 c (e.g. clean +30 c, shift +35 c -> +65 c), a pitch
+nearer the adjacent semitone than the labelled target. Here every corruption
+satisfies
+
+    -49.999 < N + S < 49.999,   N = clean production core median (cents vs target)
+
+Each band reuses axis2_v2's exact draw for that note (same magnitude, same seeded
+sign); the sign is flipped only where the drawn direction would leave the target.
+Magnitudes are never shrunk, so the 35-50 c band keeps genuine 35-50 c errors.
+
+Consequences:
+- 2 positive / 2 negative per note is no longer guaranteed (global balance is in
+  `summary.json`, `shift_statistics_cents`).
+- The sign of a large corruption is now partly predictable from where the clean
+  note sits: a note far sharp of its target can only be corrupted flat in the
+  upper bands. This is a property of the target-preserving definition, not a leak
+  of the label, but models should be compared on axis2_v3 with that in mind.
+- Feasibility and flip counts per band are in `summary.json`
+  (`sign_feasibility_by_band`, `sign_flipped_from_fixed_two_two_by_band`).
+
+Results computed on axis2_v1 or axis2_v2 do not describe this dataset.
+"""
+
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -338,6 +464,8 @@ def main() -> int:
     p.add_argument("--splits-from", type=Path, default=DEFAULT_SPLITS)
     p.add_argument("--main-dir", type=Path, default=MAIN_DIR,
                    help="feature store to read notes from (a staging directory before promotion)")
+    p.add_argument("--corruption-policy", choices=POLICIES, default="fixed_two_two",
+                   help="fixed_two_two: axis2_v1/v2 (2+/2- per note); target_preserving: axis2_v3 (|N+S| < 49.999)")
     p.add_argument("--created-at", help="fixed ISO timestamp for reproducible output")
     p.add_argument("--reproduce-check", type=Path, help="compare the build with this existing dataset")
     args = p.parse_args()
@@ -350,7 +478,9 @@ def main() -> int:
     tmp.mkdir(parents=True)
     try:
         build(args, tmp)
-        if args.dataset_name != "axis2_v1":
+        if args.corruption_policy == "target_preserving":
+            (tmp / "README.md").write_text(README_V3, encoding="utf-8")
+        elif args.dataset_name != "axis2_v1":
             (tmp / "README.md").write_text(README_V2, encoding="utf-8")
         checks = validate(tmp, args)
         report = {"validation": checks, "validation_passed": all(checks.values())}

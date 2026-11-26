@@ -1,0 +1,39 @@
+{
+  "note": "median wall time of already-trained inference on precomputed features; model loading excluded; RF uses its stored n_jobs=-1 (process pool start-up dominates single-note calls). Descriptive only.",
+  "machine_cpu_count": 10,
+  "model_inference_seconds": {
+    "1": {
+      "rf": 0.013300250007887371,
+      "natural": 0.010695124496123753,
+      "fixed_hybrid": 0.02442643749236595,
+      "dynamic_hybrid": 0.02469708351418376,
+      "rf_single_thread": 0.0031557919865008444
+    },
+    "100": {
+      "rf": 0.013371979497605935,
+      "natural": 0.010575353488093242,
+      "fixed_hybrid": 0.024492645999998786,
+      "dynamic_hybrid": 0.0245443335006712,
+      "rf_single_thread": 0.007213916498585604
+    },
+    "1000": {
+      "rf": 0.026064125006087124,
+      "natural": 0.013744812502409332,
+      "fixed_hybrid": 0.03769327099143993,
+      "dynamic_hybrid": 0.038757208007154986,
+      "rf_single_thread": 0.035290604006149806
+    }
+  },
+  "feature_extraction_seconds": {
+    "1": 0.00035589549224823713,
+    "100": 0.032748333003837615,
+    "1000": 0.33313566699507646
+  },
+  "model_file_bytes": {
+    "rf": 64701516,
+    "natural": 553851,
+    "gate": 8211,
+    "total": 65263578
+  },
+  "rf_file_note": "joblib compress=3; in-memory size is larger"
+}

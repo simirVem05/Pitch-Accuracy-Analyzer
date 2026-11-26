@@ -1,0 +1,113 @@
+{
+  "test_evaluated": true,
+  "note_group": {
+    "resamples": 10000,
+    "seed": 20260824,
+    "unit": "clean-note group (five variants carried together)",
+    "notes": 4070,
+    "statistics": {
+      "dynamic_mae": {
+        "point": 10.77601692043212,
+        "ci95": [
+          10.513414712593335,
+          11.041470791579401
+        ],
+        "std": 0.13494699763122986
+      },
+      "dynamic_rmse": {
+        "point": 14.551269177037689,
+        "ci95": [
+          14.213897391298119,
+          14.900028291403599
+        ],
+        "std": 0.17560952759137619
+      },
+      "rf_mae": {
+        "point": 11.55106772522633,
+        "ci95": [
+          11.300496620358675,
+          11.802916800565283
+        ],
+        "std": 0.12821386463380427
+      },
+      "natural_mae": {
+        "point": 11.666373237572458,
+        "ci95": [
+          11.341151326984654,
+          12.001290347470286
+        ],
+        "std": 0.1691893138987223
+      },
+      "dynamic_minus_rf_mae": {
+        "point": -0.7750508047942102,
+        "ci95": [
+          -0.8831188982909552,
+          -0.6642585072676733
+        ],
+        "std": 0.055888737653374786,
+        "fraction_resamples_dynamic_better": 1.0,
+        "ci_excludes_zero": true
+      },
+      "dynamic_minus_natural_mae": {
+        "point": -0.8903563171403377,
+        "ci95": [
+          -1.0060001763450896,
+          -0.7753083109978417
+        ],
+        "std": 0.05872710458064878,
+        "fraction_resamples_dynamic_better": 1.0,
+        "ci_excludes_zero": true
+      }
+    }
+  },
+  "song_cluster": {
+    "resamples": 10000,
+    "seed": 20260824,
+    "songs": 8,
+    "warning": "only 8 songs: unstable, low-sample, descriptive only; not a substitute for the note-group bootstrap",
+    "statistics": {
+      "dynamic_mae": {
+        "point": 10.77601692043212,
+        "ci95": [
+          8.889305732886482,
+          12.766456309222107
+        ]
+      },
+      "dynamic_rmse": {
+        "point": 14.551269177037689,
+        "ci95": [
+          12.3761538720212,
+          16.539706210464683
+        ]
+      },
+      "rf_mae": {
+        "point": 11.55106772522633,
+        "ci95": [
+          9.584457600758167,
+          13.608716175631171
+        ]
+      },
+      "natural_mae": {
+        "point": 11.666373237572458,
+        "ci95": [
+          9.576315276327001,
+          13.878440158327193
+        ]
+      },
+      "dynamic_minus_rf_mae": {
+        "point": -0.7750508047942102,
+        "ci95": [
+          -0.9807051762993256,
+          -0.5968158460035671
+        ]
+      },
+      "dynamic_minus_natural_mae": {
+        "point": -0.8903563171403377,
+        "ci95": [
+          -1.128859624608877,
+          -0.6540178392984585
+        ]
+      }
+    }
+  }
+}

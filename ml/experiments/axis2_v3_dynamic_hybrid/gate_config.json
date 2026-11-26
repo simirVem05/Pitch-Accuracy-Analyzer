@@ -1,0 +1,100 @@
+{
+  "dynamic": {
+    "features": [
+      "ridge_prediction",
+      "natural_prediction",
+      "abs_ridge_prediction",
+      "abs_natural_prediction",
+      "ridge_minus_natural",
+      "abs_ridge_minus_natural",
+      "observed_core_median",
+      "abs_observed_core_median",
+      "duration_seconds",
+      "frame_count",
+      "log1p_frame_count",
+      "target_midi",
+      "previous_interval",
+      "next_interval",
+      "abs_previous_interval",
+      "abs_next_interval",
+      "gap_before",
+      "gap_after",
+      "has_previous",
+      "has_next"
+    ],
+    "feature_sources": {
+      "ridge_prediction": "computed from expert predictions / observed core median",
+      "natural_prediction": "computed from expert predictions / observed core median",
+      "abs_ridge_prediction": "computed from expert predictions / observed core median",
+      "abs_natural_prediction": "computed from expert predictions / observed core median",
+      "ridge_minus_natural": "computed from expert predictions / observed core median",
+      "abs_ridge_minus_natural": "computed from expert predictions / observed core median",
+      "observed_core_median": "computed from expert predictions / observed core median",
+      "abs_observed_core_median": "computed from expert predictions / observed core median",
+      "duration_seconds": "natural-offset extractor column 'duration_s'",
+      "frame_count": "natural-offset extractor column 'frame_count'",
+      "log1p_frame_count": "natural-offset extractor column 'log1p_frame_count'",
+      "target_midi": "natural-offset extractor column 'target_midi'",
+      "previous_interval": "natural-offset extractor column 'interval_in'",
+      "next_interval": "natural-offset extractor column 'interval_out'",
+      "abs_previous_interval": "natural-offset extractor column 'abs_interval_in'",
+      "abs_next_interval": "natural-offset extractor column 'abs_interval_out'",
+      "gap_before": "natural-offset extractor column 'gap_before'",
+      "gap_after": "natural-offset extractor column 'gap_after'",
+      "has_previous": "natural-offset extractor column 'has_previous'",
+      "has_next": "natural-offset extractor column 'has_next'"
+    },
+    "architecture": "Linear(20,16) -> GELU -> Linear(16,8) -> GELU -> Linear(8,1) -> sigmoid",
+    "parameters": 481
+  },
+  "magnitude": {
+    "features": [
+      "abs_observed_core_median"
+    ],
+    "architecture": "Linear(1,1) -> sigmoid",
+    "parameters": 2,
+    "fitted": {
+      "formula": "w_ridge = sigmoid(a + b * |observed_core_median|)",
+      "a": -4.9272960834453805,
+      "b_per_cent": 0.11537038743232954,
+      "w_at_abs_core": {
+        "0": 0.00719394178140266,
+        "10": 0.022453656892164334,
+        "20": 0.06786935752378914,
+        "30": 0.18752325003218617,
+        "40": 0.42250937169278785,
+        "50": 0.698722792063706,
+        "75": 0.9764657524229673
+      }
+    }
+  },
+  "training": {
+    "loss": "L1 of w*ridge + (1-w)*natural against injected shift",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay_grid": [
+      0.0,
+      0.0001
+    ],
+    "batch_size": 512,
+    "max_epochs": 80,
+    "input_standardisation": "z-score fit on the gate's own fit rows",
+    "dtype": "float64",
+    "seed": 20261124,
+    "selection": "pooled OOF MAE over the shared song folds; argmin over (weight decay, epoch)",
+    "selected": {
+      "magnitude": {
+        "weight_decay": 0.0,
+        "epochs": 72
+      },
+      "dynamic": {
+        "weight_decay": 0.0,
+        "epochs": 73
+      }
+    }
+  },
+  "fixed": {
+    "weight_ridge": 0.21,
+    "source": "ml/experiments/axis2_v3_hybrid/hybrid_results.json"
+  }
+}

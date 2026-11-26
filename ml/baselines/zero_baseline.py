@@ -13,6 +13,7 @@ The test split is sealed: it is never sliced and no test metric is computed.
 Runs against any dataset version with the same encoding:
   python zero_baseline.py                              # axis2_v1 -> ml/results/axis2_v1/
   python zero_baseline.py --dataset-version axis2_v2   # axis2_v2 -> ml/results/axis2_v2/
+  python zero_baseline.py --dataset-version axis2_v3   # axis2_v3 -> ml/results/axis2_v3/
 """
 
 from __future__ import annotations
@@ -27,7 +28,7 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_DATASET_VERSION = "axis2_v1"
-DATASET_VERSIONS = ("axis2_v1", "axis2_v2")
+DATASET_VERSIONS = ("axis2_v1", "axis2_v2", "axis2_v3")
 
 EVALUATED_SPLITS = ("train", "validation")
 SEALED_SPLIT = "test"

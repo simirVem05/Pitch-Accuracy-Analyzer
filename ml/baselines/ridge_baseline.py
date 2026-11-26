@@ -17,11 +17,19 @@ model is fit on all training examples.
 The test split is sealed: test examples are excluded before feature
 extraction, so no test contour is read and no test prediction exists.
 
-  python ridge_baseline.py
+  python ridge_baseline.py                                   # axis2_v2, alpha by train CV (historical)
+  python ridge_baseline.py --dataset-version axis2_v3 \
+      --frozen-alpha-from ml/results/axis2_v2/ridge_baseline.json   # controlled rerun, alpha frozen
+
+With --frozen-alpha-from, no alpha is selected: the full and center-only models
+use the alphas stored in that result, and the grouped CV is run at those alphas
+only, to report an in-train estimate. Without it, behaviour is exactly the
+historical alpha search.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 import warnings
@@ -51,7 +59,7 @@ sys.path.insert(0, str(REPO_ROOT / "backend"))
 from note_segmentation import _core_slice  # noqa: E402
 
 
-DATASET_VERSION = "axis2_v2"
+DEFAULT_DATASET_VERSION = "axis2_v2"
 EVALUATED_SPLITS = ("train", "validation")
 SEALED_SPLIT = "test"
 CANDIDATE_ALPHAS = (0.0, 0.001, 0.01, 0.1, 1.0, 10.0, 100.0, 1000.0)
@@ -178,7 +186,8 @@ def _predict(model: Pipeline, X: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]
                "spurious_matmul_warnings": spurious, "other_warnings": other, "ok": ok}
 
 
-def grouped_cv(X: np.ndarray, y: np.ndarray, groups: np.ndarray, columns: Sequence[int]) -> Dict[str, Any]:
+def grouped_cv(X: np.ndarray, y: np.ndarray, groups: np.ndarray, columns: Sequence[int],
+               alphas: Sequence[float] = CANDIDATE_ALPHAS) -> Dict[str, Any]:
     """Alpha selection by GroupKFold over training songs. Validation is never seen here."""
     folds = list(GroupKFold(n_splits=CV_FOLDS).split(X, y, groups))
     for tr, te in folds:
@@ -187,7 +196,7 @@ def grouped_cv(X: np.ndarray, y: np.ndarray, groups: np.ndarray, columns: Sequen
     Xs = StandardScaler().fit_transform(X[:, columns])
     rank = int(np.linalg.matrix_rank(Xs))
     rows = []
-    for alpha in CANDIDATE_ALPHAS:
+    for alpha in alphas:
         maes, rmses, warns, checks_ok, maxdiff, spurious = [], [], set(), True, 0.0, 0
         for tr, te in folds:
             model, w = _fit(alpha, X[tr][:, columns], y[tr])
@@ -217,7 +226,7 @@ def grouped_cv(X: np.ndarray, y: np.ndarray, groups: np.ndarray, columns: Sequen
     return {
         "method": f"{CV_FOLDS}_fold_grouped_cv_by_song (sklearn GroupKFold, train split only)",
         "selection_metric": "mean CV MAE; ties broken toward larger alpha; candidates with numerical warnings ineligible",
-        "candidate_alphas": list(CANDIDATE_ALPHAS),
+        "candidate_alphas": list(alphas),
         "folds": [{"fold": i, "train_examples": int(tr.size), "heldout_examples": int(te.size),
                    "heldout_songs": int(np.unique(groups[te]).size)} for i, (tr, te) in enumerate(folds)],
         "standardized_train_matrix_rank": rank, "feature_count": len(columns),
@@ -263,8 +272,25 @@ def shift_sanity(X_rows: np.ndarray, cents_flat, conf_flat, offsets, duration, t
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--dataset-version", default=DEFAULT_DATASET_VERSION)
+    parser.add_argument("--results-dir", type=Path, help="override ml/results/<dataset-version>/")
+    parser.add_argument("--frozen-alpha-from", type=Path,
+                        help="a prior ridge_baseline.json whose selected alphas are reused instead of re-selected")
+    args = parser.parse_args()
+    DATASET_VERSION = args.dataset_version
     paths = dataset_paths(DATASET_VERSION)
-    rdir = paths["results_dir"]
+    rdir = (args.results_dir or paths["results_dir"]).resolve()
+    rdir.mkdir(parents=True, exist_ok=True)
+    frozen = None
+    if args.frozen_alpha_from:
+        fr = json.loads(args.frozen_alpha_from.read_text(encoding="utf-8"))
+        if tuple(fr["features"]) != FEATURES or fr["test_evaluated"] is not False:
+            raise DatasetContractError("frozen-alpha source has a different feature list or is not test-sealed")
+        frozen = {"source": str(args.frozen_alpha_from.resolve().relative_to(REPO_ROOT)),
+                  "source_dataset": fr["dataset"]["dataset_name"],
+                  "full": float(fr["hyperparameter_selection"]["selected_alpha"]),
+                  "center_only": float(fr["center_only_ablation"]["hyperparameter_selection"]["selected_alpha"])}
     out_json, out_md = rdir / "ridge_baseline.json", rdir / "ridge_baseline_comparison.md"
     for p in (out_json, out_md):
         if p.exists():
@@ -322,13 +348,21 @@ def main() -> int:
     all_cols = list(range(len(FEATURES)))
     center_cols = [fi(f) for f in CENTER_FEATURES]
 
-    def run(columns):
-        hp = grouped_cv(X_tr, y_tr, groups, columns)
+    def run(columns, frozen_alpha=None):
+        if frozen_alpha is None:
+            hp = grouped_cv(X_tr, y_tr, groups, columns)
+        else:
+            hp = grouped_cv(X_tr, y_tr, groups, columns, alphas=(frozen_alpha,))
+            if hp["selected_alpha"] != frozen_alpha:
+                raise DatasetContractError("frozen alpha was not usable")
+            hp["alpha_frozen_from"] = frozen["source"]
+            hp["selection_metric"] = ("none: alpha frozen from a prior run; grouped CV computed at that alpha only, "
+                                      "as an in-train estimate")
         model, w = _fit(hp["selected_alpha"], X_tr[:, columns], y_tr)
         return hp, model, w
 
-    hp, model, fit_warn = run(all_cols)
-    hp_c, model_c, fit_warn_c = run(center_cols)
+    hp, model, fit_warn = run(all_cols, frozen["full"] if frozen else None)
+    hp_c, model_c, fit_warn_c = run(center_cols, frozen["center_only"] if frozen else None)
 
     # ---- the single validation evaluation of each fixed model
     (p_tr, k1), (p_va, k2) = _predict(model, X_tr), _predict(model, X_va)
@@ -519,8 +553,11 @@ def main() -> int:
 def _markdown(r: Mapping[str, Any]) -> str:
     f = lambda x, d=4: "—" if x is None else f"{x:.{d}f}"
     c = r["comparison_to_baselines"]
-    L = ["# Baseline 4 (Ridge) on axis2_v2: validation", "",
-         "Generated by `ml/baselines/ridge_baseline.py`. Alpha chosen by 5-fold GroupKFold (by song) inside train; "
+    hs = r["hyperparameter_selection"]
+    how = (f"Alpha frozen from `{hs['alpha_frozen_from']}` (not re-selected); grouped CV run at that alpha only"
+           if "alpha_frozen_from" in hs else "Alpha chosen by 5-fold GroupKFold (by song) inside train")
+    L = [f"# Baseline 4 (Ridge) on {r['dataset']['dataset_name']}: validation", "",
+         f"Generated by `ml/baselines/ridge_baseline.py`. {how}; "
          "validation evaluated once; **test not evaluated**.", "",
          f"Selected alpha **{r['hyperparameter_selection']['selected_alpha']:g}**, grouped-CV MAE "
          f"{r['hyperparameter_selection']['selected_mean_cv_mae']:.4f}.", "",

@@ -1,0 +1,511 @@
+{
+  "dataset": "axis2_v3",
+  "test_evaluated": false,
+  "models_run": false,
+  "dataset_path": "data/ml_dataset/axis2_v3",
+  "builder": "scripts/build_axis2_ml_dataset.py --dataset-name axis2_v3 --notes-file notes.npz --corruption-policy target_preserving --created-at 2026-11-24T14:00:00+00:00",
+  "source": {
+    "notes": "data/main_data/<song>/notes.npz (v2 canonical, schema 2)",
+    "membership": "data/dataset_selections.json (axis2_ml)",
+    "splits": "data/ml_dataset/axis2_v1/splits.json",
+    "source_notes_sha256_identical_to_v2": true
+  },
+  "rule": {
+    "constraint": "-49.999 < N + S < 49.999, N = clean production core median relative to the unchanged target MIDI",
+    "sign_policy": "per band, the fixed_two_two draw (same magnitude, same seeded sign); the sign is flipped only when clean core + shift would leave (-49.999, +49.999); magnitudes are never changed, so 2+/2- per note is no longer guaranteed",
+    "global_seed": 20260824,
+    "seed_derivation": "sha256(f'{global_seed}:{clean_note_id}')[:8] -> np.random.default_rng",
+    "magnitude_sampling": "continuous uniform within each band, per note",
+    "bands": {
+      "corruption_1": [
+        5.0,
+        15.0
+      ],
+      "corruption_2": [
+        15.0,
+        25.0
+      ],
+      "corruption_3": [
+        25.0,
+        35.0
+      ],
+      "corruption_4": [
+        35.0,
+        50.0
+      ]
+    },
+    "band_endpoints": "numpy Generator.uniform draws from [lo, hi), unchanged from axis2_v2"
+  },
+  "counts": {
+    "v2": {
+      "songs": 50,
+      "clean_notes": 25547,
+      "examples": 127735,
+      "train_songs": 35,
+      "validation_songs": 7,
+      "test_songs": 8,
+      "train_clean_notes": 17737,
+      "validation_clean_notes": 3740,
+      "test_clean_notes": 4070,
+      "train_examples": 88685,
+      "validation_examples": 18700,
+      "test_examples": 20350,
+      "summary_json_agrees": true,
+      "positive_corruptions": 51094,
+      "negative_corruptions": 51094,
+      "examples_abs_core_ge_50": 16161,
+      "max_abs_core": 99.3563551049505
+    },
+    "v3": {
+      "songs": 50,
+      "clean_notes": 25547,
+      "examples": 127735,
+      "train_songs": 35,
+      "validation_songs": 7,
+      "test_songs": 8,
+      "train_clean_notes": 17737,
+      "validation_clean_notes": 3740,
+      "test_clean_notes": 4070,
+      "train_examples": 88685,
+      "validation_examples": 18700,
+      "test_examples": 20350,
+      "summary_json_agrees": true,
+      "positive_corruptions": 51689,
+      "negative_corruptions": 50499,
+      "examples_abs_core_ge_50": 0,
+      "max_abs_core": 49.99878242970625
+    }
+  },
+  "core_median": {
+    "stored_vs_recomputed_max_abs_diff": 0.0,
+    "observed_vs_clean_plus_shift_max_abs_diff": 1.4210854715202004e-14,
+    "final_offset_max_abs_corrupted": 49.99878242970626,
+    "observed_core_max_abs_all": 49.99878242970625,
+    "observed_core_max_abs_corrupted": 49.99878242970625,
+    "observed_core_max_abs_clean": 49.99273950830566,
+    "examples_abs_core_ge_50": 0,
+    "examples_abs_core_ge_49_999": 0,
+    "corrupted_violating_limit": 0,
+    "clean_notes_abs_N_ge_49_999": 0
+  },
+  "constant_shift_max_within_note_deviation_cents": 1.3855583347321954e-13,
+  "target_midi_mismatches_across_siblings": 0,
+  "v2_to_v3_changes": {
+    "corrupted_examples": 102188,
+    "shift_changed": 16161,
+    "shift_changed_percent": 15.814968489450818,
+    "sign_changed": 16161,
+    "magnitude_changed": 0,
+    "changed_exactly_where_v2_left_target": true,
+    "v2_examples_abs_core_ge_50": 16161,
+    "notes_with_any_change": 12321,
+    "by_band": {
+      "corruption_1": {
+        "changed": 938,
+        "percent": 3.6716639918581437,
+        "positive_to_negative": 508,
+        "negative_to_positive": 430
+      },
+      "corruption_2": {
+        "changed": 2251,
+        "percent": 8.811210709672368,
+        "positive_to_negative": 1108,
+        "negative_to_positive": 1143
+      },
+      "corruption_3": {
+        "changed": 4215,
+        "percent": 16.49900183974635,
+        "positive_to_negative": 2084,
+        "negative_to_positive": 2131
+      },
+      "corruption_4": {
+        "changed": 8757,
+        "percent": 34.277997416526404,
+        "positive_to_negative": 4083,
+        "negative_to_positive": 4674
+      }
+    }
+  },
+  "sign_feasibility_by_band": {
+    "corruption_1": {
+      "both": 23638,
+      "positive_only": 901,
+      "negative_only": 1008,
+      "neither": 0,
+      "percent_both": 92.52749833639957
+    },
+    "corruption_2": {
+      "both": 20942,
+      "positive_only": 2296,
+      "negative_only": 2309,
+      "neither": 0,
+      "percent_both": 81.97440012525932
+    },
+    "corruption_3": {
+      "both": 17088,
+      "positive_only": 4345,
+      "negative_only": 4114,
+      "neither": 0,
+      "percent_both": 66.8884800563667
+    },
+    "corruption_4": {
+      "both": 8340,
+      "positive_only": 9216,
+      "negative_only": 7991,
+      "neither": 0,
+      "percent_both": 32.64571182526324
+    }
+  },
+  "shift_distribution": {
+    "v2": {
+      "all": {
+        "count": 102188,
+        "positive": 51094,
+        "negative": 51094,
+        "percent_positive": 50.0,
+        "percent_negative": 50.0,
+        "mean_shift": 0.0074806961995326285,
+        "mean_abs_shift": 25.62129104200913,
+        "median_abs_shift": 25.00040669639573,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 49.999988184834635
+      },
+      "corruption_1": {
+        "count": 25547,
+        "positive": 12737,
+        "negative": 12810,
+        "percent_positive": 49.857126081340276,
+        "percent_negative": 50.142873918659724,
+        "mean_shift": -0.015004316094926463,
+        "mean_abs_shift": 10.003784331744106,
+        "median_abs_shift": 10.00556419593871,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 14.9998409322635
+      },
+      "corruption_2": {
+        "count": 25547,
+        "positive": 12785,
+        "negative": 12762,
+        "percent_positive": 50.04501507026266,
+        "percent_negative": 49.95498492973734,
+        "mean_shift": -0.015347389731363133,
+        "mean_abs_shift": 19.97541317593042,
+        "median_abs_shift": 19.958495851626804,
+        "min_abs_shift": 15.000697489168587,
+        "max_abs_shift": 24.999884785450305
+      },
+      "corruption_3": {
+        "count": 25547,
+        "positive": 12820,
+        "negative": 12727,
+        "percent_positive": 50.18201745801856,
+        "percent_negative": 49.81798254198145,
+        "mean_shift": 0.12422610704993566,
+        "mean_abs_shift": 29.989675727835934,
+        "median_abs_shift": 29.98889765412702,
+        "min_abs_shift": 25.000928607341148,
+        "max_abs_shift": 34.999842371254836
+      },
+      "corruption_4": {
+        "count": 25547,
+        "positive": 12752,
+        "negative": 12795,
+        "percent_positive": 49.91584139037852,
+        "percent_negative": 50.08415860962149,
+        "mean_shift": -0.06395161642551549,
+        "mean_abs_shift": 42.51629093252608,
+        "median_abs_shift": 42.524415167644605,
+        "min_abs_shift": 35.000292150720284,
+        "max_abs_shift": 49.999988184834635
+      }
+    },
+    "v3": {
+      "all": {
+        "count": 102188,
+        "positive": 51689,
+        "negative": 50499,
+        "percent_positive": 50.58226014796258,
+        "percent_negative": 49.41773985203742,
+        "mean_shift": 0.5615676570983612,
+        "mean_abs_shift": 25.62129104200913,
+        "median_abs_shift": 25.00040669639573,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 49.999988184834635
+      },
+      "corruption_1": {
+        "count": 25547,
+        "positive": 12659,
+        "negative": 12888,
+        "percent_positive": 49.55180647434141,
+        "percent_negative": 50.44819352565859,
+        "mean_shift": -0.07694014201676791,
+        "mean_abs_shift": 10.003784331744106,
+        "median_abs_shift": 10.00556419593871,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 14.9998409322635
+      },
+      "corruption_2": {
+        "count": 25547,
+        "positive": 12820,
+        "negative": 12727,
+        "percent_positive": 50.18201745801856,
+        "percent_negative": 49.81798254198145,
+        "mean_shift": 0.062023516529564976,
+        "mean_abs_shift": 19.97541317593042,
+        "median_abs_shift": 19.958495851626804,
+        "min_abs_shift": 15.000697489168587,
+        "max_abs_shift": 24.999884785450305
+      },
+      "corruption_3": {
+        "count": 25547,
+        "positive": 12867,
+        "negative": 12680,
+        "percent_positive": 50.365992093005055,
+        "percent_negative": 49.634007906994945,
+        "mean_shift": 0.25209728130448195,
+        "mean_abs_shift": 29.989675727835934,
+        "median_abs_shift": 29.98889765412702,
+        "min_abs_shift": 25.000928607341148,
+        "max_abs_shift": 34.999842371254836
+      },
+      "corruption_4": {
+        "count": 25547,
+        "positive": 13343,
+        "negative": 12204,
+        "percent_positive": 52.2292245664853,
+        "percent_negative": 47.7707754335147,
+        "mean_shift": 2.009089972576166,
+        "mean_abs_shift": 42.51629093252608,
+        "median_abs_shift": 42.524415167644605,
+        "min_abs_shift": 35.000292150720284,
+        "max_abs_shift": 49.999988184834635
+      }
+    }
+  },
+  "shift_distribution_by_split": {
+    "train": {
+      "v2": {
+        "count": 70948,
+        "positive": 35474,
+        "negative": 35474,
+        "percent_positive": 50.0,
+        "percent_negative": 50.0,
+        "mean_shift": 0.06314055825038485,
+        "mean_abs_shift": 25.623179444734113,
+        "median_abs_shift": 25.000582032502134,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 49.999988184834635
+      },
+      "v3": {
+        "count": 70948,
+        "positive": 35638,
+        "negative": 35310,
+        "percent_positive": 50.23115521226814,
+        "percent_negative": 49.76884478773186,
+        "mean_shift": 0.2966498748353124,
+        "mean_abs_shift": 25.623179444734113,
+        "median_abs_shift": 25.000582032502134,
+        "min_abs_shift": 5.000115340259381,
+        "max_abs_shift": 49.999988184834635
+      }
+    },
+    "validation": {
+      "v2": {
+        "count": 14960,
+        "positive": 7480,
+        "negative": 7480,
+        "percent_positive": 50.0,
+        "percent_negative": 50.0,
+        "mean_shift": -0.06639164054753999,
+        "mean_abs_shift": 25.640068341839246,
+        "median_abs_shift": 25.00040669639573,
+        "min_abs_shift": 5.001051766577083,
+        "max_abs_shift": 49.98768582560741
+      },
+      "v3": {
+        "count": 14960,
+        "positive": 7536,
+        "negative": 7424,
+        "percent_positive": 50.37433155080214,
+        "percent_negative": 49.62566844919786,
+        "mean_shift": 0.38158279903617315,
+        "mean_abs_shift": 25.640068341839246,
+        "median_abs_shift": 25.00040669639573,
+        "min_abs_shift": 5.001051766577083,
+        "max_abs_shift": 49.98768582560741
+      }
+    },
+    "test": {
+      "v2": {
+        "count": 16280,
+        "positive": 8140,
+        "negative": 8140,
+        "percent_positive": 50.0,
+        "percent_negative": 50.0,
+        "mean_shift": -0.16720147425794013,
+        "mean_abs_shift": 25.595806594712467,
+        "median_abs_shift": 24.999536814863628,
+        "min_abs_shift": 5.006725934879337,
+        "max_abs_shift": 49.99830307158448
+      },
+      "v3": {
+        "count": 16280,
+        "positive": 8515,
+        "negative": 7765,
+        "percent_positive": 52.3034398034398,
+        "percent_negative": 47.69656019656019,
+        "mean_shift": 1.8814669379711582,
+        "mean_abs_shift": 25.595806594712467,
+        "median_abs_shift": 24.999536814863628,
+        "min_abs_shift": 5.006725934879337,
+        "max_abs_shift": 49.99830307158448
+      }
+    }
+  },
+  "positive_corruptions_per_note_v3": {
+    "0": 1941,
+    "1": 3901,
+    "2": 13226,
+    "3": 4580,
+    "4": 1899
+  },
+  "sign_vs_clean_core_v2_v3": {
+    "corruption_1": {
+      "N < -15": {
+        "notes": 5737,
+        "percent_positive_v2": 49.991284643541924,
+        "percent_positive_v3": 57.486491197489975
+      },
+      "-15 <= N <= 15": {
+        "notes": 14509,
+        "percent_positive_v2": 49.65194017506375,
+        "percent_positive_v3": 49.65194017506375
+      },
+      "N > 15": {
+        "notes": 5301,
+        "percent_positive_v2": 50.2735332956046,
+        "percent_positive_v3": 40.690435766836444
+      }
+    },
+    "corruption_2": {
+      "N < -15": {
+        "notes": 5737,
+        "percent_positive_v2": 50.479344605194356,
+        "percent_positive_v3": 70.40264946836325
+      },
+      "-15 <= N <= 15": {
+        "notes": 14509,
+        "percent_positive_v2": 50.33427527741402,
+        "percent_positive_v3": 50.33427527741402
+      },
+      "N > 15": {
+        "notes": 5301,
+        "percent_positive_v2": 48.78324844368987,
+        "percent_positive_v3": 27.881531786455387
+      }
+    },
+    "corruption_3": {
+      "N < -15": {
+        "notes": 5737,
+        "percent_positive_v2": 49.729823949799545,
+        "percent_positive_v3": 86.87467317413282
+      },
+      "-15 <= N <= 15": {
+        "notes": 14509,
+        "percent_positive_v2": 50.403198015025154,
+        "percent_positive_v3": 50.403198015025154
+      },
+      "N > 15": {
+        "notes": 5301,
+        "percent_positive_v2": 50.066025278249384,
+        "percent_positive_v3": 10.75268817204301
+      }
+    },
+    "corruption_4": {
+      "N < -15": {
+        "notes": 5737,
+        "percent_positive_v2": 49.79954680146418,
+        "percent_positive_v3": 100.0
+      },
+      "-15 <= N <= 15": {
+        "notes": 14509,
+        "percent_positive_v2": 49.61058653249707,
+        "percent_positive_v3": 52.422634227031494
+      },
+      "N > 15": {
+        "notes": 5301,
+        "percent_positive_v2": 50.877192982456144,
+        "percent_positive_v3": 0.0
+      }
+    }
+  },
+  "checks": {
+    "example_keys_identical_v2_v3": true,
+    "row_order_identical_v2_v3": true,
+    "clean_note_ids_identical": true,
+    "target_midi_identical_v2_v3": true,
+    "duration_s_identical_v2_v3": true,
+    "start_s_identical_v2_v3": true,
+    "end_s_identical_v2_v3": true,
+    "num_frames_identical_v2_v3": true,
+    "split_index_identical_v2_v3": true,
+    "song_index_identical_v2_v3": true,
+    "source_note_index_identical_v2_v3": true,
+    "variant_index_identical_v2_v3": true,
+    "song_ids_identical_v2_v3": true,
+    "song_source_filenames_identical_v2_v3": true,
+    "song_split_index_identical_v2_v3": true,
+    "variant_names_identical_v2_v3": true,
+    "split_names_identical_v2_v3": true,
+    "contour_offsets_identical_v2_v3": true,
+    "confidence_flat_identical_v2_v3": true,
+    "clean_cents_contours_identical_v2_v3": true,
+    "splits_song_lists_identical_v2_v3_v1": true,
+    "splits_match_dataset_selections": true,
+    "split_assignment_identical_per_song": true,
+    "clean_contours_verbatim_from_canonical_notes": true,
+    "clean_target_midi_equals_canonical": true,
+    "exactly_five_variants_per_note": true,
+    "confidence_identical_across_variants": true,
+    "all_corrupted_within_limit": true,
+    "zero_examples_abs_core_ge_50": true,
+    "feasibility_matches_builder_summary": true,
+    "no_infeasible_band": true,
+    "protected_files_byte_identical": true
+  },
+  "all_checks_passed": true,
+  "builder_validation": {
+    "validation": {
+      "lengths_aligned": true,
+      "offsets_valid": true,
+      "five_variants_per_note": true,
+      "clean_is_zero": true,
+      "magnitudes_in_bands": true,
+      "shifts_rederived_from_seed": true,
+      "magnitudes_equal_fixed_two_two_draws": true,
+      "signs_changed_only_where_required": true,
+      "core_medians_recomputed": true,
+      "core_equals_clean_core_plus_shift": true,
+      "corrupted_cores_on_target": true,
+      "all_cores_below_50": true,
+      "target_midi_identical_across_variants": true,
+      "contours_match_canonical_notes": true,
+      "splits_disjoint_song_level": true,
+      "manifest_rows": true
+    },
+    "validation_passed": true
+  },
+  "reproduce_and_determinism_logs_passed": {
+    "axis2_v1_reproduce_check.log": true,
+    "axis2_v2_reproduce_check.log": true,
+    "axis2_v3_determinism_rebuild.log": true
+  },
+  "protected": {
+    "files": 375,
+    "unchanged": true,
+    "missing_after": [],
+    "new_after": [],
+    "changed": [],
+    "before_manifest": "protected_sha256_before.txt (shasum -a 256, taken before the builder was edited)"
+  }
+}
