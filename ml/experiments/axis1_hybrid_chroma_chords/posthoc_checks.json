@@ -1,0 +1,682 @@
+{
+ "note": "post hoc; not pre-registered",
+ "kappa": 0.013909029140657012,
+ "excess_fit_best": {
+  "real_beat_segments": {
+   "p10": -0.05154184469433473,
+   "p25": 0.02885711712840877,
+   "p50": 0.09952050877844187,
+   "p75": 0.15385810499538977,
+   "p90": 0.18690753754256728
+  },
+  "synthetic_medians": {
+   "clean": 0.189633283494747,
+   "degraded": 0.1416537168467069,
+   "white": -0.009802769510403986,
+   "pink": -0.07736149767074957,
+   "cluster": 0.0,
+   "single": 0.21172956151872557,
+   "mixture": 0.15993532159566926
+  },
+  "real_share_ge": {
+   "0.05": 0.6841672660022603,
+   "0.1": 0.49768827699578755,
+   "0.15": 0.2681941162368574
+  }
+ },
+ "by_gamma": {
+  "0.05": {
+   "synthetic_passed": {
+    "A": {
+     "T": "10/17",
+     "S": "11/17"
+    },
+    "B": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "C5w_a0.5": {
+     "T": "11/17",
+     "S": "12/17"
+    },
+    "D_a0.5": {
+     "T": "11/17",
+     "S": "11/17"
+    },
+    "Dchord_chromafb": {
+     "T": "13/17",
+     "S": "13/17"
+    },
+    "Dchord_Bfb": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "Dchord_abstain": {
+     "T": "13/17",
+     "S": "13/17"
+    }
+   },
+   "synthetic_failures": {
+    "A": [
+     "S1",
+     "S13",
+     "S14",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T13",
+     "T14",
+     "T17",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "B": [
+     "S10",
+     "S6",
+     "S9",
+     "T10",
+     "T6",
+     "T9"
+    ],
+    "C5w_a0.5": [
+     "S10",
+     "S13",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T10",
+     "T13",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "D_a0.5": [
+     "S10",
+     "S13",
+     "S14",
+     "S4",
+     "S5",
+     "S7",
+     "T10",
+     "T13",
+     "T14",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "Dchord_chromafb": [
+     "S10",
+     "S14",
+     "S6",
+     "S7",
+     "T10",
+     "T14",
+     "T6",
+     "T7"
+    ],
+    "Dchord_Bfb": [
+     "S10",
+     "S6",
+     "S9",
+     "T10",
+     "T6",
+     "T9"
+    ],
+    "Dchord_abstain": [
+     "S10",
+     "S14",
+     "S6",
+     "S7",
+     "T10",
+     "T14",
+     "T6",
+     "T7"
+    ]
+   },
+   "note_status": {
+    "CHORD": 0.6850926013269188,
+    "CHROMA_ONLY": 0.2916077099644688,
+    "INSUFFICIENT": 0.023299688708612393
+   },
+   "real": {
+    "A": {
+     "coverage": 0.9751595761406157,
+     "breadth_ge_0.75": 1.9233547222132654,
+     "breadth_ge_0.5": 3.5080450133814853,
+     "share_notes_ge10_pcs_ge_0.5": 0.004836681391674459,
+     "graded_share_in_0.25_0.75": 0.3588736981265921,
+     "mean_H_T1_chord_tone": 0.7807305555801779,
+     "mean_H_T2_extension": 0.23882880933836856,
+     "mean_H_T3_tension": 0.18713283595421196,
+     "mean_H_T4_clash": 0.19061500493794303,
+     "mean_H_sung": 0.45899938487191144,
+     "mean_H_alternatives": 0.34668172563630767,
+     "win_rate_sung_vs_alt": 0.6098820729137049,
+     "noise_mean_abs_dH": 0.005903329357575069
+    },
+    "B": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 3.210923497783228,
+     "breadth_ge_0.5": 6.528818036034337,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.49514458803676803,
+     "mean_H_T1_chord_tone": 0.9708760089582363,
+     "mean_H_T2_extension": 0.6461964197419439,
+     "mean_H_T3_tension": 0.3375402705754964,
+     "mean_H_T4_clash": 0.04908755134923576,
+     "mean_H_sung": 0.6786225880778822,
+     "mean_H_alternatives": 0.5140342367113938,
+     "win_rate_sung_vs_alt": 0.6406270992159117,
+     "noise_mean_abs_dH": 0.006956433001286816
+    },
+    "C5w_a0.5": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 2.6421721221268433,
+     "breadth_ge_0.5": 4.342106090620382,
+     "share_notes_ge10_pcs_ge_0.5": 0.0044021004307769705,
+     "graded_share_in_0.25_0.75": 0.45726556194908236,
+     "mean_H_T1_chord_tone": 0.877406122931822,
+     "mean_H_T2_extension": 0.44808673419039896,
+     "mean_H_T3_tension": 0.2688332039789379,
+     "mean_H_T4_clash": 0.1268864954625894,
+     "mean_H_sung": 0.573626701000369,
+     "mean_H_alternatives": 0.4354354283610271,
+     "win_rate_sung_vs_alt": 0.6385032286834003,
+     "noise_mean_abs_dH": 0.005931521142090468
+    },
+    "D_a0.5": {
+     "coverage": 0.981353960318209,
+     "breadth_ge_0.75": 2.4660044857417494,
+     "breadth_ge_0.5": 4.047901313681512,
+     "share_notes_ge10_pcs_ge_0.5": 0.003844921499519385,
+     "graded_share_in_0.25_0.75": 0.4264017942966998,
+     "mean_H_T1_chord_tone": 0.8407623565476421,
+     "mean_H_T2_extension": 0.3874063058512252,
+     "mean_H_T3_tension": 0.25386615418050645,
+     "mean_H_T4_clash": 0.1564626770188239,
+     "mean_H_sung": 0.5406779652022465,
+     "mean_H_alternatives": 0.4121701298336367,
+     "win_rate_sung_vs_alt": 0.6278989834260581,
+     "noise_mean_abs_dH": 0.00829213786311089
+    },
+    "Dchord_chromafb": {
+     "coverage": 0.981353960318209,
+     "breadth_ge_0.75": 2.861582826017302,
+     "breadth_ge_0.5": 5.676385773790452,
+     "share_notes_ge10_pcs_ge_0.5": 0.003332265299583467,
+     "graded_share_in_0.25_0.75": 0.4748371248531454,
+     "mean_H_T1_chord_tone": 0.8998061340570362,
+     "mean_H_T2_extension": 0.5331140949047904,
+     "mean_H_T3_tension": 0.31746821806221415,
+     "mean_H_T4_clash": 0.11913329455532054,
+     "mean_H_sung": 0.6199930158752618,
+     "mean_H_alternatives": 0.4751394976290644,
+     "win_rate_sung_vs_alt": 0.6270091171244647,
+     "noise_mean_abs_dH": 0.011146339423536857
+    },
+    "Dchord_Bfb": {
+     "coverage": 0.981353960318209,
+     "breadth_ge_0.75": 3.280551105414931,
+     "breadth_ge_0.5": 6.508586991348927,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.48526914450496633,
+     "mean_H_T1_chord_tone": 0.9666058881301953,
+     "mean_H_T2_extension": 0.64280737592371,
+     "mean_H_T3_tension": 0.33956907029294014,
+     "mean_H_T4_clash": 0.06103474592869854,
+     "mean_H_sung": 0.6794320948068396,
+     "mean_H_alternatives": 0.5152499120232117,
+     "win_rate_sung_vs_alt": 0.6382438612332878,
+     "noise_mean_abs_dH": 0.007315414159517966
+    },
+    "Dchord_abstain": {
+     "coverage": 0.744583844291419,
+     "breadth_ge_0.75": 3.305025337837838,
+     "breadth_ge_0.5": 6.494467905405405,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.4825415259009009,
+     "mean_H_T1_chord_tone": 0.9683317783054193,
+     "mean_H_T2_extension": 0.644070028870046,
+     "mean_H_T3_tension": 0.3397188298571388,
+     "mean_H_T4_clash": 0.06036744776092748,
+     "mean_H_sung": 0.6860054858660088,
+     "mean_H_alternatives": 0.5151464369783759,
+     "win_rate_sung_vs_alt": 0.6403063574938576,
+     "noise_mean_abs_dH": 0.00529035890862924
+    }
+   }
+  },
+  "0.1": {
+   "synthetic_passed": {
+    "A": {
+     "T": "10/17",
+     "S": "11/17"
+    },
+    "B": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "C5w_a0.5": {
+     "T": "11/17",
+     "S": "12/17"
+    },
+    "D_a0.5": {
+     "T": "13/17",
+     "S": "12/17"
+    },
+    "Dchord_chromafb": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "Dchord_Bfb": {
+     "T": "15/17",
+     "S": "15/17"
+    },
+    "Dchord_abstain": {
+     "T": "14/17",
+     "S": "14/17"
+    }
+   },
+   "synthetic_failures": {
+    "A": [
+     "S1",
+     "S13",
+     "S14",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T13",
+     "T14",
+     "T17",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "B": [
+     "S10",
+     "S6",
+     "S9",
+     "T10",
+     "T6",
+     "T9"
+    ],
+    "C5w_a0.5": [
+     "S10",
+     "S13",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T10",
+     "T13",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "D_a0.5": [
+     "S13",
+     "S14",
+     "S4",
+     "S5",
+     "S7",
+     "T13",
+     "T14",
+     "T4",
+     "T7"
+    ],
+    "Dchord_chromafb": [
+     "S14",
+     "S6",
+     "S7",
+     "T14",
+     "T6",
+     "T7"
+    ],
+    "Dchord_Bfb": [
+     "S6",
+     "S9",
+     "T6",
+     "T9"
+    ],
+    "Dchord_abstain": [
+     "S14",
+     "S6",
+     "S7",
+     "T14",
+     "T6",
+     "T7"
+    ]
+   },
+   "note_status": {
+    "CHORD": 0.4936012325881206,
+    "CHROMA_ONLY": 0.4782882118039179,
+    "INSUFFICIENT": 0.028110555607961513
+   },
+   "real": {
+    "A": {
+     "coverage": 0.9751595761406157,
+     "breadth_ge_0.75": 1.9233547222132654,
+     "breadth_ge_0.5": 3.5080450133814853,
+     "share_notes_ge10_pcs_ge_0.5": 0.004836681391674459,
+     "graded_share_in_0.25_0.75": 0.3588736981265921,
+     "mean_H_T1_chord_tone": 0.7807305555801779,
+     "mean_H_T2_extension": 0.23882880933836856,
+     "mean_H_T3_tension": 0.18713283595421196,
+     "mean_H_T4_clash": 0.19061500493794303,
+     "mean_H_sung": 0.45899938487191144,
+     "mean_H_alternatives": 0.34668172563630767,
+     "win_rate_sung_vs_alt": 0.6098820729137049,
+     "noise_mean_abs_dH": 0.005903329357575069
+    },
+    "B": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 3.210923497783228,
+     "breadth_ge_0.5": 6.528818036034337,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.49514458803676803,
+     "mean_H_T1_chord_tone": 0.9708760089582363,
+     "mean_H_T2_extension": 0.6461964197419439,
+     "mean_H_T3_tension": 0.3375402705754964,
+     "mean_H_T4_clash": 0.04908755134923576,
+     "mean_H_sung": 0.6786225880778822,
+     "mean_H_alternatives": 0.5140342367113938,
+     "win_rate_sung_vs_alt": 0.6406270992159117,
+     "noise_mean_abs_dH": 0.006956433001286816
+    },
+    "C5w_a0.5": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 2.6421721221268433,
+     "breadth_ge_0.5": 4.342106090620382,
+     "share_notes_ge10_pcs_ge_0.5": 0.0044021004307769705,
+     "graded_share_in_0.25_0.75": 0.45726556194908236,
+     "mean_H_T1_chord_tone": 0.877406122931822,
+     "mean_H_T2_extension": 0.44808673419039896,
+     "mean_H_T3_tension": 0.2688332039789379,
+     "mean_H_T4_clash": 0.1268864954625894,
+     "mean_H_sung": 0.573626701000369,
+     "mean_H_alternatives": 0.4354354283610271,
+     "win_rate_sung_vs_alt": 0.6385032286834003,
+     "noise_mean_abs_dH": 0.005931521142090468
+    },
+    "D_a0.5": {
+     "coverage": 0.9771090777599597,
+     "breadth_ge_0.75": 2.321609010458568,
+     "breadth_ge_0.5": 3.850104585679807,
+     "share_notes_ge10_pcs_ge_0.5": 0.004440868865647627,
+     "graded_share_in_0.25_0.75": 0.4107294180745508,
+     "mean_H_T1_chord_tone": 0.8228003503438721,
+     "mean_H_T2_extension": 0.3494455745447384,
+     "mean_H_T3_tension": 0.23816680400550466,
+     "mean_H_T4_clash": 0.16460068852133733,
+     "mean_H_sung": 0.5187527347438649,
+     "mean_H_alternatives": 0.39498228495435733,
+     "win_rate_sung_vs_alt": 0.622597820522197,
+     "noise_mean_abs_dH": 0.00864199120778987
+    },
+    "Dchord_chromafb": {
+     "coverage": 0.9771090777599597,
+     "breadth_ge_0.75": 2.5496701528559935,
+     "breadth_ge_0.5": 5.091971037811746,
+     "share_notes_ge10_pcs_ge_0.5": 0.004279967819790829,
+     "graded_share_in_0.25_0.75": 0.461491016358273,
+     "mean_H_T1_chord_tone": 0.864528127286813,
+     "mean_H_T2_extension": 0.45914146922405635,
+     "mean_H_T3_tension": 0.2882243210802316,
+     "mean_H_T4_clash": 0.13757802012397752,
+     "mean_H_sung": 0.5777198532027097,
+     "mean_H_alternatives": 0.4424879345819439,
+     "win_rate_sung_vs_alt": 0.6214993052000293,
+     "noise_mean_abs_dH": 0.01169312970973365
+    },
+    "Dchord_Bfb": {
+     "coverage": 0.9771090777599597,
+     "breadth_ge_0.75": 3.250748189863234,
+     "breadth_ge_0.5": 6.523411102172164,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.49052829176722984,
+     "mean_H_T1_chord_tone": 0.9697182403498843,
+     "mean_H_T2_extension": 0.6457920919816801,
+     "mean_H_T3_tension": 0.3373136837928688,
+     "mean_H_T4_clash": 0.05335027885320159,
+     "mean_H_sung": 0.6793340717183288,
+     "mean_H_alternatives": 0.514676211585037,
+     "win_rate_sung_vs_alt": 0.6380955167117677,
+     "noise_mean_abs_dH": 0.006899623118823396
+    },
+    "Dchord_abstain": {
+     "coverage": 0.5707323208502343,
+     "breadth_ge_0.75": 3.2691311773456007,
+     "breadth_ge_0.5": 6.498980772409234,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.4900556443171175,
+     "mean_H_T1_chord_tone": 0.9722624299737271,
+     "mean_H_T2_extension": 0.6490375234873466,
+     "mean_H_T3_tension": 0.3368798646250906,
+     "mean_H_T4_clash": 0.049762889026623985,
+     "mean_H_sung": 0.6891469983432523,
+     "mean_H_alternatives": 0.5136890881637216,
+     "win_rate_sung_vs_alt": 0.6400573972884038,
+     "noise_mean_abs_dH": 0.004393253140140092
+    }
+   }
+  },
+  "0.15": {
+   "synthetic_passed": {
+    "A": {
+     "T": "10/17",
+     "S": "11/17"
+    },
+    "B": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "C5w_a0.5": {
+     "T": "11/17",
+     "S": "12/17"
+    },
+    "D_a0.5": {
+     "T": "13/17",
+     "S": "13/17"
+    },
+    "Dchord_chromafb": {
+     "T": "14/17",
+     "S": "14/17"
+    },
+    "Dchord_Bfb": {
+     "T": "15/17",
+     "S": "15/17"
+    },
+    "Dchord_abstain": {
+     "T": "14/17",
+     "S": "14/17"
+    }
+   },
+   "synthetic_failures": {
+    "A": [
+     "S1",
+     "S13",
+     "S14",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T13",
+     "T14",
+     "T17",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "B": [
+     "S10",
+     "S6",
+     "S9",
+     "T10",
+     "T6",
+     "T9"
+    ],
+    "C5w_a0.5": [
+     "S10",
+     "S13",
+     "S4",
+     "S5",
+     "S7",
+     "T1",
+     "T10",
+     "T13",
+     "T4",
+     "T5",
+     "T7"
+    ],
+    "D_a0.5": [
+     "S13",
+     "S14",
+     "S4",
+     "S7",
+     "T13",
+     "T14",
+     "T4",
+     "T7"
+    ],
+    "Dchord_chromafb": [
+     "S14",
+     "S6",
+     "S7",
+     "T14",
+     "T6",
+     "T7"
+    ],
+    "Dchord_Bfb": [
+     "S6",
+     "S9",
+     "T6",
+     "T9"
+    ],
+    "Dchord_abstain": [
+     "S14",
+     "S6",
+     "S7",
+     "T14",
+     "T6",
+     "T7"
+    ]
+   },
+   "note_status": {
+    "CHORD": 0.2629940571644184,
+    "CHROMA_ONLY": 0.7071659906298148,
+    "INSUFFICIENT": 0.02983995220576675
+   },
+   "real": {
+    "A": {
+     "coverage": 0.9751595761406157,
+     "breadth_ge_0.75": 1.9233547222132654,
+     "breadth_ge_0.5": 3.5080450133814853,
+     "share_notes_ge10_pcs_ge_0.5": 0.004836681391674459,
+     "graded_share_in_0.25_0.75": 0.3588736981265921,
+     "mean_H_T1_chord_tone": 0.7807305555801779,
+     "mean_H_T2_extension": 0.23882880933836856,
+     "mean_H_T3_tension": 0.18713283595421196,
+     "mean_H_T4_clash": 0.19061500493794303,
+     "mean_H_sung": 0.45899938487191144,
+     "mean_H_alternatives": 0.34668172563630767,
+     "win_rate_sung_vs_alt": 0.6098820729137049,
+     "noise_mean_abs_dH": 0.005903329357575069
+    },
+    "B": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 3.210923497783228,
+     "breadth_ge_0.5": 6.528818036034337,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.49514458803676803,
+     "mean_H_T1_chord_tone": 0.9708760089582363,
+     "mean_H_T2_extension": 0.6461964197419439,
+     "mean_H_T3_tension": 0.3375402705754964,
+     "mean_H_T4_clash": 0.04908755134923576,
+     "mean_H_sung": 0.6786225880778822,
+     "mean_H_alternatives": 0.5140342367113938,
+     "win_rate_sung_vs_alt": 0.6406270992159117,
+     "noise_mean_abs_dH": 0.006956433001286816
+    },
+    "C5w_a0.5": {
+     "coverage": 1.0,
+     "breadth_ge_0.75": 2.6421721221268433,
+     "breadth_ge_0.5": 4.342106090620382,
+     "share_notes_ge10_pcs_ge_0.5": 0.0044021004307769705,
+     "graded_share_in_0.25_0.75": 0.45726556194908236,
+     "mean_H_T1_chord_tone": 0.877406122931822,
+     "mean_H_T2_extension": 0.44808673419039896,
+     "mean_H_T3_tension": 0.2688332039789379,
+     "mean_H_T4_clash": 0.1268864954625894,
+     "mean_H_sung": 0.573626701000369,
+     "mean_H_alternatives": 0.4354354283610271,
+     "win_rate_sung_vs_alt": 0.6385032286834003,
+     "noise_mean_abs_dH": 0.005931521142090468
+    },
+    "D_a0.5": {
+     "coverage": 0.9757255604817155,
+     "breadth_ge_0.75": 2.1229093487158,
+     "breadth_ge_0.5": 3.6466436789017433,
+     "share_notes_ge10_pcs_ge_0.5": 0.004704972446907931,
+     "graded_share_in_0.25_0.75": 0.39034352744030165,
+     "mean_H_T1_chord_tone": 0.8017272018896979,
+     "mean_H_T2_extension": 0.2989362748864528,
+     "mean_H_T3_tension": 0.2174269904924217,
+     "mean_H_T4_clash": 0.17663244468466666,
+     "mean_H_sung": 0.4914294738360543,
+     "mean_H_alternatives": 0.37307568262617974,
+     "win_rate_sung_vs_alt": 0.6170325275897123,
+     "noise_mean_abs_dH": 0.008494961314328442
+    },
+    "Dchord_chromafb": {
+     "coverage": 0.9757255604817155,
+     "breadth_ge_0.75": 2.2005091682511035,
+     "breadth_ge_0.5": 4.32612548741581,
+     "share_notes_ge10_pcs_ge_0.5": 0.004640520769553028,
+     "graded_share_in_0.25_0.75": 0.4286224528160012,
+     "mean_H_T1_chord_tone": 0.8226363731931579,
+     "mean_H_T2_extension": 0.3587970329955725,
+     "mean_H_T3_tension": 0.24745170269198094,
+     "mean_H_T4_clash": 0.1623771622745128,
+     "mean_H_sung": 0.5236403625922184,
+     "mean_H_alternatives": 0.3992592530265454,
+     "win_rate_sung_vs_alt": 0.6167952282321784,
+     "noise_mean_abs_dH": 0.0112715109495061
+    },
+    "Dchord_Bfb": {
+     "coverage": 0.9757255604817155,
+     "breadth_ge_0.75": 3.219876897296252,
+     "breadth_ge_0.5": 6.531275176436467,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.49432019593309917,
+     "mean_H_T1_chord_tone": 0.9711889149065571,
+     "mean_H_T2_extension": 0.6465031631631887,
+     "mean_H_T3_tension": 0.33722618046551683,
+     "mean_H_T4_clash": 0.04852274427084621,
+     "mean_H_sung": 0.6792661310366405,
+     "mean_H_alternatives": 0.5141364335555572,
+     "win_rate_sung_vs_alt": 0.6395759665554386,
+     "noise_mean_abs_dH": 0.006375687802793601
+    },
+    "Dchord_abstain": {
+     "coverage": 0.32616419834606797,
+     "breadth_ge_0.75": 3.260869565217391,
+     "breadth_ge_0.5": 6.467463607442398,
+     "share_notes_ge10_pcs_ge_0.5": 0.0,
+     "graded_share_in_0.25_0.75": 0.491982390179633,
+     "mean_H_T1_chord_tone": 0.9780550756920593,
+     "mean_H_T2_extension": 0.6526732179936507,
+     "mean_H_T3_tension": 0.33475149878969745,
+     "mean_H_T4_clash": 0.036104948658117766,
+     "mean_H_sung": 0.6934460721569577,
+     "mean_H_alternatives": 0.5112942761252813,
+     "win_rate_sung_vs_alt": 0.6410085624391996,
+     "noise_mean_abs_dH": 0.0027513100054961576
+    }
+   }
+  }
+ }
+}

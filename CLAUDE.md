@@ -9,7 +9,7 @@ A two-axis vocal analyzer. Given a full mixed song, it separates the stems, deri
 | Axis | Question | Reference | State |
 |---|---|---|---|
 | 1 — harmonic fit | Do the chosen notes fit the music? | CENS chroma of the `other` stem, per frame | built, measured |
-| 2 — intonation precision | Were those notes sung cleanly? | cents from a tuning-corrected 12-TET target | Phase A in production; Phase B in offline research only (dataset, baselines, first models — nothing shipped) |
+| 2 — intonation precision | Were those notes sung cleanly? | cents from a tuning-corrected 12-TET target | Phase A in production; Phase B offline only — a frozen V3 model has been evaluated once on the sealed test, nothing shipped |
 
 **The axes are never averaged.** That is the single most important invariant in the project. Averaging recreates the exact problem the redesign existed to fix: a deliberate ♭5 sung dead-center is low Axis 1 and excellent Axis 2, and averages to "mediocre," which describes nothing. A singer who picked safe notes and sang them all 30 cents flat averages to the same value. The entire diagnostic content is in the split. The axes also differ in reliability — Axis 1's published ceiling is r ≈ 0.611 — so averaging contaminates the firmer number with the softer one.
 
@@ -38,18 +38,22 @@ data/              (gitignored)
   song_mp3s/         source audio — currently EMPTY, see below
   main_data/         canonical feature store, 63 songs + manifest.json, schema 2
   dataset_selections.json   which songs may be used for what, plus Axis 2 splits
-  ml_dataset/        axis2_v1/ (v1 notes), axis2_v2/ (v2 notes)
+  ml_dataset/        axis2_v1/ (v1 notes), axis2_v2/ (v2 notes), axis2_v3/ (v2 notes, target-preserving signs)
   backups/           verified pre-migration copy of main_data (schema 1)
   migration_v2/      staging dirs and logs from the v2 migration
+  models/axis2_v3/   the final frozen Axis 2 model files (not in Git; see "Large artifacts")
+  experiment_archives/  bulky ML outputs moved out of Git, mirroring their ml/ paths
 ml/
   audits/            segmentation tail, stable center, segmentation v2 sweep, v2 migration records
   baselines/         zero, median, core-median, Ridge; v1-vs-v2 comparison
-  experiments/       natural-offset feature model (HGB), sequence model (TCN)
-  results/           baseline outputs for axis2_v1 and axis2_v2
+  experiments/       v2: natural-offset HGB, TCN, hybrids; v3: RF, gates, hybrids, final test
+  results/           baseline outputs for axis2_v1/v2/v3, the v3 model ladder, final_model_test_results.md
+  artifact_paths.py  resolver for relocated artifacts: final model dir, verify, restore
+  artifact_relocation_manifest.json  every relocated file: old path, new path, SHA-256
 docs/              RESEARCH.md only (tracked)
 ```
 
-`data/` is gitignored (`.gitignore:13`), so the feature store and ML datasets are **not under version control**. `docs/` is *not* ignored; `docs/RESEARCH.md` is tracked.
+`data/` is gitignored (`.gitignore:13`), so the feature store, ML datasets and trained models are **not under version control**. `docs/` is *not* ignored; `docs/RESEARCH.md` is tracked.
 
 **The source audio is gone.** `data/song_mp3s/` is empty, and the `evaluate.py` stem cache (`/tmp/pitch_eval_cache`) is empty too. Until audio is restored, `evaluate.py` and `build_main_dataset.py` have nothing to run on, and `harmony.npz` (with the full saved vocal tracks) is the only copy of the extracted signal. Everything after the original extraction has been regenerated from it without audio.
 
@@ -133,7 +137,7 @@ Phase A **exists to be the baseline Phase B must beat.** Building the model firs
 
 Tuning correction is what makes the axis defensible at all. Offsets on real recordings span roughly −16 to +35 cents, and the curve's entire "pro zone" is 0–25 ¢ — so a 16-cent offset would consume 64% of that budget before the singer sings a note, and would apply uniformly, making a perfect performance over a sharp backing track read as consistently sharp. The offset is estimated from the *instrumental* (`estimate_tuning_semitones`, `harmony.py:75`) because fixed-pitch instruments define the grid the singer is aiming at, and it feeds both axes.
 
-**Phase B (planned)** trains on synthetic corruption: take a released vocal, apply a known pitch shift, and the shift amount *is* the label. This is why ML fits Axis 2 and not Axis 1 — for note choice no label exists and part of the target is genuinely undetermined, while here labels are free. Because the target becomes *the released vocal* rather than a grid, expressive practice is baked in: a just third appears at 0-shift throughout training, so the model learns it as the target rather than a 14-cent error.
+**Phase B (offline; a frozen model exists, not shipped)** trains on synthetic corruption. As built, the corruption is *symbolic*: a constant shift is added to the saved cents contour, and audio is never pitch-shifted (see `ml/` below). The design intent was: take a released vocal, apply a known pitch shift, and the shift amount *is* the label. This is why ML fits Axis 2 and not Axis 1 — for note choice no label exists and part of the target is genuinely undetermined, while here labels are free. Because the target becomes *the released vocal* rather than a grid, expressive practice is baked in: a just third appears at 0-shift throughout training, so the model learns it as the target rather than a 14-cent error.
 
 Two traps recorded before anyone starts:
 
@@ -312,14 +316,17 @@ Each clean note yields 5 examples: the clean contour verbatim (label 0.0) plus 4
 |---|---|---|---|---|
 | `axis2_v1` | `notes_v1.npz` | 22,241 | 111,205 | 35 / 7 / 8 |
 | `axis2_v2` | `notes.npz` (v2) | 25,547 | 127,735 | 35 / 7 / 8 (same split) |
+| `axis2_v3` | `notes.npz` (v2) | 25,547 | 127,735 | 35 / 7 / 8 (same split) |
+
+`axis2_v3` (`--corruption-policy target_preserving`) differs from `axis2_v2` only in the signs of 15.8% of shifts: a sign is flipped where the drawn direction would carry the core median past ±49.999 ¢ of the unchanged target, so 2+/2− per note no longer holds. See its `README.md` and `ml/experiments/axis2_v3_dataset_audit/`.
 
 The original `axis2_v1` builder was never committed; `build_axis2_ml_dataset.py` re-implements it, and `--reproduce-check` rebuilt `axis2_v1` byte-identically before the script was trusted to build `axis2_v2`.
 
 This corruption is **symbolic**: it shifts the saved cents contour and never touches audio. That sidesteps the phase-vocoder artifact-leakage trap described under Axis 2, but it also means no model here has seen real pitch-shifting artifacts.
 
-### Baselines and experiments (validation split only; the test split has never been evaluated)
+### Baselines and experiments on `axis2_v2` (validation split)
 
-Hyperparameters are chosen by 5-fold `GroupKFold` by song inside train. Results are on `axis2_v2` unless noted:
+Hyperparameters are chosen by 5-fold `GroupKFold` by song inside train. Results are on `axis2_v2` validation unless noted. The `axis2_v3` ladder is in `ml/results/axis2_v3/axis2_v3_model_ladder.md`; v2 and v3 numbers are not interchangeable (Ridge is 13.32 ¢ on v2 and 16.10 ¢ on v3). The sealed test split has since been opened once, for the final V3 model only (see "Large artifacts" below):
 
 | Method | Where | Val MAE / RMSE (¢) |
 |---|---|---|
@@ -337,7 +344,63 @@ Caveats that are easy to lose when quoting these:
 - **The natural-offset models predict a note's clean core median (N) from features with the absolute pitch center removed**, then estimate shift = observed core median − N̂. Because the corruption shifts every frame equally, the observed core median is exactly N + shift, so their slope of ~1.0 and their identical MAE on every variant are **properties of that construction, not learned behavior**. They beat Ridge only in the 25–35 and 35–50 ¢ bands, and lose on clean notes and shifts up to 25 ¢.
 - **The TCN does not beat the handcrafted model** (CV 13.74 vs 13.57; validation 14.34 vs 14.05).
 
-`ml/experiments/axis2_v2_sequence_natural_offset/best_model.pt` and three ~18.7k-row `validation_predictions.csv` files are committed. Each baseline and experiment script is standalone, with no shared training library.
+### V3 ladder and the final model (`axis2_v3`)
+
+Model definitions were frozen from V2. Fixed-hybrid weights and gate settings were re-selected on V3 train OOF only, and the RF tree count was chosen on train OOF (300 → 50 trees, +0.04 ¢ OOF MAE, 6× smaller).
+
+| Model | Val MAE / RMSE (¢) | Test MAE / RMSE (¢) |
+|---|---|---|
+| Zero | 20.51 / 25.51 | 20.48 / 25.47 |
+| Core median | 17.43 / 21.90 | 13.91 / 18.77 |
+| Ridge | 16.10 / 19.75 | — |
+| Random Forest (50 trees) | 13.85 / 17.63 | 11.55 / 15.37 |
+| Natural offset | 14.05 / 18.42 | 11.67 / 15.94 |
+| **RF + natural, dynamic gate (final)** | **12.97 / 16.79** | **10.78 / 14.55** |
+
+The test column comes from the single sealed-test evaluation. **The curated summary is `ml/results/axis2_v3/final_model_test_results.md`**, and the generated record is `ml/experiments/axis2_v3_final_test/`. Caveats:
+
+- The test songs are easier: baselines also improved 3.5–4.1 ¢.
+- The song-cluster 95% CI on the final MAE is [8.89, 12.77] ¢.
+- The firmest finding is that the gate beats each expert alone. Both bootstraps exclude zero for that difference.
+- Large shifts are still under-predicted (slope 0.69).
+
+Each baseline and experiment script is standalone, with no shared training library (the v3 experiments share `ml/experiments/axis2_v3_shared/`). Trained models and prediction CSVs are no longer in Git; see the next section.
+
+## Large artifacts: what lives in Git and what lives in `data/`
+
+**Policy.** Git holds source code, configs, Markdown summaries, small result JSON/CSV, model-selection records, and integrity/provenance manifests. Trained models (`.joblib`, `.pt`, `.pth`) and bulky generated outputs (prediction CSVs, per-note audit CSVs) live under the Git-ignored `data/`. On 2026-11-26, 28 such files (156 MiB) were moved out of the tracked tree byte-for-byte. `ml/artifact_relocation_manifest.json` records each one's old path, new path, and SHA-256 before and after, plus what reads it. The `.gitignore` patterns under `data/` stop restored or regenerated copies from being tracked again. Git history was not rewritten, so old commits still contain these files and `.git` did not shrink.
+
+**The final Axis 2 V3 model** is a 50-tree Random Forest plus the natural-offset HGB, combined per example by a 481-parameter dynamic gate. Its files are:
+
+```
+data/models/axis2_v3/selected_rf_model.joblib       # was ml/experiments/axis2_v3_rf_compression/
+data/models/axis2_v3/natural_offset_model.joblib    # was ml/experiments/axis2_v3_rf_natural_hybrid/
+data/models/axis2_v3/selected_dynamic_gate.pt       # was ml/experiments/axis2_v3_rf_compression/
+```
+
+Their configs stay tracked: `axis2_v3_rf_compression/selected_rf_config.json`, `selected_dynamic_hybrid_results.json`, and `axis2_v3_rf_natural_hybrid/dynamic_gate_config.json`. They load with scikit-learn 1.7.1 and torch 2.13.0, the versions recorded in the frozen manifest. Resolve them with `ml/artifact_paths.py`:
+
+```python
+from artifact_paths import final_model_paths   # with ml/ on sys.path
+paths = final_model_paths()   # {"rf_model", "natural_model", "dynamic_gate"}, SHA-256-checked first
+```
+
+Set `AXIS2_MODEL_DIR=/path/to/dir` to load the same three filenames from elsewhere, e.g. a deployment volume. The hashes are still checked against the tracked manifest. **`.joblib` is pickle**: loading runs arbitrary code, so only load hash-verified files from a trusted source. Load the gate with `torch.load(..., weights_only=True)`. Production does **not** load this model yet; `scoring.py` is still Phase A.
+
+**The sealed test is consumed.** `ml/experiments/axis2_v3_final_test/` evaluated the frozen V3 model once (`TEST_OPENED`, 2026-11-25), on 8 songs, 4,070 notes and 20,350 examples. Results: test MAE 10.7760 ¢ / RMSE 14.5513 ¢, against validation 12.9703 / 16.7909. Most of that gap is easier test songs, not better generalization: the median and core-median baselines also improved by 3.5–4.1 ¢. **Do not use those 8 songs for any further model selection, tuning, or comparison-driven iteration.** A new held-out set is needed for that. The before/after manifests in that directory are historical records and are never edited. Their paths are the pre-relocation paths, and the relocation manifest maps them to the current ones.
+
+**Historical scripts are deliberately unedited.** The frozen test manifests record SHA-256 hashes of `final_test_evaluation.py`, `axis2_v3_shared/frozen_experts.py`, the v2 hybrid/gate/natural scripts and three baselines. Changing their hard-coded paths would break that record. They still read artifacts from the old in-tree paths, so before re-running one, copy its inputs back:
+
+```
+python ml/artifact_paths.py verify                       # hash-check all 28 at their current locations
+python ml/artifact_paths.py where <old path>             # current location of one artifact
+python ml/artifact_paths.py restore <old-path prefix>    # hash-verified copy back in-tree (Git-ignored)
+python ml/artifact_paths.py restore --all --dry-run
+```
+
+The scripts that read archived files are: `rf_compression.py` and `rf_natural_hybrid.py` (the 300-tree RF and several prediction CSVs), `random_forest.py`, `model_ladder.py`, the v2 `hybrid_ridge_natural.py` / `dynamic_hybrid.py` / `sequence_natural_offset.py`, and the audit scripts `examples_and_plots.py`, `summarize.py`, `evaluate_segmentation_v2.py` and `resume_analysis.py`. Each one fails with a missing-file error until its inputs are restored. `final_test_evaluation.py` refuses to run at all, because `TEST_OPENED` exists, and that is intended.
+
+**Backups and deployment.** `data/` exists only on this machine. A copy elsewhere inside `data/` does not protect against losing the computer, and as of 2026-11-26 no off-device backup is configured. With the source audio gone, `data/main_data/` (especially `harmony.npz`), `data/ml_dataset/` and `data/models/` must be backed up separately. A deployment that clones this repo gets **no** model files: provision the three files independently (e.g. object storage or a mounted volume), verify their hashes, and point `AXIS2_MODEL_DIR` at them.
 
 ## API and frontend
 
@@ -361,11 +424,47 @@ Three tests: **transposition** (all 11 wrong global shifts; report margin over *
 
 Stems cache to `/tmp/pitch_eval_cache` keyed on **filename stem with no content hash**, so a changed file with an unchanged name serves stale stems. That cache is currently empty and the source audio is gone, so `evaluate.py` cannot run until audio is restored. The 20-song figures above are historical measurements, not something this checkout can reproduce today. `evaluate.py` segments with v1.
 
+**An audio-free Axis 1 harness now exists:** `ml/experiments/axis1_chroma_evaluation/` (2026-11-26; read `protocol.md` then `summary.md`). It scores all 63 songs' v2 notes from the saved CENS, and it reproduces production `score_key_compliance` to 1e-12. Its main findings, all label-free proxies:
+
+- **Per-note discrimination is weak.** The sung pitch class beats 63.8% of the 11 alternatives, is top-1 for 14% of notes, and is at chance for notes under 0.1 s.
+- **Production's local/global combination does not beat the global key profile alone per note.** The local term matters for key identification across the song.
+- **A substitution up a fourth is a coin flip** (0.51).
+- **Transposition:** 46/63 songs place the true key first; 15 of the 17 failures are to P4/P5.
+- **Ties bias rank by pitch class.** `_to_rank` breaks ties by pitch-class index (C ranked low, B high, ±0.12 within ties), with negligible effect on scores.
+- **Chord templates are the most promising feature.** Triad templates cut transposition failures from 17 to 6, but the gain did not replicate on its 10-song holdout.
+
+That holdout has now been used once for selection. The 13 robustness songs have never been used for selection.
+
+**Axis 1 experiment 2 — chord-aware compatibility:** `ml/experiments/axis1_chord_compatibility/` (2026-11-27; read `summary.md`). The objective changed from "rank the sung note first" to a **graded 12-pitch-class compatibility vector**:
+- chords are estimated from the instrumental CENS (beat-synchronous Pearson matching against 112 merged chord sets plus no-chord)
+- each pitch class is scored as its expected ordinal tier: chord tone 1, extension 2/3, tension 1/3, clash 0
+
+All parameters were fitted on synthetic audio rendered through the production chroma path; nothing was tuned on real songs. Findings:
+- **Better behaved than production:** graded (51% of values intermediate vs 12%), several tones high at once, 2–3× more stable, and sensible on 25–26 of 28 synthetic musical checks per layer.
+- **Evidence calibration does not transfer to real stems.** 29% of notes fall to "no chord" and get a key-driven score; the key estimate is only 60% accurate even on synthetic data.
+- **Only the passing and neighbor context rules are specific.** The other rules forgive alternatives as often as sung notes.
+
+The recommended next steps are beat-level chord annotations for about 10 real songs, to calibrate where the model is used, and a human-labelled pilot before any 0–100 curve. In-corpus only; not production.
+
+**Axis 1 experiment 3 — chroma vs chords vs hybrids:** `ml/experiments/axis1_hybrid_chroma_chords/` (2026-11-27; read `summary.md`). It compared four methods:
+- chroma-only
+- chord-only
+- an `α·chroma + (1−α)·chords` hybrid over the top-5 chords
+- a confidence-weighted hybrid, keeping only chords that pass an evidence gate
+
+Findings:
+- **Adding direct chroma hurts compatibility.** It halves the support for extensions and chord tones that are quiet in the mix, and gives full credit to loud foreign or bleed-like pitch classes.
+- **Chord evidence should be "excess fit".** That is the template's correlation minus the best fit the same chroma achieves when its pitch classes are scrambled. Raw correlation and the softmax posterior are 92–96% "confident" on noise, and permutation significance rejects clean triads.
+- **Weighting matters only when several chords are combined.** It halves clash leakage relative to uniform top-5; inside the gated method about one chord qualifies per beat.
+- **The pre-registered gate is too strict for real stems.** At γ = 0.15 only 27% of real beats accept a chord, so the gated hybrid is chroma-only for 71% of notes.
+
+**Provisional recommendation (chosen post hoc): confidence-gated chord-only compatibility.** Score with excess-fit-weighted chord tiers when a chord passes γ ≈ 0.10. Otherwise use the full chord distribution, flagged LOW_EVIDENCE, and abstain only when the chroma is uninformative. On real songs it scores almost exactly like chord-only; its gain is principled abstention and transparency. γ, κ and the tier spacing still need real chord annotations and a human-labelled pilot.
+
 ## Working in this repo
 
 **There are no unit tests.** Not for the DSP, not for the API, not for the frontend. Every constant above is unguarded, and `evaluate.py` would surface a regression as metric drift rather than a failure. The cheapest high-value tests would be pure-function ones needing no audio: `smooth_voicing_mask`, `_to_rank`, `intonation_score_from_cents`, `build_graph_points`, and `segment_notes` on synthetic f0 arrays.
 
-Script-level checks do exist for the offline side, and are the closest thing to tests: `build_main_dataset.py --validate-only`, `resegment_main_dataset.py validate` / `compare-v1`, `build_axis2_ml_dataset.py --reproduce-check`, and `ml/audits/axis2_segmentation_v2/synthetic_checks.py` (v2 segmentation on synthetic contours). There is no CI, no Docker, and `requirements.txt` is a single flat freeze covering production and ML.
+Script-level checks do exist for the offline side, and are the closest thing to tests: `build_main_dataset.py --validate-only`, `resegment_main_dataset.py validate` / `compare-v1`, `build_axis2_ml_dataset.py --reproduce-check`, `ml/audits/axis2_segmentation_v2/synthetic_checks.py` (v2 segmentation on synthetic contours), and `ml/artifact_paths.py verify` (relocated artifacts against their recorded hashes). There is no CI, no Docker, and `requirements.txt` is a single flat freeze covering production and ML.
 
 Some conventions the existing code follows:
 
@@ -380,8 +479,8 @@ Some conventions the existing code follows:
 
 Built and measured: separation, tuning estimation, CENS chroma, Axis 1 scoring, Axis 2 Phase A, coverage reporting, beat tracking (tempo only), the a cappella guard, the local/global split, the evaluation harness, the 63-song feature store, and the Axis 2 candidate audit (not in the tree).
 
-Built offline for Axis 2, not shipped: the segmentation tail and stable-center audits, v2 segmentation and the schema-2 migration of the feature store, the `axis2_v1` / `axis2_v2` synthetic-corruption datasets with locked song-level splits, four baselines (zero, median, core median, Ridge), and two natural-offset models (HGB, TCN). All are evaluated on validation only.
+Built offline for Axis 2, not shipped: the segmentation tail and stable-center audits, v2 segmentation and the schema-2 migration of the feature store, the `axis2_v1` / `axis2_v2` synthetic-corruption datasets with locked song-level splits, four baselines (zero, median, core median, Ridge), and two natural-offset models (HGB, TCN), all on validation only. Then the `axis2_v3` dataset and the V3 model ladder (Random Forest, fixed and dynamic hybrids, RF compression to 50 trees), ending in a frozen RF + natural + dynamic-gate model that was evaluated once on the sealed test split. That split is now consumed.
 
-Next, in the recommended order: rename `key_compliance` → `harmonic_fit` in code (docs renamed it 2026-08-11; the rename must leave `evaluate.py` output byte-identical, and that *is* the check); re-verify the a cappella guard; strong/weak beat weighting, since `beat_times` is computed but unread and beat position is what distinguishes a suspension from a mistake; chord estimation, the direct attack on P4/P5; bass root motion, noting that bass-*in-chroma* is tested and harmful while bass-as-root-motion is untested — do not conflate them; a labelled set, which is what makes "more accurate" mean anything beyond the transposition proxy; then Axis 2 Phase B.
+Next, in the recommended order: rename `key_compliance` → `harmonic_fit` in code (docs renamed it 2026-08-11; the rename must leave `evaluate.py` output byte-identical, and that *is* the check); re-verify the a cappella guard; strong/weak beat weighting, since `beat_times` is computed but unread and beat position is what distinguishes a suspension from a mistake; chord estimation, the direct attack on P4/P5; bass root motion, noting that bass-*in-chroma* is tested and harmful while bass-as-root-motion is untested — do not conflate them; a labelled set, which is what makes "more accurate" mean anything beyond the transposition proxy. Then finish Axis 2 Phase B. A frozen model exists, but shipping it still needs three things: a decision on v1 vs v2 segmentation in production (v2 also changes Axis 1 inputs), a defined mapping from predicted shift to a user-facing score, and a new held-out set for any further model selection, since the original test split is consumed.
 
 Deliberately not being done: octave checking (reversed by decision, not deferred), a learned note-set generator for Axis 1 (rejected on three grounds — no label exists, part of the target is genuinely undetermined, and feeding the vocal in leaks the answer since the cheapest way to minimize loss is to learn "whatever was sung is allowed"), and a high-accuracy dry-vocal mode (deferred).

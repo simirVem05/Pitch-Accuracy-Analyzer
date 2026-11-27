@@ -98,7 +98,9 @@ Outputs are written under `data/main_data/<song_id>/`. Valid current-schema file
 
 ## Axis 2 research (offline)
 
-Work toward a learned intonation target lives under `ml/` and `data/ml_dataset/`. **None of it is used by the analyzer yet**, and everything is evaluated on the validation split only; the test split is untouched.
+Work toward a learned intonation target lives under `ml/` and `data/ml_dataset/`. **None of it is used by the analyzer yet.** Model development used the validation split only. The sealed test split was opened once, for the final frozen V3 model (test MAE 10.78 ¢; `ml/experiments/axis2_v3_final_test/`), and must not be used for further model selection.
+
+Trained models and large generated outputs are **not in Git**. They live in the Git-ignored `data/` directory: the final model in `data/models/axis2_v3/` (overridable with `AXIS2_MODEL_DIR`) and archived outputs in `data/experiment_archives/`. `ml/artifact_relocation_manifest.json` maps each file's old path to its new one, with SHA-256 hashes, and `python ml/artifact_paths.py verify` checks them. A fresh clone therefore has no model files, and they must be provisioned and backed up separately.
 
 - **Datasets:** `axis2_v1` (v1 notes) and `axis2_v2` (v2 notes), built by `scripts/build_axis2_ml_dataset.py`. Each clean note becomes five examples: unchanged (label 0) plus four with a known constant shift of 5–50 cents added to the pitch contour. The shift is the label.
 - **Baselines** (`ml/baselines/`, results in `ml/results/`): zero, full median, core median and Ridge. On `axis2_v2` validation, Ridge has the lowest error (MAE 13.3 ¢ vs 17.4 ¢ for the core median), but it under-predicts large shifts.

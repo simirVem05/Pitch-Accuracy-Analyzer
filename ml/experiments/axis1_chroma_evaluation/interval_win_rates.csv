@@ -1,0 +1,936 @@
+group,method,shift,interval,win_rate
+dev,raw_local,1,+1 m2 up,0.6549711995992987
+dev,raw_local,2,+2 M2 up,0.5816178312046081
+dev,raw_local,3,+3 m3 up,0.5854996243425995
+dev,raw_local,4,+4 M3 up,0.6328825444527924
+dev,raw_local,5,+5 P4 up,0.4823691460055096
+dev,raw_local,6,+6 tritone,0.667167543200601
+dev,raw_local,7,+7 P5 up,0.5850989231154521
+dev,raw_local,8,+8 m6 up,0.5766841973453544
+dev,raw_local,9,+9 M6 up,0.5743300776358627
+dev,raw_local,10,+10 (-2) M2 down,0.5879288755321813
+dev,raw_local,11,+11 (-1) m2 down,0.6869020786376159
+dev,raw_local_slack,1,+1 m2 up,0.6596293513648885
+dev,raw_local_slack,2,+2 M2 up,0.6014525419484097
+dev,raw_local_slack,3,+3 m3 up,0.5926371149511646
+dev,raw_local_slack,4,+4 M3 up,0.6580265464562985
+dev,raw_local_slack,5,+5 P4 up,0.47941397445529677
+dev,raw_local_slack,6,+6 tritone,0.6856248434760831
+dev,raw_local_slack,7,+7 P5 up,0.5852491860756324
+dev,raw_local_slack,8,+8 m6 up,0.589832206361132
+dev,raw_local_slack,9,+9 M6 up,0.601427498121713
+dev,raw_local_slack,10,+10 (-2) M2 down,0.5832957675932883
+dev,raw_local_slack,11,+11 (-1) m2 down,0.7066366140746306
+dev,rank_local,1,+1 m2 up,0.6470072627097421
+dev,rank_local,2,+2 M2 up,0.5770848985725019
+dev,rank_local,3,+3 m3 up,0.583145504633108
+dev,rank_local,4,+4 M3 up,0.6293513648885549
+dev,rank_local,5,+5 P4 up,0.48307037315301776
+dev,rank_local,6,+6 tritone,0.6659904833458552
+dev,rank_local,7,+7 P5 up,0.5856999749561733
+dev,rank_local,8,+8 m6 up,0.5756073127973954
+dev,rank_local,9,+9 M6 up,0.574755822689707
+dev,rank_local,10,+10 (-2) M2 down,0.592236413724017
+dev,rank_local,11,+11 (-1) m2 down,0.691710493363386
+dev,rank_local_slack,1,+1 m2 up,0.6587778612572001
+dev,rank_local_slack,2,+2 M2 up,0.5996994740796394
+dev,rank_local_slack,3,+3 m3 up,0.588129226145755
+dev,rank_local_slack,4,+4 M3 up,0.656473829201102
+dev,rank_local_slack,5,+5 P4 up,0.4832707237665915
+dev,rank_local_slack,6,+6 tritone,0.6856999749561733
+dev,rank_local_slack,7,+7 P5 up,0.5858502379163536
+dev,rank_local_slack,8,+8 m6 up,0.5878787878787879
+dev,rank_local_slack,9,+9 M6 up,0.6022789882294014
+dev,rank_local_slack,10,+10 (-2) M2 down,0.5843225644878537
+dev,rank_local_slack,11,+11 (-1) m2 down,0.7066366140746306
+dev,rank_avgties_local_slack,1,+1 m2 up,0.6612822439268721
+dev,rank_avgties_local_slack,2,+2 M2 up,0.6013273228149261
+dev,rank_avgties_local_slack,3,+3 m3 up,0.5887302779864764
+dev,rank_avgties_local_slack,4,+4 M3 up,0.6565740045078888
+dev,rank_avgties_local_slack,5,+5 P4 up,0.4822940145254195
+dev,rank_avgties_local_slack,6,+6 tritone,0.6851740545955421
+dev,rank_avgties_local_slack,7,+7 P5 up,0.5846982218883046
+dev,rank_avgties_local_slack,8,+8 m6 up,0.5873278236914601
+dev,rank_avgties_local_slack,9,+9 M6 up,0.6015527172551965
+dev,rank_avgties_local_slack,10,+10 (-2) M2 down,0.582870022539444
+dev,rank_avgties_local_slack,11,+11 (-1) m2 down,0.7043075381918357
+dev,global,1,+1 m2 up,0.7085900325569747
+dev,global,2,+2 M2 up,0.6259454044578011
+dev,global,3,+3 m3 up,0.5674931129476584
+dev,global,4,+4 M3 up,0.697771099423992
+dev,global,5,+5 P4 up,0.4953168044077135
+dev,global,6,+6 tritone,0.7129977460555973
+dev,global,7,+7 P5 up,0.5930879038317055
+dev,global,8,+8 m6 up,0.6136739293764087
+dev,global,9,+9 M6 up,0.6636113198096669
+dev,global,10,+10 (-2) M2 down,0.5643375907838718
+dev,global,11,+11 (-1) m2 down,0.7283245679939895
+dev,global_raw,1,+1 m2 up,0.7085900325569747
+dev,global_raw,2,+2 M2 up,0.6259454044578011
+dev,global_raw,3,+3 m3 up,0.5674931129476584
+dev,global_raw,4,+4 M3 up,0.697771099423992
+dev,global_raw,5,+5 P4 up,0.4953168044077135
+dev,global_raw,6,+6 tritone,0.7129977460555973
+dev,global_raw,7,+7 P5 up,0.5930879038317055
+dev,global_raw,8,+8 m6 up,0.6136739293764087
+dev,global_raw,9,+9 M6 up,0.6636113198096669
+dev,global_raw,10,+10 (-2) M2 down,0.5643375907838718
+dev,global_raw,11,+11 (-1) m2 down,0.7283245679939895
+dev,prod_geo_w25,1,+1 m2 up,0.6815176558978212
+dev,prod_geo_w25,2,+2 M2 up,0.6173303280741297
+dev,prod_geo_w25,3,+3 m3 up,0.5861257200100175
+dev,prod_geo_w25,4,+4 M3 up,0.678587528174305
+dev,prod_geo_w25,5,+5 P4 up,0.500175306786877
+dev,prod_geo_w25,6,+6 tritone,0.7022789882294015
+dev,prod_geo_w25,7,+7 P5 up,0.5894815927873779
+dev,prod_geo_w25,8,+8 m6 up,0.6044578011520161
+dev,prod_geo_w25,9,+9 M6 up,0.6322564487853745
+dev,prod_geo_w25,10,+10 (-2) M2 down,0.5815927873779113
+dev,prod_geo_w25,11,+11 (-1) m2 down,0.7355622339093414
+dev,geo_w25_noslack,1,+1 m2 up,0.6693713999499123
+dev,geo_w25_noslack,2,+2 M2 up,0.5923866766841973
+dev,geo_w25_noslack,3,+3 m3 up,0.5879288755321813
+dev,geo_w25_noslack,4,+4 M3 up,0.6486851990984223
+dev,geo_w25_noslack,5,+5 P4 up,0.49559228650137743
+dev,geo_w25_noslack,6,+6 tritone,0.6871274730778864
+dev,geo_w25_noslack,7,+7 P5 up,0.5850738792887553
+dev,geo_w25_noslack,8,+8 m6 up,0.5920861507638367
+dev,geo_w25_noslack,9,+9 M6 up,0.5966441272226396
+dev,geo_w25_noslack,10,+10 (-2) M2 down,0.5908840470823942
+dev,geo_w25_noslack,11,+11 (-1) m2 down,0.7122965189080892
+dev,geo_w25_avgties,1,+1 m2 up,0.683145504633108
+dev,geo_w25_avgties,2,+2 M2 up,0.6177310293012772
+dev,geo_w25_avgties,3,+3 m3 up,0.5867768595041323
+dev,geo_w25_avgties,4,+4 M3 up,0.6787377911344854
+dev,geo_w25_avgties,5,+5 P4 up,0.5002754820936639
+dev,geo_w25_avgties,6,+6 tritone,0.7011269722013523
+dev,geo_w25_avgties,7,+7 P5 up,0.5889807162534435
+dev,geo_w25_avgties,8,+8 m6 up,0.6046581517655898
+dev,geo_w25_avgties,9,+9 M6 up,0.6320560981718006
+dev,geo_w25_avgties,10,+10 (-2) M2 down,0.5810919108439769
+dev,geo_w25_avgties,11,+11 (-1) m2 down,0.7335587277736038
+dev,arith_w25,1,+1 m2 up,0.6798146756824442
+dev,arith_w25,2,+2 M2 up,0.6147758577510644
+dev,arith_w25,3,+3 m3 up,0.588404708239419
+dev,arith_w25,4,+4 M3 up,0.6789130979213623
+dev,arith_w25,5,+5 P4 up,0.49436513899323814
+dev,arith_w25,6,+6 tritone,0.6999749561733033
+dev,arith_w25,7,+7 P5 up,0.5898572501878288
+dev,arith_w25,8,+8 m6 up,0.6004257450538443
+dev,arith_w25,9,+9 M6 up,0.6318807913849236
+dev,arith_w25,10,+10 (-2) M2 down,0.581267217630854
+dev,arith_w25,11,+11 (-1) m2 down,0.7298522414224894
+dev,geo_w10,1,+1 m2 up,0.6713749060856499
+dev,geo_w10,2,+2 M2 up,0.6094665664913599
+dev,geo_w10,3,+3 m3 up,0.588229401452542
+dev,geo_w10,4,+4 M3 up,0.666816929626847
+dev,geo_w10,5,+5 P4 up,0.4897570748810418
+dev,geo_w10,6,+6 tritone,0.6959178562484347
+dev,geo_w10,7,+7 P5 up,0.5886301026796894
+dev,geo_w10,8,+8 m6 up,0.5969446531430003
+dev,geo_w10,9,+9 M6 up,0.6165289256198347
+dev,geo_w10,10,+10 (-2) M2 down,0.5816679188580015
+dev,geo_w10,11,+11 (-1) m2 down,0.7234159779614325
+dev,geo_w50,1,+1 m2 up,0.6925870272977711
+dev,geo_w50,2,+2 M2 up,0.6267718507387929
+dev,geo_w50,3,+3 m3 up,0.5796143250688706
+dev,geo_w50,4,+4 M3 up,0.6926120711244678
+dev,geo_w50,5,+5 P4 up,0.5100425745053844
+dev,geo_w50,6,+6 tritone,0.7105684948660155
+dev,geo_w50,7,+7 P5 up,0.588580015026296
+dev,geo_w50,8,+8 m6 up,0.6215627347858753
+dev,geo_w50,9,+9 M6 up,0.6536939644377661
+dev,geo_w50,10,+10 (-2) M2 down,0.5756824442774856
+dev,geo_w50,11,+11 (-1) m2 down,0.7379914850989231
+dev,arith_w10,1,+1 m2 up,0.6657901327322815
+dev,arith_w10,2,+2 M2 up,0.6080891560230404
+dev,arith_w10,3,+3 m3 up,0.5886301026796894
+dev,arith_w10,4,+4 M3 up,0.6664162283996995
+dev,arith_w10,5,+5 P4 up,0.48457300275482096
+dev,arith_w10,6,+6 tritone,0.6921362384172302
+dev,arith_w10,7,+7 P5 up,0.5909090909090909
+dev,arith_w10,8,+8 m6 up,0.5929125970448285
+dev,arith_w10,9,+9 M6 up,0.6147508139243676
+dev,arith_w10,10,+10 (-2) M2 down,0.5824192336589031
+dev,arith_w10,11,+11 (-1) m2 down,0.7173303280741298
+dev,arith_w50,1,+1 m2 up,0.6909842223891811
+dev,arith_w50,2,+2 M2 up,0.6274229902329076
+dev,arith_w50,3,+3 m3 up,0.5772351615326822
+dev,arith_w50,4,+4 M3 up,0.6975957926371149
+dev,arith_w50,5,+5 P4 up,0.5100926621587779
+dev,arith_w50,6,+6 tritone,0.712847483095417
+dev,arith_w50,7,+7 P5 up,0.5885549711995993
+dev,arith_w50,8,+8 m6 up,0.6186826947157525
+dev,arith_w50,9,+9 M6 up,0.6574755822689707
+dev,arith_w50,10,+10 (-2) M2 down,0.5743300776358627
+dev,arith_w50,11,+11 (-1) m2 down,0.740495867768595
+dev,chord_local_slack,1,+1 m2 up,0.6379163536188329
+dev,chord_local_slack,2,+2 M2 up,0.5908590032556975
+dev,chord_local_slack,3,+3 m3 up,0.6385424492862509
+dev,chord_local_slack,4,+4 M3 up,0.6482844978712747
+dev,chord_local_slack,5,+5 P4 up,0.5342349110944152
+dev,chord_local_slack,6,+6 tritone,0.6815426997245179
+dev,chord_local_slack,7,+7 P5 up,0.5767593288254446
+dev,chord_local_slack,8,+8 m6 up,0.6684948660155272
+dev,chord_local_slack,9,+9 M6 up,0.5872276483846732
+dev,chord_local_slack,10,+10 (-2) M2 down,0.6005008765339344
+dev,chord_local_slack,11,+11 (-1) m2 down,0.7062860005008765
+dev,chord_geo_w25,1,+1 m2 up,0.6935136488855497
+dev,chord_geo_w25,2,+2 M2 up,0.6121212121212121
+dev,chord_geo_w25,3,+3 m3 up,0.5971950914099674
+dev,chord_geo_w25,4,+4 M3 up,0.7060355622339093
+dev,chord_geo_w25,5,+5 P4 up,0.5267718507387928
+dev,chord_geo_w25,6,+6 tritone,0.7169045830202855
+dev,chord_geo_w25,7,+7 P5 up,0.5969947407963937
+dev,chord_geo_w25,8,+8 m6 up,0.6352116203355873
+dev,chord_geo_w25,9,+9 M6 up,0.6508389681943401
+dev,chord_geo_w25,10,+10 (-2) M2 down,0.5940896568995743
+dev,chord_geo_w25,11,+11 (-1) m2 down,0.7334335086401202
+holdout,raw_local,1,+1 m2 up,0.6375850949480473
+holdout,raw_local,2,+2 M2 up,0.5962916517377285
+holdout,raw_local,3,+3 m3 up,0.5910963812253672
+holdout,raw_local,4,+4 M3 up,0.6656216409888929
+holdout,raw_local,5,+5 P4 up,0.49301325689716946
+holdout,raw_local,6,+6 tritone,0.6792368326764601
+holdout,raw_local,7,+7 P5 up,0.6132210677176639
+holdout,raw_local,8,+8 m6 up,0.5782873522035112
+holdout,raw_local,9,+9 M6 up,0.5807954138301684
+holdout,raw_local,10,+10 (-2) M2 down,0.5695091365102114
+holdout,raw_local,11,+11 (-1) m2 down,0.6819240415621641
+holdout,raw_local_slack,1,+1 m2 up,0.6368685059118595
+holdout,raw_local_slack,2,+2 M2 up,0.6093694016481548
+holdout,raw_local_slack,3,+3 m3 up,0.5949480472948764
+holdout,raw_local_slack,4,+4 M3 up,0.6813865997850233
+holdout,raw_local_slack,5,+5 P4 up,0.5026872088857041
+holdout,raw_local_slack,6,+6 tritone,0.6955392332497313
+holdout,raw_local_slack,7,+7 P5 up,0.6022035112862774
+holdout,raw_local_slack,8,+8 m6 up,0.5740773916159083
+holdout,raw_local_slack,9,+9 M6 up,0.602920100322465
+holdout,raw_local_slack,10,+10 (-2) M2 down,0.560820494446435
+holdout,raw_local_slack,11,+11 (-1) m2 down,0.6984055893944823
+holdout,rank_local,1,+1 m2 up,0.6323002508061627
+holdout,rank_local,2,+2 M2 up,0.5905589394482265
+holdout,rank_local,3,+3 m3 up,0.5873342887853816
+holdout,rank_local,4,+4 M3 up,0.6584557506270154
+holdout,rank_local,5,+5 P4 up,0.4928341096381225
+holdout,rank_local,6,+6 tritone,0.6795055535650305
+holdout,rank_local,7,+7 P5 up,0.6132210677176639
+holdout,rank_local,8,+8 m6 up,0.5802579720530275
+holdout,rank_local,9,+9 M6 up,0.5821390182730204
+holdout,rank_local,10,+10 (-2) M2 down,0.5763167323539949
+holdout,rank_local,11,+11 (-1) m2 down,0.6869401648154784
+holdout,rank_local_slack,1,+1 m2 up,0.6361519168756719
+holdout,rank_local_slack,2,+2 M2 up,0.6073987817986385
+holdout,rank_local_slack,3,+3 m3 up,0.5934252955929774
+holdout,rank_local_slack,4,+4 M3 up,0.6769974919383733
+holdout,rank_local_slack,5,+5 P4 up,0.505732712289502
+holdout,rank_local_slack,6,+6 tritone,0.6966141168040129
+holdout,rank_local_slack,7,+7 P5 up,0.604442852024364
+holdout,rank_local_slack,8,+8 m6 up,0.582228591902544
+holdout,rank_local_slack,9,+9 M6 up,0.604442852024364
+holdout,rank_local_slack,10,+10 (-2) M2 down,0.5664636331064135
+holdout,rank_local_slack,11,+11 (-1) m2 down,0.6956288068792548
+holdout,rank_avgties_local_slack,1,+1 m2 up,0.6385704048728055
+holdout,rank_avgties_local_slack,2,+2 M2 up,0.610175564313866
+holdout,rank_avgties_local_slack,3,+3 m3 up,0.5952167681834468
+holdout,rank_avgties_local_slack,4,+4 M3 up,0.6785202436402723
+holdout,rank_avgties_local_slack,5,+5 P4 up,0.5059118595485489
+holdout,rank_avgties_local_slack,6,+6 tritone,0.6950913651021139
+holdout,rank_avgties_local_slack,7,+7 P5 up,0.6032783948405589
+holdout,rank_avgties_local_slack,8,+8 m6 up,0.5803475456825511
+holdout,rank_avgties_local_slack,9,+9 M6 up,0.6036366893586528
+holdout,rank_avgties_local_slack,10,+10 (-2) M2 down,0.5635077033321391
+holdout,rank_avgties_local_slack,11,+11 (-1) m2 down,0.6921354353278395
+holdout,global,1,+1 m2 up,0.6983160157649588
+holdout,global,2,+2 M2 up,0.5670010748835543
+holdout,global,3,+3 m3 up,0.5759584378359011
+holdout,global,4,+4 M3 up,0.7284127552848442
+holdout,global,5,+5 P4 up,0.5128986026513794
+holdout,global,6,+6 tritone,0.7255463991400931
+holdout,global,7,+7 P5 up,0.6275528484414189
+holdout,global,8,+8 m6 up,0.5852740953063418
+holdout,global,9,+9 M6 up,0.629881762809029
+holdout,global,10,+10 (-2) M2 down,0.5720171981368685
+holdout,global,11,+11 (-1) m2 down,0.7162307416696525
+holdout,global_raw,1,+1 m2 up,0.6983160157649588
+holdout,global_raw,2,+2 M2 up,0.5670010748835543
+holdout,global_raw,3,+3 m3 up,0.5759584378359011
+holdout,global_raw,4,+4 M3 up,0.7284127552848442
+holdout,global_raw,5,+5 P4 up,0.5128986026513794
+holdout,global_raw,6,+6 tritone,0.7255463991400931
+holdout,global_raw,7,+7 P5 up,0.6275528484414189
+holdout,global_raw,8,+8 m6 up,0.5852740953063418
+holdout,global_raw,9,+9 M6 up,0.629881762809029
+holdout,global_raw,10,+10 (-2) M2 down,0.5720171981368685
+holdout,global_raw,11,+11 (-1) m2 down,0.7162307416696525
+holdout,prod_geo_w25,1,+1 m2 up,0.661232533142243
+holdout,prod_geo_w25,2,+2 M2 up,0.6160874238624149
+holdout,prod_geo_w25,3,+3 m3 up,0.6013973486205662
+holdout,prod_geo_w25,4,+4 M3 up,0.7023468290935149
+holdout,prod_geo_w25,5,+5 P4 up,0.5268720888570405
+holdout,prod_geo_w25,6,+6 tritone,0.7177534933715514
+holdout,prod_geo_w25,7,+7 P5 up,0.6062343246148334
+holdout,prod_geo_w25,8,+8 m6 up,0.5811537083482623
+holdout,prod_geo_w25,9,+9 M6 up,0.6209243998566822
+holdout,prod_geo_w25,10,+10 (-2) M2 down,0.5614475098530992
+holdout,prod_geo_w25,11,+11 (-1) m2 down,0.7076316732353995
+holdout,geo_w25_noslack,1,+1 m2 up,0.6536187746327481
+holdout,geo_w25_noslack,2,+2 M2 up,0.6019347903977069
+holdout,geo_w25_noslack,3,+3 m3 up,0.5929774274453601
+holdout,geo_w25_noslack,4,+4 M3 up,0.678072375492655
+holdout,geo_w25_noslack,5,+5 P4 up,0.5051952705123611
+holdout,geo_w25_noslack,6,+6 tritone,0.7028842708706556
+holdout,geo_w25_noslack,7,+7 P5 up,0.610175564313866
+holdout,geo_w25_noslack,8,+8 m6 up,0.5859906843425295
+holdout,geo_w25_noslack,9,+9 M6 up,0.5999641705481906
+holdout,geo_w25_noslack,10,+10 (-2) M2 down,0.570404872805446
+holdout,geo_w25_noslack,11,+11 (-1) m2 down,0.6966141168040129
+holdout,geo_w25_avgties,1,+1 m2 up,0.6624865639555715
+holdout,geo_w25_avgties,2,+2 M2 up,0.6173414546757434
+holdout,geo_w25_avgties,3,+3 m3 up,0.6035471157291293
+holdout,geo_w25_avgties,4,+4 M3 up,0.7040487280544607
+holdout,geo_w25_avgties,5,+5 P4 up,0.5270512361160874
+holdout,geo_w25_avgties,6,+6 tritone,0.7181117878896452
+holdout,geo_w25_avgties,7,+7 P5 up,0.6062343246148334
+holdout,geo_w25_avgties,8,+8 m6 up,0.5800788247939807
+holdout,geo_w25_avgties,9,+9 M6 up,0.6211035471157291
+holdout,geo_w25_avgties,10,+10 (-2) M2 down,0.5585811537083483
+holdout,geo_w25_avgties,11,+11 (-1) m2 down,0.7063776424220709
+holdout,arith_w25,1,+1 m2 up,0.6578287352203511
+holdout,arith_w25,2,+2 M2 up,0.6161769974919383
+holdout,arith_w25,3,+3 m3 up,0.5982622715872448
+holdout,arith_w25,4,+4 M3 up,0.697778573987818
+holdout,arith_w25,5,+5 P4 up,0.5215872447151558
+holdout,arith_w25,6,+6 tritone,0.7153350053744177
+holdout,arith_w25,7,+7 P5 up,0.6161769974919383
+holdout,arith_w25,8,+8 m6 up,0.5825868864206377
+holdout,arith_w25,9,+9 M6 up,0.6207452525976352
+holdout,arith_w25,10,+10 (-2) M2 down,0.5644930132568972
+holdout,arith_w25,11,+11 (-1) m2 down,0.7084378359011108
+holdout,geo_w10,1,+1 m2 up,0.644034396273737
+holdout,geo_w10,2,+2 M2 up,0.6130419204586169
+holdout,geo_w10,3,+3 m3 up,0.601576495879613
+holdout,geo_w10,4,+4 M3 up,0.6907918308849874
+holdout,geo_w10,5,+5 P4 up,0.5154066642780365
+holdout,geo_w10,6,+6 tritone,0.7076316732353995
+holdout,geo_w10,7,+7 P5 up,0.6110713006091006
+holdout,geo_w10,8,+8 m6 up,0.5750627015406664
+holdout,geo_w10,9,+9 M6 up,0.6142959512719456
+holdout,geo_w10,10,+10 (-2) M2 down,0.5619849516302401
+holdout,geo_w10,11,+11 (-1) m2 down,0.7015406664278037
+holdout,geo_w50,1,+1 m2 up,0.6832676460050161
+holdout,geo_w50,2,+2 M2 up,0.5993371551415263
+holdout,geo_w50,3,+3 m3 up,0.6026513794338947
+holdout,geo_w50,4,+4 M3 up,0.7178430670010749
+holdout,geo_w50,5,+5 P4 up,0.5300071658903619
+holdout,geo_w50,6,+6 tritone,0.7240236474381943
+holdout,geo_w50,7,+7 P5 up,0.6148333930490864
+holdout,geo_w50,8,+8 m6 up,0.5827660336796847
+holdout,geo_w50,9,+9 M6 up,0.6151021139376568
+holdout,geo_w50,10,+10 (-2) M2 down,0.5604621999283411
+holdout,geo_w50,11,+11 (-1) m2 down,0.720530275886779
+holdout,arith_w10,1,+1 m2 up,0.6409888928699391
+holdout,arith_w10,2,+2 M2 up,0.6105338588319599
+holdout,arith_w10,3,+3 m3 up,0.5964707989967754
+holdout,arith_w10,4,+4 M3 up,0.6877463274811896
+holdout,arith_w10,5,+5 P4 up,0.5125403081332855
+holdout,arith_w10,6,+6 tritone,0.7038695807954138
+holdout,arith_w10,7,+7 P5 up,0.6125044786814762
+holdout,arith_w10,8,+8 m6 up,0.579003941239699
+holdout,arith_w10,9,+9 M6 up,0.6104442852024364
+holdout,arith_w10,10,+10 (-2) M2 down,0.5650304550340379
+holdout,arith_w10,11,+11 (-1) m2 down,0.7023468290935149
+holdout,arith_w50,1,+1 m2 up,0.6816553206735937
+holdout,arith_w50,2,+2 M2 up,0.6082049444643497
+holdout,arith_w50,3,+3 m3 up,0.5992475815120029
+holdout,arith_w50,4,+4 M3 up,0.7176639197420279
+holdout,arith_w50,5,+5 P4 up,0.5346649946255823
+holdout,arith_w50,6,+6 tritone,0.7240236474381943
+holdout,arith_w50,7,+7 P5 up,0.6176101755643139
+holdout,arith_w50,8,+8 m6 up,0.5850949480472949
+holdout,arith_w50,9,+9 M6 up,0.6153708348262271
+holdout,arith_w50,10,+10 (-2) M2 down,0.5569688283769259
+holdout,arith_w50,11,+11 (-1) m2 down,0.721873880329631
+holdout,chord_local_slack,1,+1 m2 up,0.6127731995700466
+holdout,chord_local_slack,2,+2 M2 up,0.5856323898244357
+holdout,chord_local_slack,3,+3 m3 up,0.6042637047653171
+holdout,chord_local_slack,4,+4 M3 up,0.6385704048728055
+holdout,chord_local_slack,5,+5 P4 up,0.5151379433894662
+holdout,chord_local_slack,6,+6 tritone,0.6592619132927267
+holdout,chord_local_slack,7,+7 P5 up,0.5823181655320674
+holdout,chord_local_slack,8,+8 m6 up,0.6471694733070584
+holdout,chord_local_slack,9,+9 M6 up,0.5699570046578287
+holdout,chord_local_slack,10,+10 (-2) M2 down,0.5930670010748835
+holdout,chord_local_slack,11,+11 (-1) m2 down,0.7010927982801863
+holdout,chord_geo_w25,1,+1 m2 up,0.6784306700107489
+holdout,chord_geo_w25,2,+2 M2 up,0.6008599068434253
+holdout,chord_geo_w25,3,+3 m3 up,0.6105338588319599
+holdout,chord_geo_w25,4,+4 M3 up,0.7131852382658546
+holdout,chord_geo_w25,5,+5 P4 up,0.516839842350412
+holdout,chord_geo_w25,6,+6 tritone,0.7124686492296668
+holdout,chord_geo_w25,7,+7 P5 up,0.6202078108204945
+holdout,chord_geo_w25,8,+8 m6 up,0.6017556431386599
+holdout,chord_geo_w25,9,+9 M6 up,0.6099964170548191
+holdout,chord_geo_w25,10,+10 (-2) M2 down,0.5840200644930132
+holdout,chord_geo_w25,11,+11 (-1) m2 down,0.7171264779648872
+robustness,raw_local,1,+1 m2 up,0.696611253196931
+robustness,raw_local,2,+2 M2 up,0.6082161125319693
+robustness,raw_local,3,+3 m3 up,0.6380274936061381
+robustness,raw_local,4,+4 M3 up,0.6437020460358056
+robustness,raw_local,5,+5 P4 up,0.527093989769821
+robustness,raw_local,6,+6 tritone,0.6855019181585678
+robustness,raw_local,7,+7 P5 up,0.5733695652173914
+robustness,raw_local,8,+8 m6 up,0.621962915601023
+robustness,raw_local,9,+9 M6 up,0.57193094629156
+robustness,raw_local,10,+10 (-2) M2 down,0.6110933503836317
+robustness,raw_local,11,+11 (-1) m2 down,0.7035645780051151
+robustness,raw_local_slack,1,+1 m2 up,0.7004475703324808
+robustness,raw_local_slack,2,+2 M2 up,0.6151694373401535
+robustness,raw_local_slack,3,+3 m3 up,0.6528932225063938
+robustness,raw_local_slack,4,+4 M3 up,0.668718030690537
+robustness,raw_local_slack,5,+5 P4 up,0.5202205882352942
+robustness,raw_local_slack,6,+6 tritone,0.7093989769820972
+robustness,raw_local_slack,7,+7 P5 up,0.5832800511508951
+robustness,raw_local_slack,8,+8 m6 up,0.6336317135549873
+robustness,raw_local_slack,9,+9 M6 up,0.594309462915601
+robustness,raw_local_slack,10,+10 (-2) M2 down,0.6163682864450127
+robustness,raw_local_slack,11,+11 (-1) m2 down,0.7300191815856778
+robustness,rank_local,1,+1 m2 up,0.6934942455242967
+robustness,rank_local,2,+2 M2 up,0.6087755754475703
+robustness,rank_local,3,+3 m3 up,0.6377877237851662
+robustness,rank_local,4,+4 M3 up,0.6403452685421995
+robustness,rank_local,5,+5 P4 up,0.5287723785166241
+robustness,rank_local,6,+6 tritone,0.6857416879795396
+robustness,rank_local,7,+7 P5 up,0.572730179028133
+robustness,rank_local,8,+8 m6 up,0.6226023017902813
+robustness,rank_local,9,+9 M6 up,0.5714514066496164
+robustness,rank_local,10,+10 (-2) M2 down,0.6122122762148338
+robustness,rank_local,11,+11 (-1) m2 down,0.7017263427109974
+robustness,rank_local_slack,1,+1 m2 up,0.7045236572890026
+robustness,rank_local_slack,2,+2 M2 up,0.6173273657289002
+robustness,rank_local_slack,3,+3 m3 up,0.6508152173913043
+robustness,rank_local_slack,4,+4 M3 up,0.6663203324808185
+robustness,rank_local_slack,5,+5 P4 up,0.5273337595907929
+robustness,rank_local_slack,6,+6 tritone,0.7075607416879796
+robustness,rank_local_slack,7,+7 P5 up,0.5825607416879796
+robustness,rank_local_slack,8,+8 m6 up,0.6370684143222506
+robustness,rank_local_slack,9,+9 M6 up,0.5924712276214834
+robustness,rank_local_slack,10,+10 (-2) M2 down,0.6157289002557544
+robustness,rank_local_slack,11,+11 (-1) m2 down,0.7213874680306905
+robustness,rank_avgties_local_slack,1,+1 m2 up,0.7051630434782609
+robustness,rank_avgties_local_slack,2,+2 M2 up,0.6176470588235294
+robustness,rank_avgties_local_slack,3,+3 m3 up,0.6516144501278772
+robustness,rank_avgties_local_slack,4,+4 M3 up,0.6669597186700768
+robustness,rank_avgties_local_slack,5,+5 P4 up,0.5279731457800512
+robustness,rank_avgties_local_slack,6,+6 tritone,0.7075607416879796
+robustness,rank_avgties_local_slack,7,+7 P5 up,0.582960358056266
+robustness,rank_avgties_local_slack,8,+8 m6 up,0.6372282608695652
+robustness,rank_avgties_local_slack,9,+9 M6 up,0.5923113810741688
+robustness,rank_avgties_local_slack,10,+10 (-2) M2 down,0.6158088235294118
+robustness,rank_avgties_local_slack,11,+11 (-1) m2 down,0.7212276214833759
+robustness,global,1,+1 m2 up,0.7359335038363172
+robustness,global,2,+2 M2 up,0.6117327365728901
+robustness,global,3,+3 m3 up,0.699968030690537
+robustness,global,4,+4 M3 up,0.7046035805626598
+robustness,global,5,+5 P4 up,0.4530051150895141
+robustness,global,6,+6 tritone,0.7213874680306905
+robustness,global,7,+7 P5 up,0.6671994884910486
+robustness,global,8,+8 m6 up,0.6801470588235294
+robustness,global,9,+9 M6 up,0.5955882352941176
+robustness,global,10,+10 (-2) M2 down,0.6379475703324808
+robustness,global,11,+11 (-1) m2 down,0.7915601023017903
+robustness,global_raw,1,+1 m2 up,0.7359335038363172
+robustness,global_raw,2,+2 M2 up,0.6117327365728901
+robustness,global_raw,3,+3 m3 up,0.699968030690537
+robustness,global_raw,4,+4 M3 up,0.7046035805626598
+robustness,global_raw,5,+5 P4 up,0.4530051150895141
+robustness,global_raw,6,+6 tritone,0.7213874680306905
+robustness,global_raw,7,+7 P5 up,0.6671994884910486
+robustness,global_raw,8,+8 m6 up,0.6801470588235294
+robustness,global_raw,9,+9 M6 up,0.5955882352941176
+robustness,global_raw,10,+10 (-2) M2 down,0.6379475703324808
+robustness,global_raw,11,+11 (-1) m2 down,0.7915601023017903
+robustness,prod_geo_w25,1,+1 m2 up,0.7327365728900256
+robustness,prod_geo_w25,2,+2 M2 up,0.6377877237851662
+robustness,prod_geo_w25,3,+3 m3 up,0.681425831202046
+robustness,prod_geo_w25,4,+4 M3 up,0.6982097186700768
+robustness,prod_geo_w25,5,+5 P4 up,0.5236572890025576
+robustness,prod_geo_w25,6,+6 tritone,0.7380115089514067
+robustness,prod_geo_w25,7,+7 P5 up,0.6024616368286445
+robustness,prod_geo_w25,8,+8 m6 up,0.66096547314578
+robustness,prod_geo_w25,9,+9 M6 up,0.6024616368286445
+robustness,prod_geo_w25,10,+10 (-2) M2 down,0.6277173913043478
+robustness,prod_geo_w25,11,+11 (-1) m2 down,0.7631074168797954
+robustness,geo_w25_noslack,1,+1 m2 up,0.7161125319693095
+robustness,geo_w25_noslack,2,+2 M2 up,0.6232416879795396
+robustness,geo_w25_noslack,3,+3 m3 up,0.6584079283887468
+robustness,geo_w25_noslack,4,+4 M3 up,0.6617647058823529
+robustness,geo_w25_noslack,5,+5 P4 up,0.5374040920716112
+robustness,geo_w25_noslack,6,+6 tritone,0.7225863171355499
+robustness,geo_w25_noslack,7,+7 P5 up,0.5728900255754475
+robustness,geo_w25_noslack,8,+8 m6 up,0.6398657289002557
+robustness,geo_w25_noslack,9,+9 M6 up,0.5845588235294118
+robustness,geo_w25_noslack,10,+10 (-2) M2 down,0.6277173913043478
+robustness,geo_w25_noslack,11,+11 (-1) m2 down,0.7365728900255755
+robustness,geo_w25_avgties,1,+1 m2 up,0.732576726342711
+robustness,geo_w25_avgties,2,+2 M2 up,0.637468030690537
+robustness,geo_w25_avgties,3,+3 m3 up,0.681425831202046
+robustness,geo_w25_avgties,4,+4 M3 up,0.6982097186700768
+robustness,geo_w25_avgties,5,+5 P4 up,0.5241368286445013
+robustness,geo_w25_avgties,6,+6 tritone,0.7378516624040921
+robustness,geo_w25_avgties,7,+7 P5 up,0.6021419437340153
+robustness,geo_w25_avgties,8,+8 m6 up,0.6611253196930946
+robustness,geo_w25_avgties,9,+9 M6 up,0.6024616368286445
+robustness,geo_w25_avgties,10,+10 (-2) M2 down,0.6275575447570333
+robustness,geo_w25_avgties,11,+11 (-1) m2 down,0.7632672634271099
+robustness,arith_w25,1,+1 m2 up,0.7273817135549873
+robustness,arith_w25,2,+2 M2 up,0.6269181585677749
+robustness,arith_w25,3,+3 m3 up,0.6802269820971867
+robustness,arith_w25,4,+4 M3 up,0.6898976982097187
+robustness,arith_w25,5,+5 P4 up,0.5298113810741688
+robustness,arith_w25,6,+6 tritone,0.7341751918158568
+robustness,arith_w25,7,+7 P5 up,0.5948689258312021
+robustness,arith_w25,8,+8 m6 up,0.6599264705882353
+robustness,arith_w25,9,+9 M6 up,0.5985453964194374
+robustness,arith_w25,10,+10 (-2) M2 down,0.6286764705882353
+robustness,arith_w25,11,+11 (-1) m2 down,0.7519980818414322
+robustness,geo_w10,1,+1 m2 up,0.718190537084399
+robustness,geo_w10,2,+2 M2 up,0.6246803069053708
+robustness,geo_w10,3,+3 m3 up,0.668957800511509
+robustness,geo_w10,4,+4 M3 up,0.6839833759590793
+robustness,geo_w10,5,+5 P4 up,0.52653452685422
+robustness,geo_w10,6,+6 tritone,0.7231457800511509
+robustness,geo_w10,7,+7 P5 up,0.595108695652174
+robustness,geo_w10,8,+8 m6 up,0.6492966751918159
+robustness,geo_w10,9,+9 M6 up,0.5936700767263428
+robustness,geo_w10,10,+10 (-2) M2 down,0.6273976982097187
+robustness,geo_w10,11,+11 (-1) m2 down,0.7442455242966752
+robustness,geo_w50,1,+1 m2 up,0.7372122762148338
+robustness,geo_w50,2,+2 M2 up,0.6360294117647058
+robustness,geo_w50,3,+3 m3 up,0.701886189258312
+robustness,geo_w50,4,+4 M3 up,0.70931905370844
+robustness,geo_w50,5,+5 P4 up,0.511349104859335
+robustness,geo_w50,6,+6 tritone,0.7392902813299232
+robustness,geo_w50,7,+7 P5 up,0.6288363171355499
+robustness,geo_w50,8,+8 m6 up,0.6683184143222506
+robustness,geo_w50,9,+9 M6 up,0.6047794117647058
+robustness,geo_w50,10,+10 (-2) M2 down,0.6364290281329923
+robustness,geo_w50,11,+11 (-1) m2 down,0.7770140664961637
+robustness,arith_w10,1,+1 m2 up,0.7103580562659847
+robustness,arith_w10,2,+2 M2 up,0.62028452685422
+robustness,arith_w10,3,+3 m3 up,0.6650415601023018
+robustness,arith_w10,4,+4 M3 up,0.679747442455243
+robustness,arith_w10,5,+5 P4 up,0.5258152173913043
+robustness,arith_w10,6,+6 tritone,0.7171515345268542
+robustness,arith_w10,7,+7 P5 up,0.5928708439897699
+robustness,arith_w10,8,+8 m6 up,0.6444213554987213
+robustness,arith_w10,9,+9 M6 up,0.5930306905370843
+robustness,arith_w10,10,+10 (-2) M2 down,0.6249200767263428
+robustness,arith_w10,11,+11 (-1) m2 down,0.7316176470588235
+robustness,arith_w50,1,+1 m2 up,0.7387308184143222
+robustness,arith_w50,2,+2 M2 up,0.6288363171355499
+robustness,arith_w50,3,+3 m3 up,0.7018062659846548
+robustness,arith_w50,4,+4 M3 up,0.7050031969309463
+robustness,arith_w50,5,+5 P4 up,0.5187020460358056
+robustness,arith_w50,6,+6 tritone,0.7416879795396419
+robustness,arith_w50,7,+7 P5 up,0.6240409207161125
+robustness,arith_w50,8,+8 m6 up,0.670636189258312
+robustness,arith_w50,9,+9 M6 up,0.6046994884910486
+robustness,arith_w50,10,+10 (-2) M2 down,0.6417838874680307
+robustness,arith_w50,11,+11 (-1) m2 down,0.7731777493606138
+robustness,chord_local_slack,1,+1 m2 up,0.7085997442455243
+robustness,chord_local_slack,2,+2 M2 up,0.6010230179028133
+robustness,chord_local_slack,3,+3 m3 up,0.6569693094629157
+robustness,chord_local_slack,4,+4 M3 up,0.6704763427109974
+robustness,chord_local_slack,5,+5 P4 up,0.5624200767263428
+robustness,chord_local_slack,6,+6 tritone,0.7122762148337596
+robustness,chord_local_slack,7,+7 P5 up,0.5673753196930946
+robustness,chord_local_slack,8,+8 m6 up,0.7059622762148338
+robustness,chord_local_slack,9,+9 M6 up,0.6175671355498721
+robustness,chord_local_slack,10,+10 (-2) M2 down,0.6032608695652174
+robustness,chord_local_slack,11,+11 (-1) m2 down,0.7037244245524297
+robustness,chord_geo_w25,1,+1 m2 up,0.7373721227621484
+robustness,chord_geo_w25,2,+2 M2 up,0.6328324808184144
+robustness,chord_geo_w25,3,+3 m3 up,0.7074808184143222
+robustness,chord_geo_w25,4,+4 M3 up,0.7185102301790282
+robustness,chord_geo_w25,5,+5 P4 up,0.5083120204603581
+robustness,chord_geo_w25,6,+6 tritone,0.7492007672634271
+robustness,chord_geo_w25,7,+7 P5 up,0.6328324808184144
+robustness,chord_geo_w25,8,+8 m6 up,0.7015664961636828
+robustness,chord_geo_w25,9,+9 M6 up,0.5999040920716112
+robustness,chord_geo_w25,10,+10 (-2) M2 down,0.6325127877237852
+robustness,chord_geo_w25,11,+11 (-1) m2 down,0.780690537084399
+axis2_50,raw_local,1,+1 m2 up,0.651172349003797
+axis2_50,raw_local,2,+2 M2 up,0.5848240497905821
+axis2_50,raw_local,3,+3 m3 up,0.5867225114494853
+axis2_50,raw_local,4,+4 M3 up,0.6400360120562101
+axis2_50,raw_local,5,+5 P4 up,0.48469487611069795
+axis2_50,raw_local,6,+6 tritone,0.6698046737385994
+axis2_50,raw_local,7,+7 P5 up,0.5912435902454299
+axis2_50,raw_local,8,+8 m6 up,0.5770344854581752
+axis2_50,raw_local,9,+9 M6 up,0.5757427486593337
+axis2_50,raw_local,10,+10 (-2) M2 down,0.5839041766156496
+axis2_50,raw_local,11,+11 (-1) m2 down,0.6858143813363604
+axis2_50,raw_local_slack,1,+1 m2 up,0.6546561240067327
+axis2_50,raw_local_slack,2,+2 M2 up,0.6031823697498728
+axis2_50,raw_local_slack,3,+3 m3 up,0.5931420519043332
+axis2_50,raw_local_slack,4,+4 M3 up,0.6631307002779191
+axis2_50,raw_local_slack,5,+5 P4 up,0.4844991584139038
+axis2_50,raw_local_slack,6,+6 tritone,0.6877911300739813
+axis2_50,raw_local_slack,7,+7 P5 up,0.5889536931929386
+axis2_50,raw_local_slack,8,+8 m6 up,0.5863897913649352
+axis2_50,raw_local_slack,9,+9 M6 up,0.6017536305632756
+axis2_50,raw_local_slack,10,+10 (-2) M2 down,0.5783849375660547
+axis2_50,raw_local_slack,11,+11 (-1) m2 down,0.7048381414647512
+axis2_50,rank_local,1,+1 m2 up,0.6437937918346577
+axis2_50,rank_local,2,+2 M2 up,0.5800289662191256
+axis2_50,rank_local,3,+3 m3 up,0.584060750773085
+axis2_50,rank_local,4,+4 M3 up,0.6357106509570596
+axis2_50,rank_local,5,+5 P4 up,0.4852037421223627
+axis2_50,rank_local,6,+6 tritone,0.6689435158727052
+axis2_50,rank_local,7,+7 P5 up,0.591713312717736
+axis2_50,rank_local,8,+8 m6 up,0.5766234782949075
+axis2_50,rank_local,9,+9 M6 up,0.5763690452890751
+axis2_50,rank_local,10,+10 (-2) M2 down,0.5887579754961444
+axis2_50,rank_local,11,+11 (-1) m2 down,0.6906681802168552
+axis2_50,rank_local_slack,1,+1 m2 up,0.6538341096801973
+axis2_50,rank_local_slack,2,+2 M2 up,0.6013817669393666
+axis2_50,rank_local_slack,3,+3 m3 up,0.5892864132774885
+axis2_50,rank_local_slack,4,+4 M3 up,0.6609582338435042
+axis2_50,rank_local_slack,5,+5 P4 up,0.4881786511136337
+axis2_50,rank_local_slack,6,+6 tritone,0.6880847066191725
+axis2_50,rank_local_slack,7,+7 P5 up,0.5899127099072298
+axis2_50,rank_local_slack,8,+8 m6 up,0.5866442243707676
+axis2_50,rank_local_slack,9,+9 M6 up,0.6027517908169256
+axis2_50,rank_local_slack,10,+10 (-2) M2 down,0.5804204016127138
+axis2_50,rank_local_slack,11,+11 (-1) m2 down,0.7042314166046894
+axis2_50,rank_avgties_local_slack,1,+1 m2 up,0.6563197244294829
+axis2_50,rank_avgties_local_slack,2,+2 M2 up,0.6032606568285904
+axis2_50,rank_avgties_local_slack,3,+3 m3 up,0.5901475711433828
+axis2_50,rank_avgties_local_slack,4,+4 M3 up,0.6613692410067719
+axis2_50,rank_avgties_local_slack,5,+5 P4 up,0.48745449563549537
+axis2_50,rank_avgties_local_slack,6,+6 tritone,0.6873409793713547
+axis2_50,rank_avgties_local_slack,7,+7 P5 up,0.5887579754961444
+axis2_50,rank_avgties_local_slack,8,+8 m6 up,0.5858026382745528
+axis2_50,rank_avgties_local_slack,9,+9 M6 up,0.602008063569108
+axis2_50,rank_avgties_local_slack,10,+10 (-2) M2 down,0.5786393705718871
+axis2_50,rank_avgties_local_slack,11,+11 (-1) m2 down,0.7016479430070067
+axis2_50,global,1,+1 m2 up,0.7063451677300662
+axis2_50,global,2,+2 M2 up,0.613066113437977
+axis2_50,global,3,+3 m3 up,0.5693427799741653
+axis2_50,global,4,+4 M3 up,0.7044662778408424
+axis2_50,global,5,+5 P4 up,0.4991584139037852
+axis2_50,global,6,+6 tritone,0.7157396171761851
+axis2_50,global,7,+7 P5 up,0.6006184679218695
+axis2_50,global,8,+8 m6 up,0.6074685873096646
+axis2_50,global,9,+9 M6 up,0.6562414373507652
+axis2_50,global,10,+10 (-2) M2 down,0.5660155791286648
+axis2_50,global,11,+11 (-1) m2 down,0.7256820761733276
+axis2_50,global_raw,1,+1 m2 up,0.7063451677300662
+axis2_50,global_raw,2,+2 M2 up,0.613066113437977
+axis2_50,global_raw,3,+3 m3 up,0.5693427799741653
+axis2_50,global_raw,4,+4 M3 up,0.7044662778408424
+axis2_50,global_raw,5,+5 P4 up,0.4991584139037852
+axis2_50,global_raw,6,+6 tritone,0.7157396171761851
+axis2_50,global_raw,7,+7 P5 up,0.6006184679218695
+axis2_50,global_raw,8,+8 m6 up,0.6074685873096646
+axis2_50,global_raw,9,+9 M6 up,0.6562414373507652
+axis2_50,global_raw,10,+10 (-2) M2 down,0.5660155791286648
+axis2_50,global_raw,11,+11 (-1) m2 down,0.7256820761733276
+axis2_50,prod_geo_w25,1,+1 m2 up,0.6770853720593416
+axis2_50,prod_geo_w25,2,+2 M2 up,0.6170587544525776
+axis2_50,prod_geo_w25,3,+3 m3 up,0.5894625592046033
+axis2_50,prod_geo_w25,4,+4 M3 up,0.6837789172897013
+axis2_50,prod_geo_w25,5,+5 P4 up,0.5060085332915802
+axis2_50,prod_geo_w25,6,+6 tritone,0.7056601557912866
+axis2_50,prod_geo_w25,7,+7 P5 up,0.5931420519043332
+axis2_50,prod_geo_w25,8,+8 m6 up,0.599365874662387
+axis2_50,prod_geo_w25,9,+9 M6 up,0.6297804047441969
+axis2_50,prod_geo_w25,10,+10 (-2) M2 down,0.5771910596156105
+axis2_50,prod_geo_w25,11,+11 (-1) m2 down,0.7294594277214546
+axis2_50,geo_w25_noslack,1,+1 m2 up,0.6659294633420754
+axis2_50,geo_w25_noslack,2,+2 M2 up,0.5944729322425334
+axis2_50,geo_w25_noslack,3,+3 m3 up,0.5890319802716562
+axis2_50,geo_w25_noslack,4,+4 M3 up,0.6551062747093592
+axis2_50,geo_w25_noslack,5,+5 P4 up,0.4976905311778291
+axis2_50,geo_w25_noslack,6,+6 tritone,0.6905703213684581
+axis2_50,geo_w25_noslack,7,+7 P5 up,0.5905585783066505
+axis2_50,geo_w25_noslack,8,+8 m6 up,0.5907542960034446
+axis2_50,geo_w25_noslack,9,+9 M6 up,0.5973695541550867
+axis2_50,geo_w25_noslack,10,+10 (-2) M2 down,0.5864093631346147
+axis2_50,geo_w25_noslack,11,+11 (-1) m2 down,0.7088699260187106
+axis2_50,geo_w25_avgties,1,+1 m2 up,0.6786315418640153
+axis2_50,geo_w25_avgties,2,+2 M2 up,0.61764590754296
+axis2_50,geo_w25_avgties,3,+3 m3 up,0.590441147688574
+axis2_50,geo_w25_avgties,4,+4 M3 up,0.6842682115316867
+axis2_50,geo_w25_avgties,5,+5 P4 up,0.5061259639096567
+axis2_50,geo_w25_avgties,6,+6 tritone,0.7048381414647512
+axis2_50,geo_w25_avgties,7,+7 P5 up,0.5927506165107449
+axis2_50,geo_w25_avgties,8,+8 m6 up,0.5992875875836693
+axis2_50,geo_w25_avgties,9,+9 M6 up,0.6296629741261205
+axis2_50,geo_w25_avgties,10,+10 (-2) M2 down,0.5761733275922809
+axis2_50,geo_w25_avgties,11,+11 (-1) m2 down,0.7276196813715896
+axis2_50,arith_w25,1,+1 m2 up,0.6750107644733236
+axis2_50,arith_w25,2,+2 M2 up,0.6150820057149567
+axis2_50,arith_w25,3,+3 m3 up,0.5905585783066505
+axis2_50,arith_w25,4,+4 M3 up,0.6830351900418836
+axis2_50,arith_w25,5,+5 P4 up,0.5003131483148706
+axis2_50,arith_w25,6,+6 tritone,0.7033311151994364
+axis2_50,arith_w25,7,+7 P5 up,0.5956080948839394
+axis2_50,arith_w25,8,+8 m6 up,0.5965279680588719
+axis2_50,arith_w25,9,+9 M6 up,0.629447684659647
+axis2_50,arith_w25,10,+10 (-2) M2 down,0.5776020667788782
+axis2_50,arith_w25,11,+11 (-1) m2 down,0.7251732101616628
+axis2_50,geo_w10,1,+1 m2 up,0.6654010255607312
+axis2_50,geo_w10,2,+2 M2 up,0.6102477786041414
+axis2_50,geo_w10,3,+3 m3 up,0.591145731397033
+axis2_50,geo_w10,4,+4 M3 up,0.6720554272517321
+axis2_50,geo_w10,5,+5 P4 up,0.4953614905859788
+axis2_50,geo_w10,6,+6 tritone,0.6984773163189416
+axis2_50,geo_w10,7,+7 P5 up,0.5935334872979214
+axis2_50,geo_w10,8,+8 m6 up,0.5921634634203625
+axis2_50,geo_w10,9,+9 M6 up,0.6160410224292481
+axis2_50,geo_w10,10,+10 (-2) M2 down,0.5773672055427251
+axis2_50,geo_w10,11,+11 (-1) m2 down,0.7186362390887384
+axis2_50,geo_w50,1,+1 m2 up,0.6905507495987787
+axis2_50,geo_w50,2,+2 M2 up,0.6207773906916664
+axis2_50,geo_w50,3,+3 m3 up,0.5846479038634673
+axis2_50,geo_w50,4,+4 M3 up,0.6981250244647121
+axis2_50,geo_w50,5,+5 P4 up,0.5144048224840491
+axis2_50,geo_w50,6,+6 tritone,0.7135084354327318
+axis2_50,geo_w50,7,+7 P5 up,0.5943163580850981
+axis2_50,geo_w50,8,+8 m6 up,0.6130856852076565
+axis2_50,geo_w50,9,+9 M6 up,0.6452616745606138
+axis2_50,geo_w50,10,+10 (-2) M2 down,0.5723568325047951
+axis2_50,geo_w50,11,+11 (-1) m2 down,0.7341762242141935
+axis2_50,arith_w10,1,+1 m2 up,0.6603710807531217
+axis2_50,arith_w10,2,+2 M2 up,0.60862332172075
+axis2_50,arith_w10,3,+3 m3 up,0.590343288840177
+axis2_50,arith_w10,4,+4 M3 up,0.6710768387677614
+axis2_50,arith_w10,5,+5 P4 up,0.49068383763259876
+axis2_50,arith_w10,6,+6 tritone,0.6946999647708145
+axis2_50,arith_w10,7,+7 P5 up,0.5956276666536188
+axis2_50,arith_w10,8,+8 m6 up,0.589873566367871
+axis2_50,arith_w10,9,+9 M6 up,0.6138098406857948
+axis2_50,arith_w10,10,+10 (-2) M2 down,0.5786197988022077
+axis2_50,arith_w10,11,+11 (-1) m2 down,0.7140564449837554
+axis2_50,arith_w50,1,+1 m2 up,0.6889458644850668
+axis2_50,arith_w50,2,+2 M2 up,0.6232238619015932
+axis2_50,arith_w50,3,+3 m3 up,0.5820448584961052
+axis2_50,arith_w50,4,+4 M3 up,0.7019806630915567
+axis2_50,arith_w50,5,+5 P4 up,0.5154616980467374
+axis2_50,arith_w50,6,+6 tritone,0.7152894664735585
+axis2_50,arith_w50,7,+7 P5 up,0.5949035111754805
+axis2_50,arith_w50,8,+8 m6 up,0.6113437977061886
+axis2_50,arith_w50,9,+9 M6 up,0.6482757270912436
+axis2_50,arith_w50,10,+10 (-2) M2 down,0.5705366579246095
+axis2_50,arith_w50,11,+11 (-1) m2 down,0.7364269777273261
+axis2_50,chord_local_slack,1,+1 m2 up,0.6324225936509179
+axis2_50,chord_local_slack,2,+2 M2 up,0.5897169922104357
+axis2_50,chord_local_slack,3,+3 m3 up,0.6310525697733589
+axis2_50,chord_local_slack,4,+4 M3 up,0.6461619759658669
+axis2_50,chord_local_slack,5,+5 P4 up,0.5300622382275806
+axis2_50,chord_local_slack,6,+6 tritone,0.6766743648960739
+axis2_50,chord_local_slack,7,+7 P5 up,0.577973930402787
+axis2_50,chord_local_slack,8,+8 m6 up,0.663835283986378
+axis2_50,chord_local_slack,9,+9 M6 up,0.5834540259130231
+axis2_50,chord_local_slack,10,+10 (-2) M2 down,0.5988765804204016
+axis2_50,chord_local_slack,11,+11 (-1) m2 down,0.7051512897796218
+axis2_50,chord_geo_w25,1,+1 m2 up,0.6902180295142287
+axis2_50,chord_geo_w25,2,+2 M2 up,0.609660625513759
+axis2_50,chord_geo_w25,3,+3 m3 up,0.6001096019102047
+axis2_50,chord_geo_w25,4,+4 M3 up,0.7075977609895486
+axis2_50,chord_geo_w25,5,+5 P4 up,0.5246017144870239
+axis2_50,chord_geo_w25,6,+6 tritone,0.7159353348729792
+axis2_50,chord_geo_w25,7,+7 P5 up,0.6020667788781462
+axis2_50,chord_geo_w25,8,+8 m6 up,0.6279015148549731
+axis2_50,chord_geo_w25,9,+9 M6 up,0.6419149019454339
+axis2_50,chord_geo_w25,10,+10 (-2) M2 down,0.5918894586448507
+axis2_50,chord_geo_w25,11,+11 (-1) m2 down,0.7298704348847223
+all_63,raw_local,1,+1 m2 up,0.6601106813822596
+all_63,raw_local,2,+2 M2 up,0.5894255258937836
+all_63,raw_local,3,+3 m3 up,0.5968147659025878
+all_63,raw_local,4,+4 M3 up,0.6407571612740937
+all_63,raw_local,5,+5 P4 up,0.4930352482470207
+all_63,raw_local,6,+6 tritone,0.6728924944187655
+all_63,raw_local,7,+7 P5 up,0.5877275728704839
+all_63,raw_local,8,+8 m6 up,0.5858724019746565
+all_63,raw_local,9,+9 M6 up,0.5749929251957363
+all_63,raw_local,10,+10 (-2) M2 down,0.5892525862340031
+all_63,raw_local,11,+11 (-1) m2 down,0.6893060403106626
+all_63,raw_local_slack,1,+1 m2 up,0.6636638053013867
+all_63,raw_local_slack,2,+2 M2 up,0.6055403578278779
+all_63,raw_local_slack,3,+3 m3 up,0.6048957645505141
+all_63,raw_local_slack,4,+4 M3 up,0.6642297896424866
+all_63,raw_local_slack,5,+5 P4 up,0.4915259566707543
+all_63,raw_local_slack,6,+6 tritone,0.6920416312926454
+all_63,raw_local_slack,7,+7 P5 up,0.5878376253812534
+all_63,raw_local_slack,8,+8 m6 up,0.595682797220388
+all_63,raw_local_slack,9,+9 M6 up,0.6002892808854511
+all_63,raw_local_slack,10,+10 (-2) M2 down,0.5858566801874037
+all_63,raw_local_slack,11,+11 (-1) m2 down,0.7097915291010282
+all_63,rank_local,1,+1 m2 up,0.6535704178851052
+all_63,rank_local,2,+2 M2 up,0.5856837405276232
+all_63,rank_local,3,+3 m3 up,0.5946294374744521
+all_63,rank_local,4,+4 M3 up,0.6366223312266138
+all_63,rank_local,5,+5 P4 up,0.49377417224790116
+all_63,rank_local,6,+6 tritone,0.6722479011414018
+all_63,rank_local,7,+7 P5 up,0.5879791214665283
+all_63,rank_local,8,+8 m6 up,0.5856680187403704
+all_63,rank_local,9,+9 M6 up,0.5754016916643084
+all_63,rank_local,10,+10 (-2) M2 down,0.5933716944942301
+all_63,rank_local,11,+11 (-1) m2 down,0.6928434424425368
+all_63,rank_local_slack,1,+1 m2 up,0.6638053013866616
+all_63,rank_local_slack,2,+2 M2 up,0.6045184416564475
+all_63,rank_local_slack,3,+3 m3 up,0.6013898059931453
+all_63,rank_local_slack,4,+4 M3 up,0.6620130176398453
+all_63,rank_local_slack,5,+5 P4 up,0.49588089173977296
+all_63,rank_local_slack,6,+6 tritone,0.6919158569946231
+all_63,rank_local_slack,7,+7 P5 up,0.5884664968713643
+all_63,rank_local_slack,8,+8 m6 up,0.5965632173065434
+all_63,rank_local_slack,9,+9 M6 up,0.6007294909285288
+all_63,rank_local_slack,10,+10 (-2) M2 down,0.5873659717636701
+all_63,rank_local_slack,11,+11 (-1) m2 down,0.7076062006728925
+all_63,rank_avgties_local_slack,1,+1 m2 up,0.6659277426657862
+all_63,rank_avgties_local_slack,2,+2 M2 up,0.606090620381725
+all_63,rank_avgties_local_slack,3,+3 m3 up,0.6022387825047951
+all_63,rank_avgties_local_slack,4,+4 M3 up,0.6624689494701758
+all_63,rank_avgties_local_slack,5,+5 P4 up,0.4954249599094425
+all_63,rank_avgties_local_slack,6,+6 tritone,0.6913184290790177
+all_63,rank_avgties_local_slack,7,+7 P5 up,0.5876175203597145
+all_63,rank_avgties_local_slack,8,+8 m6 up,0.5959186240291796
+all_63,rank_avgties_local_slack,9,+9 M6 up,0.6001006194384177
+all_63,rank_avgties_local_slack,10,+10 (-2) M2 down,0.5859510109109204
+all_63,rank_avgties_local_slack,11,+11 (-1) m2 down,0.7054994811810207
+all_63,global,1,+1 m2 up,0.7121655189761972
+all_63,global,2,+2 M2 up,0.6128038235386599
+all_63,global,3,+3 m3 up,0.5950382039430242
+all_63,global,4,+4 M3 up,0.7044932867968431
+all_63,global,5,+5 P4 up,0.49007955224349903
+all_63,global,6,+6 tritone,0.7168506115775242
+all_63,global,7,+7 P5 up,0.6137156871993208
+all_63,global,8,+8 m6 up,0.6217652422727415
+all_63,global,9,+9 M6 up,0.6443102851932208
+all_63,global,10,+10 (-2) M2 down,0.5801653932018992
+all_63,global,11,+11 (-1) m2 down,0.7386410087098702
+all_63,global_raw,1,+1 m2 up,0.7121655189761972
+all_63,global_raw,2,+2 M2 up,0.6128038235386599
+all_63,global_raw,3,+3 m3 up,0.5950382039430242
+all_63,global_raw,4,+4 M3 up,0.7044932867968431
+all_63,global_raw,5,+5 P4 up,0.49007955224349903
+all_63,global_raw,6,+6 tritone,0.7168506115775242
+all_63,global_raw,7,+7 P5 up,0.6137156871993208
+all_63,global_raw,8,+8 m6 up,0.6217652422727415
+all_63,global_raw,9,+9 M6 up,0.6443102851932208
+all_63,global_raw,10,+10 (-2) M2 down,0.5801653932018992
+all_63,global_raw,11,+11 (-1) m2 down,0.7386410087098702
+all_63,prod_geo_w25,1,+1 m2 up,0.6880325755431878
+all_63,prod_geo_w25,2,+2 M2 up,0.6211363707826306
+all_63,prod_geo_w25,3,+3 m3 up,0.607552746596233
+all_63,prod_geo_w25,4,+4 M3 up,0.686617614690438
+all_63,prod_geo_w25,5,+5 P4 up,0.5094802377134232
+all_63,prod_geo_w25,6,+6 tritone,0.7120240228909223
+all_63,prod_geo_w25,7,+7 P5 up,0.5949753167940132
+all_63,prod_geo_w25,8,+8 m6 up,0.6114831934094268
+all_63,prod_geo_w25,9,+9 M6 up,0.6244065025312078
+all_63,prod_geo_w25,10,+10 (-2) M2 down,0.5871301449548785
+all_63,prod_geo_w25,11,+11 (-1) m2 down,0.7360783573876678
+all_63,geo_w25_noslack,1,+1 m2 up,0.6758010250605289
+all_63,geo_w25_noslack,2,+2 M2 up,0.6001320630129233
+all_63,geo_w25_noslack,3,+3 m3 up,0.6026789925478728
+all_63,geo_w25_noslack,4,+4 M3 up,0.6564160613778575
+all_63,geo_w25_noslack,5,+5 P4 up,0.5055026255384713
+all_63,geo_w25_noslack,6,+6 tritone,0.6968682199792472
+all_63,geo_w25_noslack,7,+7 P5 up,0.5870829795931202
+all_63,geo_w25_noslack,8,+8 m6 up,0.6004150551834733
+all_63,geo_w25_noslack,9,+9 M6 up,0.594849542495991
+all_63,geo_w25_noslack,10,+10 (-2) M2 down,0.5945351067509355
+all_63,geo_w25_noslack,11,+11 (-1) m2 down,0.7143194038298274
+all_63,geo_w25_avgties,1,+1 m2 up,0.6892431531616514
+all_63,geo_w25_avgties,2,+2 M2 up,0.6215451372512028
+all_63,geo_w25_avgties,3,+3 m3 up,0.6083388359588718
+all_63,geo_w25_avgties,4,+4 M3 up,0.6870106593717574
+all_63,geo_w25_avgties,5,+5 P4 up,0.5096688991604565
+all_63,geo_w25_avgties,6,+6 tritone,0.7113322642518002
+all_63,geo_w25_avgties,7,+7 P5 up,0.5945979938999465
+all_63,geo_w25_avgties,8,+8 m6 up,0.6114517498349212
+all_63,geo_w25_avgties,9,+9 M6 up,0.624312171807691
+all_63,geo_w25_avgties,10,+10 (-2) M2 down,0.5862811684432286
+all_63,geo_w25_avgties,11,+11 (-1) m2 down,0.7346319529604125
+all_63,arith_w25,1,+1 m2 up,0.6853127063484576
+all_63,arith_w25,2,+2 M2 up,0.6174103072037229
+all_63,arith_w25,3,+3 m3 up,0.6081973398735968
+all_63,arith_w25,4,+4 M3 up,0.6843851209005439
+all_63,arith_w25,5,+5 P4 up,0.5061157752413294
+all_63,arith_w25,6,+6 tritone,0.7093984844197089
+all_63,arith_w25,7,+7 P5 up,0.5954626921988492
+all_63,arith_w25,8,+8 m6 up,0.6089991510234883
+all_63,arith_w25,9,+9 M6 up,0.6233688645725246
+all_63,arith_w25,10,+10 (-2) M2 down,0.5876489639342201
+all_63,arith_w25,11,+11 (-1) m2 down,0.7304499575511744
+all_63,geo_w10,1,+1 m2 up,0.6757853032732761
+all_63,geo_w10,2,+2 M2 up,0.6130868157092099
+all_63,geo_w10,3,+3 m3 up,0.6064522214885388
+all_63,geo_w10,4,+4 M3 up,0.6744017859950319
+all_63,geo_w10,5,+5 P4 up,0.5014935697890136
+all_63,geo_w10,6,+6 tritone,0.7033298745401377
+all_63,geo_w10,7,+7 P5 up,0.5938433481118134
+all_63,geo_w10,8,+8 m6 up,0.6034021947615005
+all_63,geo_w10,9,+9 M6 up,0.6116404112819546
+all_63,geo_w10,10,+10 (-2) M2 down,0.5872087538911424
+all_63,geo_w10,11,+11 (-1) m2 down,0.7236738672452284
+all_63,geo_w50,1,+1 m2 up,0.6997295852592522
+all_63,geo_w50,2,+2 M2 up,0.6237776310410967
+all_63,geo_w50,3,+3 m3 up,0.6077099644687608
+all_63,geo_w50,4,+4 M3 up,0.7003270131748577
+all_63,geo_w50,5,+5 P4 up,0.5138037292079364
+all_63,geo_w50,6,+6 tritone,0.7185800081753294
+all_63,geo_w50,7,+7 P5 up,0.6011068138225953
+all_63,geo_w50,8,+8 m6 up,0.6239505707008772
+all_63,geo_w50,9,+9 M6 up,0.6372983680784832
+all_63,geo_w50,10,+10 (-2) M2 down,0.5849605383139955
+all_63,geo_w50,11,+11 (-1) m2 down,0.7426028990975694
+all_63,arith_w10,1,+1 m2 up,0.670204068798541
+all_63,arith_w10,2,+2 M2 up,0.6109172090683269
+all_63,arith_w10,3,+3 m3 up,0.6050372606357891
+all_63,arith_w10,4,+4 M3 up,0.6727824419079961
+all_63,arith_w10,5,+5 P4 up,0.49759456655032547
+all_63,arith_w10,6,+6 tritone,0.699116435556394
+all_63,arith_w10,7,+7 P5 up,0.5950853693047826
+all_63,arith_w10,8,+8 m6 up,0.6006037166305066
+all_63,arith_w10,9,+9 M6 up,0.609722353237116
+all_63,arith_w10,10,+10 (-2) M2 down,0.5877275728704839
+all_63,arith_w10,11,+11 (-1) m2 down,0.7175109266421407
+all_63,arith_w50,1,+1 m2 up,0.6987391126623275
+all_63,arith_w50,2,+2 M2 up,0.6243278935949439
+all_63,arith_w50,3,+3 m3 up,0.605603244976889
+all_63,arith_w50,4,+4 M3 up,0.7025752287520045
+all_63,arith_w50,5,+5 P4 up,0.5160991101468415
+all_63,arith_w50,6,+6 tritone,0.7204823444329151
+all_63,arith_w50,7,+7 P5 up,0.6006351602050121
+all_63,arith_w50,8,+8 m6 up,0.6230072634657108
+all_63,arith_w50,9,+9 M6 up,0.6397038015281578
+all_63,arith_w50,10,+10 (-2) M2 down,0.5845517718454234
+all_63,arith_w50,11,+11 (-1) m2 down,0.7436562588435053
+all_63,chord_local_slack,1,+1 m2 up,0.6474074772820174
+all_63,chord_local_slack,2,+2 M2 up,0.5919410118542275
+all_63,chord_local_slack,3,+3 m3 up,0.6361506776090305
+all_63,chord_local_slack,4,+4 M3 up,0.6509448794138918
+all_63,chord_local_slack,5,+5 P4 up,0.5364273810646795
+all_63,chord_local_slack,6,+6 tritone,0.6836776404741691
+all_63,chord_local_slack,7,+7 P5 up,0.5758890670691444
+all_63,chord_local_slack,8,+8 m6 up,0.6721221268433796
+all_63,chord_local_slack,9,+9 M6 up,0.590164449894664
+all_63,chord_local_slack,10,+10 (-2) M2 down,0.5997390183316039
+all_63,chord_local_slack,11,+11 (-1) m2 down,0.7048706096909096
+all_63,chord_geo_w25,1,+1 m2 up,0.6994937584504607
+all_63,chord_geo_w25,2,+2 M2 up,0.6142187843914096
+all_63,chord_geo_w25,3,+3 m3 up,0.6212307015061472
+all_63,chord_geo_w25,4,+4 M3 up,0.7097443637392699
+all_63,chord_geo_w25,5,+5 P4 up,0.5213973524510266
+all_63,chord_geo_w25,6,+6 tritone,0.7224790114140175
+all_63,chord_geo_w25,7,+7 P5 up,0.6081187309373329
+all_63,chord_geo_w25,8,+8 m6 up,0.6423922271483822
+all_63,chord_geo_w25,9,+9 M6 up,0.6336509134358393
+all_63,chord_geo_w25,10,+10 (-2) M2 down,0.599880514416879
+all_63,chord_geo_w25,11,+11 (-1) m2 down,0.7398673081155865

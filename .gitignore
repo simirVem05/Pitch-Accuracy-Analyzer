@@ -12,6 +12,19 @@ outputs/
 #data
 data/
 
+# Large ML artifacts live under data/ (models in data/models/, bulky outputs in
+# data/experiment_archives/); see ml/artifact_relocation_manifest.json. These
+# patterns keep copies restored by `ml/artifact_paths.py restore`, and freshly
+# regenerated outputs, from being tracked again.
+ml/**/*.joblib
+ml/**/*.pt
+ml/**/*.pth
+ml/**/*predictions*.csv
+ml/audits/axis2_stable_center/stable_center_audit.csv
+ml/audits/axis2_segmentation_tail/segmentation_tail_audit.csv
+ml/audits/axis2_segmentation_v2/**/v2_notes.csv
+ml/audits/axis2_segmentation_v2/**/v1_vs_v2_notes.csv
+
 # node (frontend)
 node_modules/
 frontend/node_modules/

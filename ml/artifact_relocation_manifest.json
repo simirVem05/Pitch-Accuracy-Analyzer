@@ -1,0 +1,454 @@
+{
+  "purpose": "Relocation of large ML artifacts out of Git tracking into the Git-ignored data/ directory. Bytes are unchanged; old paths are historical provenance (they are still the paths recorded in the frozen test manifests and experiment results).",
+  "created_utc": "2026-11-26T21:42:35.039534+00:00",
+  "git_commit_at_relocation": "77b7db4165541a223600a75e0f141f7d49859210",
+  "final_model_dir_default": "data/models/axis2_v3",
+  "final_model_dir_env_override": "AXIS2_MODEL_DIR",
+  "archive_dir": "data/experiment_archives",
+  "resolver": "ml/artifact_paths.py",
+  "counts": {
+    "relocated": 28,
+    "hash_mismatches": 0,
+    "bytes_total": 163626009,
+    "by_category": {
+      "final_model": 3,
+      "archived_model": 5,
+      "prediction_csv": 14,
+      "audit_csv": 6
+    }
+  },
+  "artifacts": [
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_compression/selected_rf_model.joblib",
+      "new_path": "data/models/axis2_v3/selected_rf_model.joblib",
+      "original_sha256": "eeb77c5b07433b9e8af20fdbe54c4a589d81de45384bea978f88fa3caac134e0",
+      "relocated_sha256": "eeb77c5b07433b9e8af20fdbe54c4a589d81de45384bea978f88fa3caac134e0",
+      "bytes": 10783734,
+      "hash_match": true,
+      "category": "final_model",
+      "purpose": "Final 50-tree Random Forest expert (frozen; evaluated on the sealed test)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_final_test/final_test_evaluation.py (ARTIFACTS['rf_model'])",
+        "written by ml/experiments/axis2_v3_rf_compression/rf_compression.py",
+        "recorded in ml/experiments/axis2_v3_final_test/final_model_manifest_{before,after}_test.json"
+      ],
+      "matches_final_model_manifest": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_natural_hybrid/natural_offset_model.joblib",
+      "new_path": "data/models/axis2_v3/natural_offset_model.joblib",
+      "original_sha256": "fffb541918578183d8579d3b33c7301490f0e7548a63ff6a16c31bb6c5f34f71",
+      "relocated_sha256": "fffb541918578183d8579d3b33c7301490f0e7548a63ff6a16c31bb6c5f34f71",
+      "bytes": 553851,
+      "hash_match": true,
+      "category": "final_model",
+      "purpose": "Final natural-offset HGB expert (frozen; evaluated on the sealed test)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_final_test/final_test_evaluation.py (ARTIFACTS['natural_model'])",
+        "written by ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py",
+        "recorded in ml/experiments/axis2_v3_final_test/final_model_manifest_{before,after}_test.json"
+      ],
+      "matches_final_model_manifest": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_compression/selected_dynamic_gate.pt",
+      "new_path": "data/models/axis2_v3/selected_dynamic_gate.pt",
+      "original_sha256": "08ab42c3bc1955b20519a325cbfd88e09b3fc6310dd4d042435dfb247958ab6d",
+      "relocated_sha256": "08ab42c3bc1955b20519a325cbfd88e09b3fc6310dd4d042435dfb247958ab6d",
+      "bytes": 8401,
+      "hash_match": true,
+      "category": "final_model",
+      "purpose": "Final dynamic gate (481 parameters) weighting RF vs natural per example (frozen; evaluated on the sealed test)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_final_test/final_test_evaluation.py (ARTIFACTS['dynamic_gate'])",
+        "written by ml/experiments/axis2_v3_rf_compression/rf_compression.py",
+        "recorded in ml/experiments/axis2_v3_final_test/final_model_manifest_{before,after}_test.json"
+      ],
+      "matches_final_model_manifest": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_random_forest/random_forest_model.joblib",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_random_forest/random_forest_model.joblib",
+      "original_sha256": "1a866954b600948cc3ff693a8226d443150c63ffff695b25c4f9a7bf1ed7ebe6",
+      "relocated_sha256": "1a866954b600948cc3ff693a8226d443150c63ffff695b25c4f9a7bf1ed7ebe6",
+      "bytes": 64701516,
+      "hash_match": true,
+      "category": "archived_model",
+      "purpose": "Original 300-tree Random Forest (superseded by the 50-tree selected model)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_rf_compression/rf_compression.py (RF_MODEL)",
+        "ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py (RF_MODEL)",
+        "written by ml/experiments/axis2_v3_random_forest/random_forest.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_natural_hybrid/dynamic_gate.pt",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_rf_natural_hybrid/dynamic_gate.pt",
+      "original_sha256": "0e715071bfd59bb6781400ef170c38651906b5370b87643bfc605696be2c3ae0",
+      "relocated_sha256": "0e715071bfd59bb6781400ef170c38651906b5370b87643bfc605696be2c3ae0",
+      "bytes": 8211,
+      "hash_match": true,
+      "category": "archived_model",
+      "purpose": "Dynamic gate trained against the 300-tree RF (superseded by selected_dynamic_gate.pt)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_dynamic_hybrid/gate_model.pt",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_dynamic_hybrid/gate_model.pt",
+      "original_sha256": "6580be79980d5297049a249005d1de4bbb9e866b9909daf45ffe6fcb53661abf",
+      "relocated_sha256": "6580be79980d5297049a249005d1de4bbb9e866b9909daf45ffe6fcb53661abf",
+      "bytes": 9333,
+      "hash_match": true,
+      "category": "archived_model",
+      "purpose": "V3 Ridge+natural dynamic gate (intermediate)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v3_dynamic_hybrid/dynamic_hybrid_frozen.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_dynamic_hybrid/gate_model.pt",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_dynamic_hybrid/gate_model.pt",
+      "original_sha256": "ce303b6aab2ef4f1fe77ccce458b69d849d5eaa56fa77c60bddaa758a6cedd7a",
+      "relocated_sha256": "ce303b6aab2ef4f1fe77ccce458b69d849d5eaa56fa77c60bddaa758a6cedd7a",
+      "bytes": 9333,
+      "hash_match": true,
+      "category": "archived_model",
+      "purpose": "V2 Ridge+natural dynamic gate (intermediate)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v2_dynamic_hybrid/dynamic_hybrid.py",
+        "directory is in frozen_experts.PROTECTED_COMMON"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_sequence_natural_offset/best_model.pt",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_sequence_natural_offset/best_model.pt",
+      "original_sha256": "9b75b3faa616b769b3fe60a505e985e327e9bb3c4bb1cf8ab92552d3c8612a76",
+      "relocated_sha256": "9b75b3faa616b769b3fe60a505e985e327e9bb3c4bb1cf8ab92552d3c8612a76",
+      "bytes": 160053,
+      "hash_match": true,
+      "category": "archived_model",
+      "purpose": "V2 TCN sequence model state_dict (did not beat the handcrafted model)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v2_sequence_natural_offset/sequence_natural_offset.py",
+        "directory is in frozen_experts.PROTECTED_COMMON"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_final_test/final_test_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_final_test/final_test_predictions.csv",
+      "original_sha256": "c8f039cf05ca10531122106ac723a6cae0f104791def84ff42cc12172c1d221c",
+      "relocated_sha256": "c8f039cf05ca10531122106ac723a6cae0f104791def84ff42cc12172c1d221c",
+      "bytes": 3486458,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Sealed-test per-example predictions with labels (historical record; never regenerate)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v3_final_test/final_test_evaluation.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_final_test/final_test_predictions_unlabeled.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_final_test/final_test_predictions_unlabeled.csv",
+      "original_sha256": "fe6e74fe51bc336cee6ea81ea4c1d3153de381e51adabfc5f9921e07b197840f",
+      "relocated_sha256": "fe6e74fe51bc336cee6ea81ea4c1d3153de381e51adabfc5f9921e07b197840f",
+      "bytes": 1797676,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Sealed-test predictions hashed before labels were loaded (hash recorded in final_test_summary.md)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v3_final_test/final_test_evaluation.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_compression/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_rf_compression/validation_predictions.csv",
+      "original_sha256": "a854583f377b332043ca3cd052e7a7219be309097b1329ee3f28fd46f1f96871",
+      "relocated_sha256": "a854583f377b332043ca3cd052e7a7219be309097b1329ee3f28fd46f1f96871",
+      "bytes": 2814757,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the selected RF / hybrids",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_final_test/final_test_evaluation.py (COMP / 'validation_predictions.csv')",
+        "written by ml/experiments/axis2_v3_rf_compression/rf_compression.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_natural_hybrid/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_rf_natural_hybrid/validation_predictions.csv",
+      "original_sha256": "11694e6ed1ece820e952e5100c97da6c82a07357998f07e99e55bc0eb31a1dee",
+      "relocated_sha256": "11694e6ed1ece820e952e5100c97da6c82a07357998f07e99e55bc0eb31a1dee",
+      "bytes": 3029075,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the 300-tree RF + natural hybrids",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_rf_compression/rf_compression.py (HYB_DIR / 'validation_predictions.csv')",
+        "written by ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_rf_natural_hybrid/train_oof_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_rf_natural_hybrid/train_oof_predictions.csv",
+      "original_sha256": "8716bd030c687a0017964f48426adaa2aae6d45dbe6561c4c57b5ed682d4f170",
+      "relocated_sha256": "8716bd030c687a0017964f48426adaa2aae6d45dbe6561c4c57b5ed682d4f170",
+      "bytes": 10603437,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Train out-of-fold predictions used to fit the fixed weight and gate",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_random_forest/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_random_forest/validation_predictions.csv",
+      "original_sha256": "1d59e20514b3af870c970823bff760a8f123061fec16626416a1cbcd73c6d7db",
+      "relocated_sha256": "1d59e20514b3af870c970823bff760a8f123061fec16626416a1cbcd73c6d7db",
+      "bytes": 2467514,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the 300-tree RF",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py (RF_DIR / 'validation_predictions.csv')",
+        "written by ml/experiments/axis2_v3_random_forest/random_forest.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_natural_offset/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_natural_offset/validation_predictions.csv",
+      "original_sha256": "ee3312ccd543fb51784d0747b0f7a6d77ceddba94e6d3c470ee4a01c59ddffce",
+      "relocated_sha256": "ee3312ccd543fb51784d0747b0f7a6d77ceddba94e6d3c470ee4a01c59ddffce",
+      "bytes": 2137474,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the frozen natural-offset model on V3",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py (NAT_PREDICTIONS)",
+        "written by ml/experiments/axis2_v3_natural_offset/natural_offset_frozen.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_dynamic_hybrid/gate_validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_dynamic_hybrid/gate_validation_predictions.csv",
+      "original_sha256": "07615b5c437f144b4df8b2bc3ccdd9fe07ce2735cde0a301c00e11539e813683",
+      "relocated_sha256": "07615b5c437f144b4df8b2bc3ccdd9fe07ce2735cde0a301c00e11539e813683",
+      "bytes": 2629637,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V3 Ridge+natural dynamic gate",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_random_forest/random_forest.py (DYN_PREDICTIONS)",
+        "ml/experiments/axis2_v3_rf_natural_hybrid/rf_natural_hybrid.py (OLD_DYN_PREDICTIONS)",
+        "written by ml/experiments/axis2_v3_dynamic_hybrid/dynamic_hybrid_frozen.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v3_hybrid/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v3_hybrid/validation_predictions.csv",
+      "original_sha256": "ad5dfa74a1254c808784d311cde386aae5280870e673027a467bb07a83a544b3",
+      "relocated_sha256": "ad5dfa74a1254c808784d311cde386aae5280870e673027a467bb07a83a544b3",
+      "bytes": 1897636,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V3 fixed Ridge+natural hybrid",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "no hard-coded reader found; v3 scripts take prediction paths as CLI arguments",
+        "written by ml/experiments/axis2_v3_hybrid/hybrid_fixed.py"
+      ]
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_dynamic_hybrid/gate_validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_dynamic_hybrid/gate_validation_predictions.csv",
+      "original_sha256": "dd1841d9edb825bbddd0ada7976027f179c1466231f01b9ed5b2064f4974abe8",
+      "relocated_sha256": "dd1841d9edb825bbddd0ada7976027f179c1466231f01b9ed5b2064f4974abe8",
+      "bytes": 2633065,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V2 dynamic gate",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v3_shared/model_ladder.py",
+        "written by ml/experiments/axis2_v2_dynamic_hybrid/dynamic_hybrid.py",
+        "directory is in frozen_experts.PROTECTED_COMMON"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_hybrid/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_hybrid/validation_predictions.csv",
+      "original_sha256": "a0931982b9c32f6a1822e9b9e92827d7832e7159408a9fda263e44cf630bc5f1",
+      "relocated_sha256": "a0931982b9c32f6a1822e9b9e92827d7832e7159408a9fda263e44cf630bc5f1",
+      "bytes": 1899043,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V2 fixed Ridge+natural hybrid",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v2_dynamic_hybrid/dynamic_hybrid.py (HYBRID_VAL_PREDICTIONS)",
+        "ml/experiments/axis2_v3_dynamic_hybrid/dynamic_hybrid_frozen.py (--hybrid-predictions, CLI)",
+        "written by ml/experiments/axis2_v2_hybrid/hybrid_ridge_natural.py",
+        "directory is in frozen_experts.PROTECTED_COMMON"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_natural_offset/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_natural_offset/validation_predictions.csv",
+      "original_sha256": "8c9278cf2ea021649a42aac755f43a59b260c65d0fcf6d75cfaec67fd5b024e6",
+      "relocated_sha256": "8c9278cf2ea021649a42aac755f43a59b260c65d0fcf6d75cfaec67fd5b024e6",
+      "bytes": 2139208,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V2 natural-offset HGB",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/experiments/axis2_v2_hybrid/hybrid_ridge_natural.py (NATURAL_VAL_PREDICTIONS)",
+        "ml/experiments/axis2_v2_sequence_natural_offset/sequence_natural_offset.py (HANDCRAFTED_DIR)",
+        "ml/experiments/axis2_v3_hybrid/hybrid_fixed.py (--natural-predictions, CLI)",
+        "written by ml/experiments/axis2_v2_natural_offset/natural_offset_feature_experiment.py",
+        "directory is in frozen_experts.PROTECTED_COMMON"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_natural_offset/first_run_unrounded/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_natural_offset/first_run_unrounded/validation_predictions.csv",
+      "original_sha256": "100e85f6f9ae555a4d9ac8ed4419346d77b0f72af702a15e30480bc8364e451f",
+      "relocated_sha256": "100e85f6f9ae555a4d9ac8ed4419346d77b0f72af702a15e30480bc8364e451f",
+      "bytes": 2139415,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions from the first (unrounded) V2 natural-offset run",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "historical only; no reader"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/experiments/axis2_v2_sequence_natural_offset/validation_predictions.csv",
+      "new_path": "data/experiment_archives/experiments/axis2_v2_sequence_natural_offset/validation_predictions.csv",
+      "original_sha256": "58b5df9f88725f66e4b85a2147111240cb639917c0d704742012d23626c9347e",
+      "relocated_sha256": "58b5df9f88725f66e4b85a2147111240cb639917c0d704742012d23626c9347e",
+      "bytes": 2009889,
+      "hash_match": true,
+      "category": "prediction_csv",
+      "purpose": "Validation predictions of the V2 TCN",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/experiments/axis2_v2_sequence_natural_offset/sequence_natural_offset.py"
+      ],
+      "matches_axis2_v3_dataset_audit_protected_sha256": true
+    },
+    {
+      "old_path": "ml/audits/axis2_stable_center/stable_center_audit.csv",
+      "new_path": "data/experiment_archives/audits/axis2_stable_center/stable_center_audit.csv",
+      "original_sha256": "7b1cdc454e14f4dca8051afe8a6b15501b523262ccebdd9eaaef8e90c4090098",
+      "relocated_sha256": "7b1cdc454e14f4dca8051afe8a6b15501b523262ccebdd9eaaef8e90c4090098",
+      "bytes": 16223274,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-note stable-center audit rows (v1 notes)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/audits/axis2_stable_center/examples_and_plots.py (CSV_PATH)",
+        "ml/audits/axis2_stable_center/summarize.py (CSV)",
+        "written by ml/audits/axis2_stable_center/stable_center_audit.py"
+      ]
+    },
+    {
+      "old_path": "ml/audits/axis2_segmentation_tail/segmentation_tail_audit.csv",
+      "new_path": "data/experiment_archives/audits/axis2_segmentation_tail/segmentation_tail_audit.csv",
+      "original_sha256": "3f27641c412dac84292a8386b3899e8046f940f42bc47d52bae27ecfb8228e19",
+      "relocated_sha256": "3f27641c412dac84292a8386b3899e8046f940f42bc47d52bae27ecfb8228e19",
+      "bytes": 10592323,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-note v1 segmentation-tail audit rows",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/audits/axis2_segmentation_v2/evaluate_segmentation_v2.py (TAIL / 'segmentation_tail_audit.csv')",
+        "written by ml/audits/axis2_segmentation_tail/segmentation_tail_audit.py"
+      ]
+    },
+    {
+      "old_path": "ml/audits/axis2_segmentation_v2/v2_notes.csv",
+      "new_path": "data/experiment_archives/audits/axis2_segmentation_v2/v2_notes.csv",
+      "original_sha256": "5b521d9abf23f8a9312c587d4b2f55f3a94362230e7188a33eb85e73cf46f8d7",
+      "relocated_sha256": "5b521d9abf23f8a9312c587d4b2f55f3a94362230e7188a33eb85e73cf46f8d7",
+      "bytes": 6134482,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-v2-note metrics and audit categories (canonical config)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "ml/audits/axis2_segmentation_v2/resume_analysis.py (E.OUT / 'v2_notes.csv')",
+        "written by ml/audits/axis2_segmentation_v2/detail_outputs.py"
+      ]
+    },
+    {
+      "old_path": "ml/audits/axis2_segmentation_v2/v1_vs_v2_notes.csv",
+      "new_path": "data/experiment_archives/audits/axis2_segmentation_v2/v1_vs_v2_notes.csv",
+      "original_sha256": "7ae088843c4c4838e00d61efff69f333d0ca8ec9720adb3afe78958749a3f7bd",
+      "relocated_sha256": "7ae088843c4c4838e00d61efff69f333d0ca8ec9720adb3afe78958749a3f7bd",
+      "bytes": 3373598,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-v1-note outcome under v2 (canonical config)",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "written by ml/audits/axis2_segmentation_v2/detail_outputs.py"
+      ]
+    },
+    {
+      "old_path": "ml/audits/axis2_segmentation_v2/superseded_gapv1_g0.5_s100/v2_notes.csv",
+      "new_path": "data/experiment_archives/audits/axis2_segmentation_v2/superseded_gapv1_g0.5_s100/v2_notes.csv",
+      "original_sha256": "c4054e9b13dba661fa44542768c05e8c8a1fbe30f277644700f365afb125d3da",
+      "relocated_sha256": "c4054e9b13dba661fa44542768c05e8c8a1fbe30f277644700f365afb125d3da",
+      "bytes": 6112319,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-v2-note rows for the superseded gapv1_g0.5_s100 config",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "historical only; no reader"
+      ]
+    },
+    {
+      "old_path": "ml/audits/axis2_segmentation_v2/superseded_gapv1_g0.5_s100/v1_vs_v2_notes.csv",
+      "new_path": "data/experiment_archives/audits/axis2_segmentation_v2/superseded_gapv1_g0.5_s100/v1_vs_v2_notes.csv",
+      "original_sha256": "036104fa0dee787dd9babf9ed8ecd7048a32b7d63cc4d5292db90d6cb89b66f7",
+      "relocated_sha256": "036104fa0dee787dd9babf9ed8ecd7048a32b7d63cc4d5292db90d6cb89b66f7",
+      "bytes": 3271297,
+      "hash_match": true,
+      "category": "audit_csv",
+      "purpose": "Per-v1-note outcome for the superseded gapv1_g0.5_s100 config",
+      "git_tracked_before": true,
+      "referenced_by": [
+        "historical only; no reader"
+      ]
+    }
+  ]
+}
